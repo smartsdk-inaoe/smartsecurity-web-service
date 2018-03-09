@@ -9,3 +9,41 @@
 ***GET /organization/idOrganization*** get an especific organization <br>
 ***PUT /organization/idOrganization***  update an especific organization <br>
 ***DELETE /organization/idOrganization***  update an especific organization <br>
+
+**Zones**  
+***GET /zone*** get all Zones <br>
+***POST /zone*** create a new Zone <br>
+***GET /zone/idZone*** get an especific Zone <br>
+***PUT /zone/idZone***  update an especific Zone <br>
+***DELETE /zone/idZone***  update an especific Zone <br>
+
+**Subzones**  
+***GET /subzone*** get all Subzones <br>
+***POST /subzones*** create a new Subzone <br>
+***GET /subzone/idSubzone*** get an especific Subzone <br>
+***PUT /subzone/idSubzone***  update an especific Subzone <br>
+***DELETE /subzone/idSubzone***  update an especific Subzone <br>
+
+**Road**  
+***GET /road*** get all Roads <br>
+***POST /road*** create a new Road <br>
+***GET /road/idRoad*** get an especific Road <br>
+***PUT /road/idRoad***  update an especific Road <br>
+***DELETE /road/idRoad***  update an especific Road <br>
+
+**RoadSegment**  
+***GET /roadSegment*** get all RoadSegments <br>
+***POST /roadSegment*** create a new RoadSegment <br>
+***GET /roadSegment/idRoadSegment*** get an especific RoadSegment <br>
+***PUT /roadSegment/idRoadSegment***  update an especific RoadSegment <br>
+***DELETE /roadSegment/idRoadSegment***  update an especific RoadSegment <br>
+
+**OffStreetParking**  
+***GET /offStreetParking*** get all OffStreetParkings <br>
+***POST /offStreetParking*** create a new OffStreetParking <br>
+***GET /offStreetParking/idOffStreetParking*** get an especific OffStreetParking <br>
+***PUT /offStreetParking/idOffStreetParking***  update an especific OffStreetParking <br>
+***DELETE /offStreetParking/idOffStreetParking***  update an especific OffStreetParking <br>
+
+
+
