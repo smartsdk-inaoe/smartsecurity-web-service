@@ -1,7 +1,7 @@
 'use strict';
 
 var express     = require('express');
-var app         = express.Router();
+var app         = express();
 
 //Import the controllers
 var organizationController = require('../controllers/organization.controller');

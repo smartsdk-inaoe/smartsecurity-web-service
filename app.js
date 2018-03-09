@@ -2,11 +2,10 @@
 
 var express = require('express');
 var bodyParser = require('body-parser');
-
 var app = express();
 
-var organizationRoute = require('./api/routes/organization.route');
-var zoneRoute = require('./api/routes/zone.route');
+var organizationRoute 	= require('./api/routes/organization.route');
+var zoneRoute  			= require('./api/routes/zone.route');
 
 //Configurar bodyParser
 app.use(bodyParser.urlencoded({extended:false}));

@@ -1,6 +1,11 @@
 'use strict';
 var organizationModel = require('../models/organization.model');
 var organizationDAO = require('../dao/organization.dao');
+var cb = require('ocb-sender');
+var ngsi = require('ngsi-parser');
+
+// Configuration for the connection with the ContextBroker
+cb.config('http://207.249.127.218',1026,'v2')
 
 function isEmpty (object) {
     if (object == undefined ) return true;
@@ -32,7 +37,27 @@ exports.addOrganization = function (req, res){
 			organizationDAO.addOrganization(organizationModel, async function(status, data){
 				if(status === "success"){
 					console.log(data);
-					res.status(201).json(data);
+					let idEntity = data.idOrganization;
+					let typeEntity = "Organization";
+					let NGSIentity = ngsi.parseEntity({
+						id : `Organization_${idEntity}`,
+						type : typeEntity,
+						name: body.name,
+						dateCreated: organizationModel.dateCreated,
+						dateModified: organizationModel.dateModified		
+					})
+					console.log(NGSIentity);
+					//==============SEND THE ROAD ENTITY TO THE CONTEXTBROKER================
+					await cb.createEntity(NGSIentity)
+					.then((result) => {
+						console.log(result)
+						res.status(201).json(NGSIentity);	
+					})
+					.catch((err) => {
+						console.log(err)
+						res.status(400).json({message: "An error has ocurred to send the entity to ContextBroker"});
+					})	
+					//res.status(201).json(data);
 				}
 				else{
 					res.status(400).json({message: "Error inserting"});
@@ -135,7 +160,7 @@ exports.getAllInactive = function (req, res){
 		}
 	});
 }
-exports.getAllOrganization = function(res,res){
+exports.getAllOrganization = function(req,res){
 	organizationDAO.getAllOrganizations(async function(status, data){
 		if(status=="success"){
 			res.status(200).json(data);

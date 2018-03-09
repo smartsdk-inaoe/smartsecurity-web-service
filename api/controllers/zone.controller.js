@@ -157,7 +157,16 @@ exports.getAllInactive = function (req, res){
 		}
 	});
 }
-
+exports.getAllZone = function(req,res){
+	organizationDAO.getAllZone(async function(status, data){
+		if(status=="success"){
+			res.status(200).json(data);
+		}
+		else{
+			res.status(400).json({message: "An error has ocurred"});
+		}
+	});
+}
 exports.getByIdZone = function (req, res){
 	var query = req.query;
 	if (!isEmpty(query)){
