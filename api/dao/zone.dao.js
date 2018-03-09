@@ -22,7 +22,28 @@ class ZoneDAO{
 			callback("error_connection", null);
 		}
 	}
-
+	updateZone(zoneModel, callback){
+		var connection = db.getConnection();
+		connection.connect();
+		if(connection){
+			var sql = "UPDATE zone SET name = ?, address = ?, category = ?, location = ?, centerPoint = ?, refSubzones = ?, owner = ?, dateModified = ? WHERE idOrganization = ?";
+			var values = [zoneModel.name, zoneModel.address, zoneModel.category, zoneModel.location, zoneModel.centerPoint, zoneModel.refSubzones, zoneModel.owner, zoneMdel.dateModified, zoneModel.idZone];
+			connection.query(sql, values, async function(err, result){
+				if (err) {
+					callback("error", null);
+				}else{
+					if(result.affectedRows == 1){
+						callback("success", result.affectedRows);
+					}else{
+						callback("not_found", result.affectedRows);
+					}								
+				}
+			});
+			connection.end();
+		}else{
+			callback("error_connection", null);
+		}
+	}
 	deleteZone(zoneModel, callback){
 		var connection = db.getConnection();
 		connection.connect();

@@ -1,6 +1,6 @@
 'use strict';
 
-var zone ={
+var zone = {
 	idZone : "",
 	type : "Zone",
 	name : "",

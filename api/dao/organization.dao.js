@@ -87,6 +87,25 @@ class OrganizationDAO {
 		}
 	}
 
+	getAllOrganizations(callback){
+		var connection = db.getConnection();
+		connection.connect();
+		if(connection){
+			var sql = 'SELECT * FROM organization';
+			//var values = [[connection.escape(status)]]
+			connection.query(sql, async function (err, result, fields) {
+			    if (err){
+			    	callback("error", null);
+			    }else{
+			    	callback("success", result);
+			    }
+		  	});
+		  	connection.end();
+		}else{
+			callback("error_connection", null);
+		}
+	}
+
 	getByIdOrganization(id, callback){
 		var connection = db.getConnection();
 		connection.connect();
