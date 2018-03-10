@@ -19,20 +19,15 @@ exports.addOrganization = function (req, res){
 	var body = req.body;
 	if (!isEmpty(body)) {
 		var date = new Date();
-		/*var curr_date = d.getDate();
-		var curr_month = d.getMonth() + 1; //Months are zero based
-		var curr_year = d.getFullYear();
-		var curr_hour = d.getHours();
-		var curr_minute = d.getMinutes();
-		var curr_seconds = d.getSeconds();*/
+
 		organizationModel.name = body.name;
 		organizationModel.dateCreated = date;
 		organizationModel.dateModified = date;
-		/*organizationModel.dateCreated = curr_year + "/" + curr_month + "/" + curr_date + " " + curr_hour + ":" + curr_minute + ":" +curr_seconds;
-		organizationModel.dateModified = curr_year + "/" + curr_month + "/" + curr_date + " " + curr_hour + ":" + curr_minute + ":" +curr_seconds;*/
+
 		if((organizationModel.name === null || /^\s*$/.test(organizationModel.name) || organizationModel.name.length === 0)){
 			res.status(400).json({message: "Empty fields required"});
 		}
+
 		else{
 			organizationDAO.addOrganization(organizationModel, async function(status, data){
 				if(status === "success"){
@@ -74,16 +69,9 @@ exports.updateOrganization = function(req, res){
 	var body = req.body;
 	if(!isEmpty(body)){
 		var date = new Date();
-		/*var curr_date = d.getDate();
-		var curr_month = d.getMonth() + 1; //Months are zero based
-		var curr_year = d.getFullYear();
-		var curr_hour = d.getHours();
-		var curr_minute = d.getMinutes();
-		var curr_seconds = d.getSeconds();*/
 		organizationModel.idOrganization = body.idOrganization;
 		organizationModel.name = body.name;
 		organizationModel.dateModified = date;
-		//organizationModel.dateModified = curr_year + "/" + curr_month + "/" + curr_date + " " + curr_hour + ":" + curr_minute + ":" +curr_seconds;
 		if((organizationModel.name === null || /^\s*$/.test(organizationModel.name)) || 
 			(organizationModel.idOrganization === null || /^\s*$/.test(organizationModel.idOrganization))){
 			res.status(400).json({message: "Empty fields required"});
@@ -108,16 +96,9 @@ exports.deleteOrganization = function(req, res){
 	var body = req.body;
 	if(!isEmpty(body)){
 		var date = new Date();
-		/*var curr_date = d.getDate();
-		var curr_month = d.getMonth() + 1; //Months are zero based
-		var curr_year = d.getFullYear();
-		var curr_hour = d.getHours();
-		var curr_minute = d.getMinutes();
-		var curr_seconds = d.getSeconds();*/
 		organizationModel.idOrganization = body.idOrganization;
 		organizationModel.status = 0;
 		organizationModel.dateModified = date;
-		//organizationModel.dateModified = curr_year + "/" + curr_month + "/" + curr_date + " " + curr_hour + ":" + curr_minute + ":" +curr_seconds;
 		if((organizationModel.idOrganization === null || /^\s*$/.test(organizationModel.idOrganization))){
 			res.status(400).json({message: "Empty fields required"});
 		}
