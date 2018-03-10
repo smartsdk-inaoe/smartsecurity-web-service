@@ -1,8 +1,15 @@
 'use strict';
 var db = require('../utils/config');
-class OrganizationDAO {
+class Organization {
 
-	addOrganization(organizationModel, callback){
+	save(organizationModel, callback){
+		var date = new Date();
+		organizationModel.dateCreated = date;
+		organizationModel.dateModified = date;
+
+		if((organizationModel.name === null || /^\s*$/.test(organizationModel.name) || organizationModel.name.length === 0)){
+			callback("Empty fields required", null);
+		}
 		var connection = db.getConnection();
 		connection.connect();
 		if(connection){
@@ -22,13 +29,22 @@ class OrganizationDAO {
 		}
 	}
 
-	updateOrganization(organizationModel, callback){
+	update( id ,organizationModel, callback){
+		var date = new Date();
+		organizationModel.dateModified = date;
+		console.log(organizationModel.name)
+		if((organizationModel.name === null || /^\s*$/.test(organizationModel.name)) || 
+			(organizationModel.idOrganization === null || /^\s*$/.test(organizationModel.idOrganization))){
+			callback("Empty fields required", null);
+		}
 		var connection = db.getConnection();
 		connection.connect();
+		
 		if(connection){
 			var sql = "UPDATE organization SET name = ?, dateModified = ? WHERE idOrganization = ?";
-			var values = [organizationModel.name, organizationModel.dateModified, organizationModel.idOrganization];
+			var values = [organizationModel.name, organizationModel.dateModified, id];
 			connection.query(sql, values, async function(err, result){
+				console.log(result)
 				if (err) {
 					callback("error", null);
 				}else{
@@ -45,12 +61,13 @@ class OrganizationDAO {
 		}
 	}
 
-	deleteOrganization(organizationModel, callback){
+	delete(id, callback){
+		var date =  new Date()
 		var connection = db.getConnection();
 		connection.connect();
 		if(connection){
 			var sql = "UPDATE organization SET dateModified = ?, status = ? WHERE idOrganization = ?";
-			var values = [organizationModel.dateModified, organizationModel.status, organizationModel.idOrganization];
+			var values = [date, 0, id];
 			connection.query(sql, values, async function(err, result){
 				if (err) {
 					callback("error", null);
@@ -66,6 +83,7 @@ class OrganizationDAO {
 		}else{
 			callback("error_connection", null);
 		}
+
 	}
 
 	getAllOrganization(status, callback){
@@ -92,7 +110,6 @@ class OrganizationDAO {
 		connection.connect();
 		if(connection){
 			var sql = 'SELECT * FROM organization';
-			//var values = [[connection.escape(status)]]
 			connection.query(sql, async function (err, result, fields) {
 			    if (err){
 			    	callback("error", null);
@@ -127,4 +144,4 @@ class OrganizationDAO {
 	}
 }
 
-module.exports = new OrganizationDAO();
+module.exports = new Organization();
