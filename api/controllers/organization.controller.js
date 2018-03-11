@@ -30,7 +30,7 @@ exports.addOrganization = function (req, res){
 		organizationModel.dateModified = date;
 		/*organizationModel.dateCreated = curr_year + "/" + curr_month + "/" + curr_date + " " + curr_hour + ":" + curr_minute + ":" +curr_seconds;
 		organizationModel.dateModified = curr_year + "/" + curr_month + "/" + curr_date + " " + curr_hour + ":" + curr_minute + ":" +curr_seconds;*/
-		if((organizationModel.name === null || /^\s*$/.test(organizationModel.name) || organizationModel.name.length === 0)){
+		if((organizationModel.name === null || /^\s*$/.test(organizationModel.name) || organizationModel.name === undefined || organizationModel.name.length === 0 )){
 			res.status(400).json({message: "Empty fields required"});
 		}
 		else{
@@ -60,7 +60,8 @@ exports.addOrganization = function (req, res){
 					//res.status(201).json(data);
 				}
 				else{
-					res.status(400).json({message: "Error inserting"});
+					res.status(400).json({message: "Error inserting", error: data});
+					console.log(data)
 				}
 			});
 		}

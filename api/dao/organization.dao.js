@@ -10,14 +10,18 @@ class OrganizationDAO {
 		var values = [[organizationModel.name, organizationModel.dateCreated, organizationModel.dateModified]];
 		connection.query(sql, [values], async function (err, result) {
 			if (err) {
-				callback("error", null);
-			}else{
+				callback("error", err);
+			}
+			else{
 				organizationModel.idOrganization = result.insertId;
 				callback("success", organizationModel);
 			};
 		});
+		console.log("aqui toy")
 		connection.end();
-		}else{
+		console.log("cerre conexión")
+		}
+		else{
 			callback("error_connection", null);
 		}
 	}
