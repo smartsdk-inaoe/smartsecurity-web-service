@@ -7,15 +7,15 @@ class Organization {
 		organizationModel.dateCreated = date;
 		organizationModel.dateModified = date;
 
-		if((organizationModel.name === null || /^\s*$/.test(organizationModel.name) || organizationModel.name.length === 0)){
+		if((organizationModel.name === null || /^\s*$/.test(organizationModel.name) )){
 			callback("Empty fields required", null);
 		}
 		var connection = db.getConnection();
 		connection.connect();
 		if(connection){
-		var sql = 'INSERT INTO organization (name, dateCreated, dateModified) VALUES ?';
-		var values = [[organizationModel.name, organizationModel.dateCreated, organizationModel.dateModified]];
-		connection.query(sql, [values], async function (err, result) {
+		var sql = 'INSERT INTO organization SET ?';
+		connection.query(sql, organizationModel,function (err, result) {
+			console.log(result)
 			if (err) {
 				callback("error", null);
 			}else{

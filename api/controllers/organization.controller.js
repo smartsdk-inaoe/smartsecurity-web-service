@@ -17,6 +17,7 @@ function isEmpty (object) {
 
 exports.addOrganization = function (req, res){
 	var body = req.body;
+	console.log(body)
 
 	if (!isEmpty(body)) {
 
@@ -32,7 +33,7 @@ exports.addOrganization = function (req, res){
 					dateCreated:new Date(data.dateCreated),
 					dateModified :new  Date(data.dateModified)		
 				})
-				console.log(NGSIentity);
+				//console.log(NGSIentity);
 				//==============SEND THE ROAD ENTITY TO THE CONTEXTBROKER================
 				await cb.createEntity(NGSIentity)
 				.then((result) => {
