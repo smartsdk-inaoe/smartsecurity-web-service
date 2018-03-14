@@ -15,9 +15,8 @@ function isEmpty (object) {
     return false;
 }
 
-exports.addZone = function (req, res){
+exports.addZone = async function (req, res){
 	var body = req.body;
-	console.log(body);
 	if (!isEmpty(body)) {	
 		zoneDAO.save(body, async function(status, data){
 			if(status === "success"){
@@ -35,18 +34,17 @@ exports.addZone = function (req, res){
 					location: {
 						type: "geo:polygon",
 						value: locationConverted,
-						/*metadata:{
+						metadata:{
 							centerPoint:{
 								type: "geo:point",
 								value: data.centerPoint
 							}
-						}*/
+						}
 					},
 					owner: "Organization_"+data.owner,
 					dateCreated: new Date(data.dateCreated),
 					dateModified :new  Date(data.dateModified)			
 				})
-				console.log(NGSIentity);
 				// =========SEND THE ROAD ENTITY TO THE CONTEXTBROKER=========
 				await cb.createEntity(NGSIentity)
 					.then((result) => {
@@ -57,6 +55,7 @@ exports.addZone = function (req, res){
 						console.log(err)
 						res.status(400).json({message: "An error has ocurred to send the zone entity to the ContextBroker"});
 					})	
+				res.status(201).json(NGSIentity);	
 			}
 			else{
 				res.status(400).json({message: "Error inserting", error: data});
@@ -119,7 +118,7 @@ exports.getAllInactive = function (req, res){
 	});
 }
 exports.getAllZone = function(req,res){
-	organizationDAO.getAllZone(async function(status, data){
+	zoneDAO.getAllZone(async function(status, data){
 		if(status=="success"){
 			res.status(200).json(data);
 		}

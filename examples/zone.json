@@ -1,0 +1,14 @@
+{
+    "name": "Daniel House",
+    "address": "Felipe Carrillo Puerto 14-10, Morelos, 62744 Cuautla, Mor.",
+    "location": [
+      [18.812253,-98.962773],
+      [18.812781,-98.964404],
+      [18.811826,-98.965884],
+      [18.811704,-98.962848],
+      [18.812253,-98.962773]
+    ],
+    "centerPoint": [18.8116606,-98.96332079999999],
+    "category": "university",
+    "owner":"6"
+}

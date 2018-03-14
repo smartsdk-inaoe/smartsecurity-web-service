@@ -1,25 +1,16 @@
 'use strict';
 var db = require('../utils/config');
 
-class ZoneDAO{
+class ZoneDAO{ 
 	save(zoneModel, callback){
 		var date = new Date();
 		zoneModel.dateCreated = date;
 		zoneModel.dateModified = date;
-		//VALIDATIONS
-		/*if((zoneModel.name === null || /^\s*$/.test(zoneModel.name) || zoneModel.name === undefined || zoneModel.name.length === 0) || 
-			(zoneModel.address === null || /^\s*$/.test(zoneModel.address) || zoneModel.address === undefined || zoneModel.address.length === 0) ||
-			(req.body.category === null || /^\s*$/.test(req.body.category) ||req.body.category.length === 0) ||
-			(zoneModel.location === null || /^\s*$/.test(zoneModel.location) || zoneModel.location === undefined || zoneModel.location === 0) ||
-			(zoneModel.centerPoint === null || /^\s*$/.test(zoneModel.centerPoint) || zoneModel.centerPoint === undefined || zoneModel.centerPoint === 0) || 
-			(zoneModel.owner === null || /^\s*$/.test(zoneModel.owner) || zoneModel.owner === undefined || zoneModel.owner === 0)){
-			callback("Empty fields required", null);
-	 	}*/
+		zoneModel["location"] = zoneModel["location"].join(";");
+		zoneModel["centerPoint"] = zoneModel["centerPoint"].toString();
 		var connection = db.getConnection();
 		connection.connect();
 		if(connection){
-			//var sql = 'INSERT INTO zone (name, address, category, location, centerPoint, refSubzones, owner, dateCreated, dateModified) VALUES ?';
-			//var values = [[zoneModel.name, zoneModel.address, zoneModel.category, zoneModel.location, zoneModel.centerPoint, zoneModel.refSubzones, zoneModel.owner, zoneModel.dateCreated, zoneModel.dateModified]];
 			var sql = 'INSERT INTO zone SET ?';			
 			connection.query(sql, zoneModel, async function (err, result) {
 				if (err) {
@@ -39,23 +30,9 @@ class ZoneDAO{
 	update(id, zoneModel, callback){
 		var date = new Date();
 		zoneModel.dateModified = date;
-
-		//VALIDATIONS
-		/*if((zoneModel.name === null || /^\s*$/.test(zoneModel.name) || zoneModel.name === undefined || zoneModel.name.length === 0) || 
-		   (zoneModel.address === null || /^\s*$/.test(zoneModel.address) || zoneModel.address === undefined || zoneModel.address.length === 0) ||
-		   (zoneModel.location === null || /^\s*$/.test(zoneModel.location) || zoneModel.location === undefined || zoneModel.location === 0) ||
-		   (zoneModel.centerPoint === null || /^\s*$/.test(zoneModel.centerPoint) || zoneModel.centerPoint === undefined || zoneModel.centerPoint === 0) || 
-		   (zoneModel.owner === null || /^\s*$/.test(zoneModel.owner) || zoneModel.owner === undefined || zoneModel.owner === 0) ||
-		   (zoneModel.category === null || /^\s*$/.test(zoneModel.category) || zoneModel.category.length === 0) ||
-		   (zoneModel.refSubzones === null || /^\s*$/.test(zoneModel.refSubzones) || zoneModel.refSubzones.length === 0)){
-			callback("Empty fields required", null);
-		}*/
-
 		var connection = db.getConnection();
 		connection.connect();
 		if(connection){
-			//var sql = "UPDATE zone SET name = ?, address = ?, category = ?, location = ?, centerPoint = ?, refSubzones = ?, owner = ?, dateModified = ? WHERE idZone = ?";
-			//var values = [zoneModel.name, zoneModel.address, zoneModel.category, zoneModel.location, zoneModel.centerPoint, zoneModel.refSubzones, zoneModel.owner, zoneMdel.dateModified, id];
 			var sql = "UPDATE zone SET ? WHERE idZone = ?";
 			var values = [zoneModel, id];
 			connection.query(sql, values, async function(err, result){
@@ -78,9 +55,7 @@ class ZoneDAO{
 		}
 	}
 	delete(id, zoneModel, callback){
-
 		var date = new Date();
-
 		var connection = db.getConnection();
 		connection.connect();
 		if(connection){
@@ -110,17 +85,19 @@ class ZoneDAO{
 		var connection = db.getConnection();
 		connection.connect();
 		if(connection){
-			var sql = 'SELECT * FROM zone WHERE status = ?';
+			var sql = 'SELECT * FROM organization WHERE status = ?';
 			var values = [[connection.escape(status)]]
 			connection.query(sql, [values], async function (err, result, fields) {
 			    if (err){
 			    	callback("error", null);
-			    }else{
+				}
+				else{
 			    	callback("success", result);
 			    }
 		  	});
 		  	connection.end();
-		}else{
+		}
+		else{
 			callback("error_connection", null);
 		}
 	}
