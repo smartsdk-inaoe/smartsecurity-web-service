@@ -40,17 +40,11 @@ class Organization {
 		organizationModel.dateModified = date;
 		console.log(organizationModel.name)
 
-		//VALIDATIONS
-		/*if((organizationModel.name === null || /^\s*$/.test(organizationModel.name) || organizationModel.name === undefined || organizationModel.name.length === 0) ||
-			(organizationModel.idOrganization === null || /^\s*$/.test(organizationModel.idOrganization) || organizationModel.idOrganization === undefined || organizationModel.idOrganization.length === 0)){
-			callback("Empty fields required", null);
-		}*/
 		var connection = db.getConnection();
 		connection.connect();
 		
 		if(connection){
-			//var sql = "UPDATE organization SET name = ?, dateModified = ? WHERE idOrganization = ?";
-			//var values = [organizationModel.name, organizationModel.dateModified, id];
+			
 			var sql = "UPDATE organization SET ? WHERE idOrganization = ?";
 			var values = [organizationModel, id];
 			connection.query(sql, values, async function(err, result){
@@ -99,35 +93,26 @@ class Organization {
 
 	}
 
-	getAllOrganization(status, callback){
+	getAllOrganizations(query, callback){
 		var connection = db.getConnection();
 		connection.connect();
-		if(connection){
-			var sql = 'SELECT * FROM organization WHERE status = ?';
-			var values = [[connection.escape(status)]]
-			connection.query(sql, [values], async function (err, result, fields) {
-			    if (err){
-			    	callback("error", null);
-				}
-				else{
-			    	callback("success", result);
-			    }
-		  	});
-		  	connection.end();
+		let parametersString ="";
+		if (query !== {}){
+			for (var key in query) {
+				if (parametersString.length<=0) {
+					parametersString = key + "=" + connection.escape(query[key]);
+				}else{
+					parametersString = parametersString + " AND " + key + "=" + connection.escape(query[key]);
+				};						
+			}
+			if (parametersString !== "")
+				parametersString = ' WHERE ' + parametersString;
 		}
-		else{
-			callback("error_connection", null);
-		}
-	}
-
-	getAllOrganizations(callback){
-		var connection = db.getConnection();
-		connection.connect();
 		if(connection){
-			var sql = 'SELECT * FROM organization';
+			var sql = 'SELECT * FROM organization' + parametersString;
 			connection.query(sql, async function (err, result, fields) {
 			    if (err){
-			    	callback("error", null);
+			    	callback("error", err);
 				}
 				else{
 			    	callback("success", result);

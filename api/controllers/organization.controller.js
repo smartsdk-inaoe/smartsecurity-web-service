@@ -81,36 +81,13 @@ exports.deleteOrganization = function(req, res){
 	});
 }
 
-exports.getAllActive = function (req, res){
-	var status = 1;
-	organization.getAllOrganization(status, async function(status, data){
-		if(status=="success"){
-			res.status(200).json(data);
-		}
-		else{
-			res.status(400).json({message: "An error has ocurred", error: data});
-		}
-	});
-}
-
-exports.getAllInactive = function (req, res){
-	var status = 0;
-	organization.getAllOrganization(status, async function(status, data){
-		if(status=="success"){
-			res.status(200).json(data);
-		}
-		else{
-			res.status(400).json({message: "An error has ocurred", error: data});
-		}
-	});
-}
 exports.getAllOrganization = function(req,res){
-	organization.getAllOrganizations(async function(status, data){
+	organization.getAllOrganizations(req.query, async function(status, data){
 		if(status=="success"){
 			res.status(200).json(data);
 		}
 		else{
-			res.status(400).json({message: "An error has ocurred", error: data});
+			res.status(400).json({message: "An error has ocurred", error: data["sqlMessage"]});
 		}
 	});
 }

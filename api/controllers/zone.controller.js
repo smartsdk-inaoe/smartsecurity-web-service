@@ -94,36 +94,13 @@ exports.deleteZone = function(req, res){
 	});
 }
 
-exports.getAllActive = function (req, res){
-	var status = 1;
-	zoneDAO.getAllZone(status,async function(status, data){
-		if(status=="success"){
-			res.status(200).json(data);
-		}
-		else{
-			res.status(400).json({message: "An error has ocurred", error: data});
-		}
-	});
-}
-
-exports.getAllInactive = function (req, res){
-	var status = 0;
-	zoneDAO.getAllZone(status, async function(status, data){
-		if(status=="success"){
-			res.status(200).json(data);
-		}
-		else{
-			res.status(400).json({message: "An error has ocurred", error: data});
-		}
-	});
-}
 exports.getAllZone = function(req,res){
-	zoneDAO.getAllZone(async function(status, data){
+	zoneDAO.getAllZones(req.query ,function(status, data){
 		if(status=="success"){
 			res.status(200).json(data);
 		}
 		else{
-			res.status(400).json({message: "An error has ocurred", error: data});
+			res.status(400).json({message: "An error has ocurred", error: data["sqlMessage"]});
 		}
 	});
 }

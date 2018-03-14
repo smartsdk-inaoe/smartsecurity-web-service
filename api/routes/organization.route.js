@@ -7,10 +7,8 @@ var app         = express();
 var organizationController = require('../controllers/organization.controller');
 
 app.route('/organization')
-    .get(organizationController.getAllOrganization)
-    .post(organizationController.addOrganization)
-app.get('/organization/actives', organizationController.getAllActive);
-app.get('/organization/inactives', organizationController.getAllInactive);   
+    .get(organizationController.getAllOrganization) // /zones?status =  1 || /zones?status=0
+    .post(organizationController.addOrganization)  
 app.route('/organization/:idOrganization')
     .get(organizationController.getByIdOrganization)
     .put(organizationController.updateOrganization)

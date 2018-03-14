@@ -81,36 +81,30 @@ class ZoneDAO{
 		}
 	}
 
-	getAllZone(status, callback){
+	getAllZones(query,callback){
+		
 		var connection = db.getConnection();
 		connection.connect();
-		if(connection){
-			var sql = 'SELECT * FROM organization WHERE status = ?';
-			var values = [[connection.escape(status)]]
-			connection.query(sql, [values], async function (err, result, fields) {
-			    if (err){
-			    	callback("error", null);
-				}
-				else{
-			    	callback("success", result);
-			    }
-		  	});
-		  	connection.end();
+		let parametersString ="";
+		console.log( query === {})
+		if (query !== {}){
+			for (var key in query) {
+				if (parametersString.length<=0) {
+					parametersString = key + "=" + connection.escape(query[key]);
+				}else{
+					parametersString = parametersString + " AND " + key + "=" + connection.escape(query[key]);
+				};						
+			}
+			if (parametersString !== "")
+				parametersString = ' WHERE ' + parametersString;
 		}
-		else{
-			callback("error_connection", null);
-		}
-	}
 
-	getAllZones(callback){
-		var connection = db.getConnection();
-		connection.connect();
 		if(connection){
-			var sql = 'SELECT * FROM zone';
-			//var values = [[connection.escape(status)]]
+			var sql = `SELECT * FROM zone ${parametersString}` ;
+			console.log(sql)
 			connection.query(sql, async function (err, result, fields) {
 			    if (err){
-			    	callback("error", null);
+			    	callback("error", err);
 			    }else{
 			    	callback("success", result);
 			    }
@@ -121,6 +115,7 @@ class ZoneDAO{
 			callback("error_connection", null);
 		}
 	}
+
 	getByIdZone(id, callback){
 		var connection = db.getConnection();
 		connection.connect();
