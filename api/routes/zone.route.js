@@ -10,12 +10,13 @@ var zoneController = require('../controllers/zone.controller');
 app.route('/zone')
     .get(zoneController.getAllZone)
     .post(zoneController.addZone);
+app.get('/zone/actives', zoneController.getAllActive);
+app.get('/zone/inactives', zoneController.getAllInactive);
 app.route('zone/:idZOne')
     .get(zoneController.getByIdZone)
     .put(zoneController.updateZone)
     .delete(zoneController.deleteZone);
-app.get('/zone/actives', zoneController.getAllActive);
-app.get('/zone/inactives', zoneController.getAllInactive);
+
 
 /*
 app.post('/zone', zoneController.addZone);

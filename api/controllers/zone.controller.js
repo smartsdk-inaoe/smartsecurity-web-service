@@ -1,6 +1,11 @@
 'use strict';
 var zoneModel = require('../models/zone.model');
 var zoneDAO = require('../dao/zone.dao');
+var cb = require('ocb-sender');
+var ngsi = require('ngsi-parser');
+
+// Configuration for the connection with the ContextBroker
+cb.config('http://207.249.127.218',1026,'v2')
 
 function isEmpty (object) {
     if (object == undefined ) return true;
@@ -13,42 +18,50 @@ function isEmpty (object) {
 exports.addZone = function (req, res){
 	var body = req.body;
 	console.log(body);
-	if (!isEmpty(body)) {
-		var date = new Date();
-		/*var curr_date = d.getDate();
-		var curr_month = d.getMonth() + 1; //Months are zero based
-		var curr_year = d.getFullYear();
-		var curr_hour = d.getHours();
-		var curr_minute = d.getMinutes();
-		var curr_seconds = d.getSeconds();*/
-		zoneModel.name = body.name;
-		console.log(zoneModel.name);
-		zoneModel.address = body.address;
-		zoneModel.category = body.category;
-		zoneModel.location = JSON.stringify(body.location);
-		zoneModel.centerPoint = JSON.stringify(body.centerPoint);
-		zoneModel.refSubzones = body.refSubzones;
-		zoneModel.owner = body.owner;
-		zoneModel.dateCreated = date;
-		zoneModel.dateModified = date;
-		//zoneModel.dateCreated = curr_year + "/" + curr_month + "/" + curr_date + " " + curr_hour + ":" + curr_minute + ":" +curr_seconds;
-		//zoneModel.dateModified = curr_year + "/" + curr_month + "/" + curr_date + " " + curr_hour + ":" + curr_minute + ":" +curr_seconds;
-
-		if((zoneModel.name === null || /^\s*$/.test(zoneModel.name)) || (zoneModel.address === null || /^\s*$/.test(zoneModel.address)) || (zoneModel.location === null || /^\s*$/.test(zoneModel.location)) 
-			|| (zoneModel.centerPoint === null || /^\s*$/.test(zoneModel.centerPoint)) || (zoneModel.owner === null || /^\s*$/.test(zoneModel.owner))){
-			res.status(400).json({message: "Empty fields required"});
-		}
-		else{
-			zoneDAO.addZone(zoneModel, async function(status, data){
-				if(status === "success"){
-					console.log(data);
-					res.status(201).json(data);
-				}
-				else{
-					res.status(400).json({message: "Error inserting"});
-				}
-			});
-		}
+	if (!isEmpty(body)) {	
+		zoneDAO.save(body, async function(status, data){
+			if(status === "success"){
+				console.log(data);
+				let locationConverted = body.location.split(";")
+				console.log(data.centerPoint);
+				let idEntity = data.idZone;
+				let typeEntity = "Zone";
+				let NGSIentity = ngsi.parseEntity({
+					id : `Zone_${idEntity}`,
+					type : typeEntity,
+					name: data.name,
+					address: data.address,
+					category: data.category,
+					location: {
+						type: "geo:polygon",
+						value: locationConverted,
+						/*metadata:{
+							centerPoint:{
+								type: "geo:point",
+								value: data.centerPoint
+							}
+						}*/
+					},
+					owner: "Organization_"+data.owner,
+					dateCreated: new Date(data.dateCreated),
+					dateModified :new  Date(data.dateModified)			
+				})
+				console.log(NGSIentity);
+				// =========SEND THE ROAD ENTITY TO THE CONTEXTBROKER=========
+				await cb.createEntity(NGSIentity)
+					.then((result) => {
+						console.log(result)
+						res.status(201).json(NGSIentity);	
+					})
+					.catch((err) => {
+						console.log(err)
+						res.status(400).json({message: "An error has ocurred to send the zone entity to the ContextBroker"});
+					})	
+			}
+			else{
+				res.status(400).json({message: "Error inserting", error: data});
+			}
+		});
 	}
 	else{
 		res.status(400).json({message: "Bad request"});
@@ -58,80 +71,28 @@ exports.addZone = function (req, res){
 exports.updateZone = function(req, res){
 	var body = req.body;
 	if(!isEmpty(body)){
-		var date = new Date();
-		/*var curr_date = d.getDate();
-		var curr_month = d.getMonth() + 1; //Months are zero based
-		var curr_year = d.getFullYear();
-		var curr_hour = d.getHours();
-		var curr_minute = d.getMinutes();
-		var curr_seconds = d.getSeconds();*/
-		zoneModel.idZone = body.idZone;
-		zoneModel.name = body.name;
-		console.log(zoneModel.name);
-		zoneModel.address = body.address;
-		zoneModel.category = body.category;
-		zoneModel.location = JSON.stringify(body.location);
-		zoneModel.centerPoint = JSON.stringify(body.centerPoint);
-		zoneModel.refSubzones = body.refSubzones;
-		zoneModel.owner = body.owner;
-		zoneModel.dateModified = date;
-		//organizationModel.dateModified = curr_year + "/" + curr_month + "/" + curr_date + " " + curr_hour + ":" + curr_minute + ":" +curr_seconds;
-		if((zoneModel.name === null || /^\s*$/.test(zoneModel.name)) || 
-			(zoneModel.address === null || /^\s*$/.test(zoneModel.address))
-			(zoneModel.category === null || /^\s*$/.test(zoneModel.category))
-			(zoneModel.location === null || /^\s*$/.test(zoneModel.location))
-			(zoneModel.centerPoint === null || /^\s*$/.test(zoneModel.centerPoint))
-			(zoneModel.refSubzones === null || /^\s*$/.test(zoneModel.refSubzones))
-			(zoneModel.owner === null || /^\s*$/.test(zoneModel.owner))
-			(zoneModel.idZone === null || /^\s*$/.test(zoneModel.idZone)))
-			{
-			res.status(400).json({message: "Empty fields required"});
-		}
-		else{
-			zoneDAO.updateZone(zoneModel, async function(status, data){
-				if (status=="success" && !isEmpty(data)) {
-					res.status(200).json(data);
-				}
-				else{
-					res.status(404).json({message: "The entity cannot be updated"});
-				}
-			});
-		}
+		zoneDAO.update(req.params.idZone, body, async function(status, data){
+			if (status=="success" && !isEmpty(data)) {
+				res.status(200).json(data);
+			}
+			else{
+				res.status(404).json({message: "The entity cannot be updated", error: data});
+			}
+		});
 	}
 	else{
 		res.status(400).json({message: "Bad request"});
 	}
 }
 exports.deleteZone = function(req, res){
-	var body = req.body;
-	if(!isEmpty(body)){
-		var date = new Date();
-		/*var curr_date = d.getDate();
-		var curr_month = d.getMonth() + 1; //Months are zero based
-		var curr_year = d.getFullYear();
-		var curr_hour = d.getHours();
-		var curr_minute = d.getMinutes();
-		var curr_seconds = d.getSeconds();*/
-		zoneModel.idZone = body.idZone;
-		zoneModel.status = 0;
-		zoneModel.dateModified = date;
-		//zoneModel.dateModified = curr_year + "/" + curr_month + "/" + curr_date + " " + curr_hour + ":" + curr_minute + ":" +curr_seconds;
-		if((zoneModel.idZone === null || /^\s*$/.test(zoneModel.idZone))){
-			res.status(400).json({message: "Empty fields required"});
+	zoneDAO.delete(req.params.idZone, async function(status, data){
+		if (status=="success" && !isEmpty(data)) {
+			res.status(200).json(data);
 		}
 		else{
-			zoneDAO.deleteZone(zoneModel, async function(status, data){
-				if (status=="success" && !isEmpty(data)) {
-					res.status(200).json(data);
-				}
-				else{
-					res.status(404).json({message: "The entity cannot be updated"});
-				}
-			});
+			res.status(404).json({message: "The entity cannot be updated", error: data});
 		}
-	}else{
-		res.status(400).json({message: "Bad request"});
-	}
+	});
 }
 
 exports.getAllActive = function (req, res){
@@ -141,7 +102,7 @@ exports.getAllActive = function (req, res){
 			res.status(200).json(data);
 		}
 		else{
-			res.status(400).json({message: "An error has ocurred"});
+			res.status(400).json({message: "An error has ocurred", error: data});
 		}
 	});
 }
@@ -153,7 +114,7 @@ exports.getAllInactive = function (req, res){
 			res.status(200).json(data);
 		}
 		else{
-			res.status(400).json({message: "An error has ocurred"});
+			res.status(400).json({message: "An error has ocurred", error: data});
 		}
 	});
 }
@@ -163,24 +124,17 @@ exports.getAllZone = function(req,res){
 			res.status(200).json(data);
 		}
 		else{
-			res.status(400).json({message: "An error has ocurred"});
+			res.status(400).json({message: "An error has ocurred", error: data});
 		}
 	});
 }
 exports.getByIdZone = function (req, res){
-	var query = req.query;
-	if (!isEmpty(query)){
-		var id = query.idZone;
-		zoneDAO.getByIdZone(id, async function(status, data){
-			if(status == "success"){
-				res.status(200).json(data);
-			}
-			else{
-				res.status(400).json({message: "An error has ocurred"});
-			}
-		});
-	}
-	else{
-		res.status(400).json({message: "Bad request"});
-	}
+	zoneDAO.getByIdZone(req.params.idZone, async function(status, data){
+		if(status == "success"){
+			res.status(200).json(data);
+		}
+		else{
+			res.status(400).json({message: "An error has ocurred", error:data});
+		}
+	});
 }
