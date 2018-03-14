@@ -17,11 +17,6 @@ function isEmpty (object) {
 
 exports.addOrganization = function (req, res){
 	var body = req.body;
-<<<<<<< HEAD
-=======
-	console.log(body)
-
->>>>>>> 5646a7eca489ff373db0b1f0b6d5dd6940008851
 	if (!isEmpty(body)) {
 		organization.save(body, async function(status, data){
 			if(status === "success"){
