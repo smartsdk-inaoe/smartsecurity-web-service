@@ -1,12 +1,30 @@
-'use strict';
 
-var organization ={
-	idOrganization : "",
-	type : "Organization",
-	name : "",
-	dateCreated : "",
-	dateModified : "",
-	status : 1
-}
+const Sequelize = require('sequelize');
 
+var sequelize = require('../utils/config');
+
+var organization = sequelize.define('Organizations', {
+	idOrganization : { 
+		type : Sequelize.INTEGER, 
+		primaryKey: true,
+		autoIncrement: true 
+	},
+	type : { 
+		type: Sequelize.STRING,
+		 defaultValue: "Organization"
+	},
+	name : Sequelize.STRING,
+	dateCreated : { 
+		type: Sequelize.DATE, 
+		defaultValue: Sequelize.NOW 
+	},
+	dateModified : { 
+		type: Sequelize.DATE, 
+		defaultValue: Sequelize.NOW 
+	},
+	status : { 
+		type: Sequelize.INTEGER,
+		 defaultValue: 1
+	}
+});
 module.exports = organization;

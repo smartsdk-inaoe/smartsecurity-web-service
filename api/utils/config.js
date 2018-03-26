@@ -1,22 +1,19 @@
-var mysql = require('mysql');
 
-//LOCAL CONFIGURATION
-/*exports.getConnection = function(){
-	var params = {
-		host:'localhost',
-		user:'root',
-		password:'4DmiN-20#17',
-		database:'smarsdkcenidet'
-	};
-	return mysql.createConnection(params);
-}*/
-//REMOTE CONFIGURATION
-exports.getConnection = function(){
-	var params = {
-		host:'207.249.127.16',
-		user:'smartsdkcenidet',
-		password:'hdcenidet2018*',
-		database:'smarsdkcenidet'
-	};
-	return mysql.createConnection(params);
-}
+const Sequelize = require('sequelize');
+var sequelize = new Sequelize('prueba', 'root', '', {
+  host: 'localhost',
+  dialect: 'mysql',
+  operatorsAliases: false,
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000
+  },
+  define: {
+    timestamps: false 
+  }
+});
+
+module.exports = sequelize;
+

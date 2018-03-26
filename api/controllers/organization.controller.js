@@ -20,7 +20,7 @@ exports.addOrganization = function (req, res){
 	if (!isEmpty(body)) {
 		organization.save(body, async function(status, data){
 			if(status === "success"){
-				console.log(data);
+				/*console.log(data);
 				let idEntity = data.idOrganization;
 				let typeEntity = "Organization";
 				let NGSIentity = ngsi.parseEntity({
@@ -40,7 +40,9 @@ exports.addOrganization = function (req, res){
 				.catch((err) => {
 					console.log(err)
 					res.status(400).json({message: "An error has ocurred to send the entity to ContextBroker"});
-				})	
+				})*/
+				res.status(201).json(body);	
+
 			}
 			else{
 				res.status(400).json({ message: "Error inserting", error: data});
@@ -57,7 +59,7 @@ exports.updateOrganization = function(req, res){
 	var body = req.body;
 	if(!isEmpty(body)){
 		organization.update( req.params.idOrganization ,body, async function(status, data){
-			if (status=="success" && !isEmpty(data)) {
+			if (status=="success") {
 				res.status(200).json(data);
 			}
 			else{
