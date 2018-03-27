@@ -29,4 +29,6 @@ var organization = sequelize.define('Organizations', {
 		 defaultValue: "1"
 	}
 });
+
+organization.sync() 
 module.exports = organization;

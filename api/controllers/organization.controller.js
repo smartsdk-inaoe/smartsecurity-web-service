@@ -5,7 +5,6 @@ var cb = require('ocb-sender');
 var ngsi = require('ngsi-parser');
 
 var organization = require('../models/organization.model')
-//organization.sync({force: true}) // Fuerza que la tabla cumpla con el modelo (Elimina si existe y crea sino existe) 
 var context = require("../context")
 
 function isEmpty (object) {
