@@ -14,6 +14,6 @@ exports.create = async (type, json, callback) =>{
         callback(true, NGSIentity);
     })
     .catch((err) => {
-        callback(false,{message: "An error has ocurred to send the entity to ContextBroker"});
+        callback(false,{message: err});
     })
 }
