@@ -2,7 +2,7 @@
 var cb = require('ocb-sender');
 var ngsi = require('ngsi-parser');
 
-var zone = require('../models/organization.model')
+var zone = require('../models/zone.model')
 var context = require("../context")
 
 function isEmpty (object) {

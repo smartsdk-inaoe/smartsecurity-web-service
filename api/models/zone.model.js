@@ -51,4 +51,5 @@ var zone = sequelize.define('Zone', {
 		defaultValue: "1"
 	}
 });
+zone.sync() 
 module.exports = zone;

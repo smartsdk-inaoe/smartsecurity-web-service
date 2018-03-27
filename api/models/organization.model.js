@@ -3,7 +3,7 @@ const Sequelize = require('sequelize');
 
 var sequelize = require('../utils/config');
 
-var organization = sequelize.define('Organizations', {
+var organization = sequelize.define('Organization', {
 	idOrganization : { 
 		type : Sequelize.STRING(100), 
 		primaryKey: true,
@@ -29,6 +29,5 @@ var organization = sequelize.define('Organizations', {
 		 defaultValue: "1"
 	}
 });
-
 organization.sync() 
 module.exports = organization;
