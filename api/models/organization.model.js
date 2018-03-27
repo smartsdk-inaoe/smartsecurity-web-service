@@ -26,8 +26,8 @@ var organization = sequelize.define('Organizations', {
 		defaultValue: Sequelize.NOW 
 	},
 	status : { 
-		type: Sequelize.INTEGER,
-		 defaultValue: 1
+		type: Sequelize.CHAR,
+		 defaultValue: "1"
 	}
 });
 module.exports = organization;

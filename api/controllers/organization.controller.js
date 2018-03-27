@@ -49,37 +49,6 @@ exports.addOrganization = function (req, res){
 			callback("failed", err["errors"])
 		})
 
-		/*organization.save(body, async function(status, data){
-			if(status === "success"){
-				console.log(data);
-				let idEntity = data.idOrganization;
-				let typeEntity = "Organization";
-				let NGSIentity = ngsi.parseEntity({
-					id : `Organization_${idEntity}`,
-					type : typeEntity,
-					name: data.name,
-					dateCreated: new Date(data.dateCreated),
-					dateModified :new  Date(data.dateModified)		
-				})
-				//console.log(NGSIentity);
-				//==============SEND THE ROAD ENTITY TO THE CONTEXTBROKER================
-				await cb.createEntity(NGSIentity)
-				.then((result) => {
-					console.log(result)
-					res.status(201).json(NGSIentity);	
-				})
-				.catch((err) => {
-					console.log(err)
-					res.status(400).json({message: "An error has ocurred to send the entity to ContextBroker"});
-				})
-				res.status(201).json(body);	
-
-			}
-			else{
-				res.status(400).json({ message: "Error inserting", error: data});
-			}
-		});*/
-
 	}
 	else{
 		res.status(400).json({message: "Bad request"});
@@ -88,15 +57,21 @@ exports.addOrganization = function (req, res){
 
 exports.updateOrganization = function(req, res){
 	var body = req.body;
-	if(!isEmpty(body)){
-		organization.update( req.params.idOrganization ,body, async function(status, data){
-			if (status=="success") {
-				res.status(200).json(data);
+	if(!isEmpty(body)){ 
+
+		body["dateModified"] = new Date();
+		organization.update(body, {
+			where: {
+				idOrganization: Number(req.params.idOrganization)
 			}
-			else{
+		})
+		.then((result) => {
+			if(result[0] > 0){
+				res.status(200).json(result);
+			}else {
 				res.status(404).json({message: "The entity cannot be updated", error: data});
 			}
-		});	
+		})
 	}
 	else{
 		res.status(400).json({message: "Bad request"});
@@ -104,33 +79,42 @@ exports.updateOrganization = function(req, res){
 }
 
 exports.deleteOrganization = function(req, res){
-	organization.delete( req.params.idOrganization, async function(status, data){
-		if (status=="success" && !isEmpty(data)) {
-			res.status(200).json(data);
+
+	organization.update({
+		status : 0,
+		dateModified :new Date()
+	}, {
+		where: {
+			idOrganization: Number(req.params.idOrganization)
 		}
-		else{
+	})
+	.then((result) => {
+		if(result[0] > 0){
+			res.status(200).json(result);
+		}else {
 			res.status(404).json({message: "The entity cannot be updated"});
 		}
-	});
+	})
+
 }
 
 exports.getAllOrganization = function(req,res){
-	organization.getAllOrganizations(req.query, async function(status, data){
-		if(status=="success"){
-			res.status(200).json(data);
-		}
-		else{
-			res.status(400).json({message: "An error has ocurred", error: data["sqlMessage"]});
-		}
-	});
+
+	organization.findAll({ where: req.query}).then(result => {
+		
+		res.status(200).json(result);
+	})
 }
+
 exports.getByIdOrganization = function (req, res){
-	organization.getByIdOrganization(req.params.idOrganization, async function(status, data){
-		if(status == "success"){
-			res.status(200).json(data);
+
+	organization.findById(req.params.idOrganization).then((result) => {
+		if (result){
+			res.status(200).json(result.get({
+				plain: true
+			}));
+		}else {
+			res.status(400).json({message: "An error has ocurred", error: result});
 		}
-		else{
-			res.status(400).json({message: "An error has ocurred", error: data});
-		}
-	});	
+	})
 }
