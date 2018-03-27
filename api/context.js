@@ -7,7 +7,6 @@ exports.create = async (type, json, callback) =>{
     delete json[`id${type}`] ;
     json["dateCreated"] = new Date(json.dateCreated),
 	json["dateModified"] = new  Date(json.dateModified)	
-
     let NGSIentity = ngsi.parseEntity(json)
     await cb.createEntity(NGSIentity)
     .then((result) => {

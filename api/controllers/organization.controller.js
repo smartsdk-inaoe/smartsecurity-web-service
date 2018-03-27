@@ -20,7 +20,6 @@ exports.addOrganization = function (req, res){
 	var body = req.body;
 	let type = "Organization";
 	body[`id${type}`] = `${type}_${Date.now()}`;
-
 	if (!isEmpty(body)) {
 		organization.create(body)
 		.then(async (result)=> {
@@ -36,7 +35,7 @@ exports.addOrganization = function (req, res){
 			})
 		})
 		.catch(err => {
-			callback("failed", err["errors"])
+			res.status(400).json( err["errors"])
 		})
 	}
 	else{
