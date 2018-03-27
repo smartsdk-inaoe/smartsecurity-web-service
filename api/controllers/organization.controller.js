@@ -1,14 +1,17 @@
 'use strict';
 
-var organization = require('../dao/organization.dao');
+
 var cb = require('ocb-sender');
 var ngsi = require('ngsi-parser');
 
 var organization = require('../models/organization.model')
-//organization.sync({force: true})
+
+//organization.sync({force: true}) // Fuerza que la tabla cumpla con el modelo (Elimina si existe y crea sino existe) 
 
 // Configuration for the connection with the ContextBroker
 cb.config('http://207.249.127.218',1026,'v2')
+
+var context = require("../context")
 
 function isEmpty (object) {
     if (object == undefined ) return true;
@@ -26,29 +29,17 @@ exports.addOrganization = function (req, res){
 			var data  = result.get({
 				plain: true
 			})
-			let idEntity = data.idOrganization;
-			let typeEntity = "Organization";
-			let NGSIentity = ngsi.parseEntity({
-				id : `Organization_${idEntity}`,
-				type : typeEntity,
-				name: data.name,
-				dateCreated: new Date(data.dateCreated),
-				dateModified :new  Date(data.dateModified)		
-			})
-			await cb.createEntity(NGSIentity)
-			.then((result) => {
-				console.log(result)
-				res.status(201).json(NGSIentity);	
-			})
-			.catch((err) => {
-				console.log(err)
-				res.status(400).json({message: "An error has ocurred to send the entity to ContextBroker"});
+			context.create("Organization", data,(status, entity) =>{
+				if(status){
+					res.status(201).json(entity);
+				}else{
+					res.status(400).json({message: "An error has ocurred to send the entity to ContextBroker"});
+				}
 			})
 		})
 		.catch(err => {
 			callback("failed", err["errors"])
 		})
-
 	}
 	else{
 		res.status(400).json({message: "Bad request"});
@@ -58,7 +49,6 @@ exports.addOrganization = function (req, res){
 exports.updateOrganization = function(req, res){
 	var body = req.body;
 	if(!isEmpty(body)){ 
-
 		body["dateModified"] = new Date();
 		organization.update(body, {
 			where: {
@@ -79,7 +69,6 @@ exports.updateOrganization = function(req, res){
 }
 
 exports.deleteOrganization = function(req, res){
-
 	organization.update({
 		status : 0,
 		dateModified :new Date()
@@ -95,19 +84,14 @@ exports.deleteOrganization = function(req, res){
 			res.status(404).json({message: "The entity cannot be updated"});
 		}
 	})
-
 }
-
 exports.getAllOrganization = function(req,res){
-
 	organization.findAll({ where: req.query}).then(result => {
-		
 		res.status(200).json(result);
 	})
 }
 
 exports.getByIdOrganization = function (req, res){
-
 	organization.findById(req.params.idOrganization).then((result) => {
 		if (result){
 			res.status(200).json(result.get({
