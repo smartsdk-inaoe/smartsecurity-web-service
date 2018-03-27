@@ -13,10 +13,13 @@ var organization = sequelize.define('Organizations', {
 		type: Sequelize.STRING,
 		 defaultValue: "Organization"
 	},
-	name : Sequelize.STRING,
+	name : {
+		type : Sequelize.STRING,
+		allowNull: false
+	},
 	dateCreated : { 
 		type: Sequelize.DATE, 
-		defaultValue: Sequelize.NOW 
+		defaultValue: Sequelize.NOW
 	},
 	dateModified : { 
 		type: Sequelize.DATE, 

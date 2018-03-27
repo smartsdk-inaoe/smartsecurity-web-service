@@ -1,8 +1,11 @@
 'use strict';
-var organizationModel = require('../models/organization.model');
+
 var organization = require('../dao/organization.dao');
 var cb = require('ocb-sender');
 var ngsi = require('ngsi-parser');
+
+var organization = require('../models/organization.model')
+//organization.sync({force: true})
 
 // Configuration for the connection with the ContextBroker
 cb.config('http://207.249.127.218',1026,'v2')
@@ -18,9 +21,37 @@ function isEmpty (object) {
 exports.addOrganization = function (req, res){
 	var body = req.body;
 	if (!isEmpty(body)) {
-		organization.save(body, async function(status, data){
+		organization.create(body)
+		.then(async (result)=> {
+			var data  = result.get({
+				plain: true
+			})
+			let idEntity = data.idOrganization;
+			let typeEntity = "Organization";
+			let NGSIentity = ngsi.parseEntity({
+				id : `Organization_${idEntity}`,
+				type : typeEntity,
+				name: data.name,
+				dateCreated: new Date(data.dateCreated),
+				dateModified :new  Date(data.dateModified)		
+			})
+			await cb.createEntity(NGSIentity)
+			.then((result) => {
+				console.log(result)
+				res.status(201).json(NGSIentity);	
+			})
+			.catch((err) => {
+				console.log(err)
+				res.status(400).json({message: "An error has ocurred to send the entity to ContextBroker"});
+			})
+		})
+		.catch(err => {
+			callback("failed", err["errors"])
+		})
+
+		/*organization.save(body, async function(status, data){
 			if(status === "success"){
-				/*console.log(data);
+				console.log(data);
 				let idEntity = data.idOrganization;
 				let typeEntity = "Organization";
 				let NGSIentity = ngsi.parseEntity({
@@ -40,14 +71,14 @@ exports.addOrganization = function (req, res){
 				.catch((err) => {
 					console.log(err)
 					res.status(400).json({message: "An error has ocurred to send the entity to ContextBroker"});
-				})*/
+				})
 				res.status(201).json(body);	
 
 			}
 			else{
 				res.status(400).json({ message: "Error inserting", error: data});
 			}
-		});
+		});*/
 
 	}
 	else{

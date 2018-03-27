@@ -1,5 +1,5 @@
 
-var sequelize = require('../utils/config');
+
 var organization = require('../models/organization.model')
 //organization.sync({force: true})
 
@@ -11,6 +11,9 @@ class Organization {
 			callback("success" ,result.get({
 				plain: true
 			  }))
+		})
+		.catch(err => {
+			callback("failed", err["errors"])
 		})
 	}
 
