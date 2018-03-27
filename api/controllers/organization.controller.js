@@ -1,6 +1,4 @@
 'use strict';
-
-
 var cb = require('ocb-sender');
 var ngsi = require('ngsi-parser');
 

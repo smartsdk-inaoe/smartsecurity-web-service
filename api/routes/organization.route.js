@@ -14,5 +14,4 @@ app.route('/organization/:idOrganization')
     .put(organizationController.updateOrganization)
     .delete(organizationController.deleteOrganization)
 
-
 module.exports = app;
