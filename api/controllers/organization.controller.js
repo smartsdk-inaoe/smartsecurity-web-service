@@ -5,7 +5,6 @@ var cb = require('ocb-sender');
 var ngsi = require('ngsi-parser');
 
 var organization = require('../models/organization.model')
-//organization.sync({force: true}) // Fuerza que la tabla cumpla con el modelo (Elimina si existe y crea sino existe) 
 var context = require("../context")
 
 function isEmpty (object) {
@@ -14,13 +13,12 @@ function isEmpty (object) {
     if (object.length === 0)  return true;
     if (typeof object === 'string' && object === "") return true;
     return false;
-}
+}  
 
 exports.addOrganization = function (req, res){
 	var body = req.body;
 	let type = "Organization";
 	body[`id${type}`] = `${type}_${Date.now()}`;
-
 	if (!isEmpty(body)) {
 		organization.create(body)
 		.then(async (result)=> {
@@ -36,7 +34,7 @@ exports.addOrganization = function (req, res){
 			})
 		})
 		.catch(err => {
-			callback("failed", err["errors"])
+			res.status(400).json( err["errors"])
 		})
 	}
 	else{

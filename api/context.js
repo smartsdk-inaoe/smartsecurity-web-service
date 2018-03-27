@@ -7,7 +7,6 @@ exports.create = async (type, json, callback) =>{
     delete json[`id${type}`] ;
     json["dateCreated"] = new Date(json.dateCreated),
 	json["dateModified"] = new  Date(json.dateModified)	
-
     let NGSIentity = ngsi.parseEntity(json)
     await cb.createEntity(NGSIentity)
     .then((result) => {
@@ -15,6 +14,6 @@ exports.create = async (type, json, callback) =>{
         callback(true, NGSIentity);
     })
     .catch((err) => {
-        callback(false,{message: "An error has ocurred to send the entity to ContextBroker"});
+        callback(false,{message: err});
     })
 }

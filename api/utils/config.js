@@ -14,6 +14,6 @@ var sequelize = new Sequelize('prueba', 'root', '', {
     timestamps: false 
   }
 });
-
+ 
 module.exports = sequelize;
 
