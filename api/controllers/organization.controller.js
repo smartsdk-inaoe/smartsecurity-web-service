@@ -14,7 +14,7 @@ function isEmpty (object) {
     if (object.length === 0)  return true;
     if (typeof object === 'string' && object === "") return true;
     return false;
-}
+}  
 
 exports.addOrganization = function (req, res){
 	var body = req.body;
