@@ -5,9 +5,8 @@ var sequelize = require('../utils/config');
 
 var organization = sequelize.define('Organizations', {
 	idOrganization : { 
-		type : Sequelize.INTEGER, 
+		type : Sequelize.STRING(100), 
 		primaryKey: true,
-		autoIncrement: true 
 	},
 	type : { 
 		type: Sequelize.STRING,
@@ -26,7 +25,7 @@ var organization = sequelize.define('Organizations', {
 		defaultValue: Sequelize.NOW 
 	},
 	status : { 
-		type: Sequelize.CHAR,
+		type: Sequelize.CHAR(1),
 		 defaultValue: "1"
 	}
 });

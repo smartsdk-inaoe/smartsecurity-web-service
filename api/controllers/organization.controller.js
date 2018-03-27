@@ -5,12 +5,7 @@ var cb = require('ocb-sender');
 var ngsi = require('ngsi-parser');
 
 var organization = require('../models/organization.model')
-
 //organization.sync({force: true}) // Fuerza que la tabla cumpla con el modelo (Elimina si existe y crea sino existe) 
-
-// Configuration for the connection with the ContextBroker
-cb.config('http://207.249.127.218',1026,'v2')
-
 var context = require("../context")
 
 function isEmpty (object) {
@@ -23,6 +18,9 @@ function isEmpty (object) {
 
 exports.addOrganization = function (req, res){
 	var body = req.body;
+	let type = "Organization";
+	body[`id${type}`] = `${type}_${Date.now()}`;
+
 	if (!isEmpty(body)) {
 		organization.create(body)
 		.then(async (result)=> {
@@ -85,6 +83,7 @@ exports.deleteOrganization = function(req, res){
 		}
 	})
 }
+
 exports.getAllOrganization = function(req,res){
 	organization.findAll({ where: req.query}).then(result => {
 		res.status(200).json(result);
