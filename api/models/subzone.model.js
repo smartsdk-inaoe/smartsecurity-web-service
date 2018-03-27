@@ -3,8 +3,8 @@ const Sequelize = require('sequelize');
 
 var sequelize = require('../utils/config');
 
-var zone = sequelize.define('Zone', {
-	idZone: { 
+var subzone = sequelize.define('Subzone', {
+	idSubzone: { 
 		type : Sequelize.STRING(100), 
 		primaryKey: true,
 	},
@@ -14,7 +14,7 @@ var zone = sequelize.define('Zone', {
 	},
 	refBuildingType : { 
 		type: Sequelize.STRING,
-		defaultValue: "Zone"
+		defaultValue: "Subzone"
 	},
 	name : {
 		type : Sequelize.STRING,
@@ -26,18 +26,14 @@ var zone = sequelize.define('Zone', {
 	location:{
 		type: Sequelize.TEXT,
 		allowNull: false
-	},
-	centerPoint:{
-		type:Sequelize.TEXT,
-		allowNull:false
-	},
+    },
+    refZone:{
+        type: Sequelize.TEXT,
+        allowNull: false
+    },
 	dateCreated : { 
 		type: Sequelize.DATE, 
 		defaultValue: Sequelize.NOW
-	},
-	address: {
-		type: Sequelize.TEXT,
-		allowNull: false
 	},
 	description: {
 		type:Sequelize.TEXT
@@ -51,4 +47,4 @@ var zone = sequelize.define('Zone', {
 		defaultValue: "1"
 	}
 });
-module.exports = zone;
+module.exports = subzone;

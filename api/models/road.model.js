@@ -3,44 +3,35 @@ const Sequelize = require('sequelize');
 
 var sequelize = require('../utils/config');
 
-var zone = sequelize.define('Zone', {
-	idZone: { 
+var road = sequelize.define('Road', {
+	idSubzone : { 
 		type : Sequelize.STRING(100), 
 		primaryKey: true,
 	},
 	type : { 
 		type: Sequelize.STRING,
-		defaultValue: "Building"
-	},
-	refBuildingType : { 
-		type: Sequelize.STRING,
-		defaultValue: "Zone"
+		defaultValue: "Road"
 	},
 	name : {
 		type : Sequelize.STRING,
 		allowNull: false
-	},
-	category : { 
-		type: Sequelize.TEXT
-	},
-	location:{
-		type: Sequelize.TEXT,
-		allowNull: false
-	},
-	centerPoint:{
-		type:Sequelize.TEXT,
-		allowNull:false
-	},
+    },
+    alternateName:{
+        type: Sequelize.STRING
+    },
+    description:{
+        type: Sequelize.TEXT
+    },
+    lenght:{
+        type: Sequelize.NUMBER
+    },
+    responsible:{
+        type: Sequelize.TEXT,
+        allowNull: false
+    },
 	dateCreated : { 
 		type: Sequelize.DATE, 
 		defaultValue: Sequelize.NOW
-	},
-	address: {
-		type: Sequelize.TEXT,
-		allowNull: false
-	},
-	description: {
-		type:Sequelize.TEXT
 	},
 	dateModified : { 
 		type: Sequelize.DATE, 
@@ -51,4 +42,4 @@ var zone = sequelize.define('Zone', {
 		defaultValue: "1"
 	}
 });
-module.exports = zone;
+module.exports = road;
