@@ -51,5 +51,6 @@ var zone = sequelize.define('Zone', {
 		defaultValue: "1"
 	}
 });
+//zone.hasMany(Subzone, {foreignKey: 'refZone'});
 zone.sync() 
 module.exports = zone;
