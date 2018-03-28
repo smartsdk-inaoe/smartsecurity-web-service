@@ -17,34 +17,35 @@ exports.addZone = async function (req, res){
 	var body = req.body;
 	let type = "Zone";
 	body[`id${type}`] = `${type}_${Date.now()}`;
+
+	// Cambios especificos al recibir el json
+	body["location"] = body["location"].join(";")
+	body["centerPoint"] = body["centerPoint"].join(";")
+	body["category"] = body["category"].join(",")
+	
+
 	if (!isEmpty(body)) {
 		zone.create(body)
 		.then((result)=> {
 			var data  = result.get({
 				plain: true
 			})
-			let location = data['location'];
-			let locationConverted = location.split(";")
-			var entityParsed = ngsi.parseEntity({
-				id: data['idZone'],
-				type: "Building",
-				name: data.name,
-				address: data.address,
-				category: data.category,
-				location: {
-					type: "geo:polygon",
-					value: locationConverted,
-					metadata:{
-						centerPoint:{
-							value: data['centerPoint'],
-							type: "geo:point"
-						}
+
+			//Cambios especificos para envíar al context
+			data.location  = {
+				type: "geo:polygon",
+				value: data['location'].split(";"),
+				metadata:{
+					centerPoint:{
+						value: data['centerPoint'],
+						type: "geo:point"
 					}
-				},
-				dateCreated: new Date(data.dateCreated),
-				dateModified :new  Date(data.dateModified)
-			})
-			context.create("Zone", entityParsed, (status, entity) => {
+				}
+			}
+			delete data.centerPoint
+			data.category = data.category.split(",")
+			
+			context.create("Zone", data, (status, entity) => {
 				if(status){
 					res.status(201).json(entity);
 				}
@@ -83,6 +84,7 @@ exports.updateZone = function(req, res){
 		res.status(400).json({message: "Bad request"});
 	}
 }
+
 exports.deleteZone = function(req, res){
 	zone.update({
 		status : 0,
@@ -106,6 +108,7 @@ exports.getAllZone = function(req,res){
 		res.status(200).json(result);
 	})
 }
+
 exports.getByIdZone = function (req, res){
 	zone.findById(req.params.idZone).then((result) => {
 		if(result){
