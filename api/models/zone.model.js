@@ -8,19 +8,23 @@ var zone = sequelize.define('Zone', {
 		type : Sequelize.STRING(100), 
 		primaryKey: true,
 	},
-	type : { 
+	type: { 
 		type: Sequelize.STRING,
 		defaultValue: "Building"
 	},
-	refBuildingType : { 
+	refBuildingType: { 
 		type: Sequelize.STRING,
 		defaultValue: "Zone"
 	},
-	name : {
+	name: {
 		type : Sequelize.STRING,
 		allowNull: false
 	},
-	category : { 
+	address: {
+		type: Sequelize.TEXT,
+		allowNull: false
+	},
+	category: { 
 		type: Sequelize.TEXT
 	},
 	location:{
@@ -31,18 +35,14 @@ var zone = sequelize.define('Zone', {
 		type:Sequelize.TEXT,
 		allowNull:false
 	},
-	dateCreated : { 
-		type: Sequelize.DATE, 
-		defaultValue: Sequelize.NOW
-	},
-	address: {
-		type: Sequelize.TEXT,
-		allowNull: false
-	},
 	description: {
 		type:Sequelize.TEXT
 	},
-	dateModified : { 
+	dateCreated: { 
+		type: Sequelize.DATE, 
+		defaultValue: Sequelize.NOW
+	},
+	dateModified: { 
 		type: Sequelize.DATE, 
 		defaultValue: Sequelize.NOW 
 	},

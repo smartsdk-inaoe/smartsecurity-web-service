@@ -3,7 +3,7 @@ var cb = require('ocb-sender');
 var ngsi = require('ngsi-parser');
 
 var zone = require('../models/zone.model')
-var context = require("../context")
+var context = require('../context')
 
 function isEmpty (object) {
     if (object == undefined ) return true;
@@ -19,20 +19,42 @@ exports.addZone = async function (req, res){
 	body[`id${type}`] = `${type}_${Date.now()}`;
 	if (!isEmpty(body)) {
 		zone.create(body)
-		.then(async (result)=> {
+		.then((result)=> {
 			var data  = result.get({
 				plain: true
 			})
-			context.create("Zone", data, (status, entity) =>{
+			let location = data['location'];
+			let locationConverted = location.split(";")
+			var entityParsed = ngsi.parseEntity({
+				id: data['idZone'],
+				type: "Building",
+				name: data.name,
+				address: data.address,
+				category: data.category,
+				location: {
+					type: "geo:polygon",
+					value: locationConverted,
+					metadata:{
+						centerPoint:{
+							value: data['centerPoint'],
+							type: "geo:point"
+						}
+					}
+				},
+				dateCreated: new Date(data.dateCreated),
+				dateModified :new  Date(data.dateModified)
+			})
+			context.create("Zone", entityParsed, (status, entity) => {
 				if(status){
 					res.status(201).json(entity);
-				}else{
+				}
+				else{
 					res.status(400).json({message: "An error has ocurred to send the entity to ContextBroker"});
 				}
 			})
 		})
 		.catch(err => {
-			res.status(400).json( err["errors"])
+			res.status(400).json(err["errors"])
 		})
 	}
 	else{

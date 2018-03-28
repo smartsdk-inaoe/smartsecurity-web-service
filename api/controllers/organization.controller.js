@@ -19,14 +19,15 @@ exports.addOrganization = function (req, res){
 	body[`id${type}`] = `${type}_${Date.now()}`;
 	if (!isEmpty(body)) {
 		organization.create(body)
-		.then(async (result)=> {
+		.then((result)=> {
 			var data  = result.get({
 				plain: true
 			})
-			context.create("Organization", data,(status, entity) =>{
+			context.create("Organization", data, (status, entity) =>{
 				if(status){
 					res.status(201).json(entity);
-				}else{
+				}
+				else{
 					res.status(400).json({message: "An error has ocurred to send the entity to ContextBroker"});
 				}
 			})

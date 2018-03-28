@@ -10,9 +10,9 @@ var organization = sequelize.define('Organization', {
 	},
 	type : { 
 		type: Sequelize.STRING,
-		 defaultValue: "Organization"
+		defaultValue: "Organization"
 	},
-	name : {
+	name: {
 		type : Sequelize.STRING,
 		allowNull: false
 	},
@@ -26,7 +26,7 @@ var organization = sequelize.define('Organization', {
 	},
 	status : { 
 		type: Sequelize.CHAR(1),
-		 defaultValue: "1"
+		defaultValue: "1"
 	}
 });
 organization.sync() 
