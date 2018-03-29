@@ -44,7 +44,7 @@ exports.addZone = async function (req, res){
 			}
 			delete data.centerPoint
 			data.category = data.category.split(",")
-			
+
 			context.create("Zone", data, (status, entity) => {
 				if(status){
 					res.status(201).json(entity);
@@ -105,6 +105,7 @@ exports.deleteZone = function(req, res){
 
 exports.getAllZone = function(req,res){
 	zone.findAll({ where: req.query}).then(result => {
+		// Cambiar para que se obtengan arreglos en lugar de text
 		res.status(200).json(result);
 	})
 }
@@ -115,6 +116,7 @@ exports.getByIdZone = function (req, res){
 			res.status(200).json(result.get({
 				plain: true
 			}));
+			// Cambiar para que se obtengan arreglos en lugar de text
 		}
 		else{
 			res.status(400).json({message: "An error has ocurred", error: result});
