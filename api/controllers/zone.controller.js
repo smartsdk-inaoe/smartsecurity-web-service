@@ -23,14 +23,12 @@ exports.addZone = async function (req, res){
 	body["centerPoint"] = body["centerPoint"].join(";")
 	body["category"] = body["category"].join(",")
 	
-
 	if (!isEmpty(body)) {
 		zone.create(body)
 		.then((result)=> {
 			var data  = result.get({
 				plain: true
 			})
-
 			//Cambios especificos para envíar al context
 			data.location  = {
 				type: "geo:polygon",
@@ -69,7 +67,7 @@ exports.updateZone = function(req, res){
 		body["dateModified"] = new Date();
 		zone.update(body, {
 			where: {
-				idZone: Number(req.params.idZone)
+				idZone: req.params.idZone
 			}
 		})
 		.then((result) => {
@@ -91,13 +89,14 @@ exports.deleteZone = function(req, res){
 		dateModified : new Date()
 	}, {
 		where: {
-			idZone: Number(req.params.idZone)
+			idZone: req.params.idZone
 		}
 	})
 	.then((result) => {
 		if(result[0] > 0){
 			res.status(200).json(result);
-		}else {
+		}
+		else {
 			res.status(404).json({message: "The entity cannot be updated"});
 		}
 	})

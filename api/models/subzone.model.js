@@ -2,13 +2,14 @@
 const Sequelize = require('sequelize');
 
 var sequelize = require('../utils/config');
+var Zone = require('../models/zone.model')
 
 var subzone = sequelize.define('Subzone', {
 	idSubzone: { 
 		type : Sequelize.STRING(100), 
 		primaryKey: true,
 	},
-	type : { 
+	type: { 
 		type: Sequelize.STRING,
 		defaultValue: "Building"
 	},
@@ -16,7 +17,7 @@ var subzone = sequelize.define('Subzone', {
 		type: Sequelize.STRING,
 		defaultValue: "Subzone"
 	},
-	name : {
+	name: {
 		type : Sequelize.STRING,
 		allowNull: false
 	},
@@ -28,8 +29,14 @@ var subzone = sequelize.define('Subzone', {
 		allowNull: false
     },
     refZone:{
-        type: Sequelize.TEXT,
-        allowNull: false
+		type: Sequelize.STRING(100),
+		references: {
+			// This is a reference to another model
+			model: Zone,
+			// This is the column name of the referenced model
+			key: 'idZone',
+		},
+		allowNull: false,
     },
 	dateCreated : { 
 		type: Sequelize.DATE, 
@@ -47,4 +54,5 @@ var subzone = sequelize.define('Subzone', {
 		defaultValue: "1"
 	}
 });
+subzone.sync() 
 module.exports = subzone;

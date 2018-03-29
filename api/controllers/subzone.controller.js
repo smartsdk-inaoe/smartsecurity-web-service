@@ -2,8 +2,8 @@
 var cb = require('ocb-sender');
 var ngsi = require('ngsi-parser');
 
-var organization = require('../models/organization.model')
-var context = require("../context")
+var subzone = require('../models/subzone.model')
+var context = require('../context')
 
 function isEmpty (object) {
     if (object == undefined ) return true;
@@ -11,20 +11,32 @@ function isEmpty (object) {
     if (object.length === 0)  return true;
     if (typeof object === 'string' && object === "") return true;
     return false;
-}  
+}
 
-exports.addOrganization = function (req, res){
+exports.addSubzone = async function (req, res){
 	var body = req.body;
-	let type = "Organization";
+	let type = "Subzone";
 	body[`id${type}`] = `${type}_${Date.now()}`;
+
+	// Cambios especificos al recibir el json
+	body["location"] = body["location"].join(";")
+	body["category"] = body["category"].join(",")
 	
 	if (!isEmpty(body)) {
-		organization.create(body)
+		subzone.create(body)
 		.then((result)=> {
 			var data  = result.get({
 				plain: true
 			})
-			context.create("Organization", data, (status, entity) =>{
+			//Cambios especificos para envíar al context
+			data.location  = {
+				type: "geo:polygon",
+				value: data['location'].split(";"),
+			}
+			delete data.centerPoint
+			data.category = data.category.split(",")
+			
+			context.create("Subzone", data, (status, entity) => {
 				if(status){
 					res.status(201).json(entity);
 				}
@@ -34,7 +46,7 @@ exports.addOrganization = function (req, res){
 			})
 		})
 		.catch(err => {
-			res.status(400).json( err["errors"])
+			res.status(400).json(err["errors"])
 		})
 	}
 	else{
@@ -42,13 +54,13 @@ exports.addOrganization = function (req, res){
 	}
 }
 
-exports.updateOrganization = function(req, res){
+exports.updateSubzone = function(req, res){
 	var body = req.body;
 	if(!isEmpty(body)){ 
 		body["dateModified"] = new Date();
-		organization.update(body, {
+		subzone.update(body, {
 			where: {
-				idOrganization: req.params.idOrganization
+				idSubzone: req.params.idSubzone
 			}
 		})
 		.then((result) => {
@@ -64,13 +76,14 @@ exports.updateOrganization = function(req, res){
 	}
 }
 
-exports.deleteOrganization = function(req, res){
-	organization.update({
+exports.deleteSubzone = function(req, res){
+	subzone.update({
 		status : 0,
-		dateModified :new Date()
-	}, {
+		dateModified : new Date()
+    }, 
+    {
 		where: {
-			idOrganization: req.params.idOrganization
+			idSubzone: req.params.idSubzone
 		}
 	})
 	.then((result) => {
@@ -82,19 +95,20 @@ exports.deleteOrganization = function(req, res){
 	})
 }
 
-exports.getAllOrganization = function(req,res){
-	organization.findAll({ where: req.query}).then(result => {
+exports.getAllSubzone = function(req,res){
+	subzone.findAll({ where: req.query}).then(result => {
 		res.status(200).json(result);
 	})
 }
 
-exports.getByIdOrganization = function (req, res){
-	organization.findById(req.params.idOrganization).then((result) => {
-		if (result){
+exports.getByIdSubzone = function (req, res){
+	subzone.findById(req.params.idSubzone).then((result) => {
+		if(result){
 			res.status(200).json(result.get({
 				plain: true
 			}));
-		}else {
+		}
+		else{
 			res.status(400).json({message: "An error has ocurred", error: result});
 		}
 	})

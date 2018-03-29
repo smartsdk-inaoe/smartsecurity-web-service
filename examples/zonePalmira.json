@@ -1,0 +1,21 @@
+{
+	"name": "CENIDET Palmira",
+	"address": "Interior Internado Palmira S/N, Palmira, 62490 Cuernavaca, Mor.",
+    "category": ["University", "School", "Academy"],
+    "description": "Centro Nacional de Investigación y Desarrollo Tecnológico",
+	"location": [
+        [18.876982, -99.220337],
+        [18.876799, -99.219173], 
+        [18.876566, -99.219205], 
+        [18.875642, -99.219688],
+        [18.875672, -99.21986],
+        [18.875718, -99.219978],
+        [18.875824, -99.220117], 
+        [18.875941, -99.220182], 
+        [18.876149, -99.220176],
+        [18.876317, -99.220165], 
+        [18.876591, -99.220214], 
+        [18.876743, -99.220289],
+        [18.876982, -99.220337]
+    ]
+}
