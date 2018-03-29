@@ -20,7 +20,7 @@ exports.addZone = async function (req, res){
 
 	// Cambios especificos al recibir el json
 	body["location"] = body["location"].join(";")
-	body["centerPoint"] = body["centerPoint"].join(";")
+	body["centerPoint"] = body["centerPoint"].join(",")
 	body["category"] = body["category"].join(",")
 	
 	if (!isEmpty(body)) {
@@ -105,6 +105,25 @@ exports.deleteZone = function(req, res){
 exports.getAllZone = function(req,res){
 	zone.findAll({ where: req.query}).then(result => {
 		// Cambiar para que se obtengan arreglos en lugar de text
+
+		for (let item in result){
+			let json = result[item]
+			json.location = json.location.split(";")
+			for( let item in json.location){
+				json.location[item] = json.location[item].split(",")
+				json.location[item][0] = Number(json.location[item][0])
+				json.location[item][1] = Number(json.location[item][1])
+			}
+			json.centerPoint = json.centerPoint.split(",")
+			json.centerPoint[0] = Number(json.centerPoint[0]) 
+			json.centerPoint[1] = Number(json.centerPoint[1]) 
+			json.category = json.category.split(",")
+			result[item] = json
+
+			console.log(json.centerPoint)
+		}
+		
+
 		res.status(200).json(result);
 	})
 }
@@ -112,9 +131,20 @@ exports.getAllZone = function(req,res){
 exports.getByIdZone = function (req, res){
 	zone.findById(req.params.idZone).then((result) => {
 		if(result){
-			res.status(200).json(result.get({
+			let json = result.get({
 				plain: true
-			}));
+			})
+			json.location = json.location.split(";")
+			for( let item in json.location){
+				json.location[item] = json.location[item].split(",")
+				json.location[item][0] = Number(json.location[item][0])
+				json.location[item][1] = Number(json.location[item][1])
+			}
+			json.centerPoint = json.centerPoint.split(",")
+			json.centerPoint[0] = Number(json.centerPoint[0]) 
+			json.centerPoint[1] = Number(json.centerPoint[1]) 
+			json.category = json.category.split(",")
+			res.status(200).json(json);
 			// Cambiar para que se obtengan arreglos en lugar de text
 		}
 		else{

@@ -97,6 +97,18 @@ exports.deleteSubzone = function(req, res){
 
 exports.getAllSubzone = function(req,res){
 	subzone.findAll({ where: req.query}).then(result => {
+		for (let item in result){
+			let json = result[item]
+			json.location = json.location.split(";")
+			for( let item in json.location){
+				json.location[item] = json.location[item].split(",")
+				json.location[item][0] = Number(json.location[item][0])
+				json.location[item][1] = Number(json.location[item][1])
+			}
+			json.category = json.category.split(",")
+			result[item] = json
+			console.log(json.centerPoint)
+		}
 		res.status(200).json(result);
 	})
 }
@@ -104,9 +116,17 @@ exports.getAllSubzone = function(req,res){
 exports.getByIdSubzone = function (req, res){
 	subzone.findById(req.params.idSubzone).then((result) => {
 		if(result){
-			res.status(200).json(result.get({
+			let json = result.get({
 				plain: true
-			}));
+			})
+			json.location = json.location.split(";")
+			for( let item in json.location){
+				json.location[item] = json.location[item].split(",")
+				json.location[item][0] = Number(json.location[item][0])
+				json.location[item][1] = Number(json.location[item][1])
+			}
+			json.category = json.category.split(",")
+			res.status(200).json(json);
 		}
 		else{
 			res.status(400).json({message: "An error has ocurred", error: result});
