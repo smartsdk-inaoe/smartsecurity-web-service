@@ -13,7 +13,7 @@ function isEmpty (object) {
     return false;
 }
 
-exports.addSubzone = async function (req, res){
+exports.add = async function (req, res){
 	var body = req.body;
 	let type = "Subzone";
 	body[`id${type}`] = `${type}_${Date.now()}`;
@@ -54,7 +54,7 @@ exports.addSubzone = async function (req, res){
 	}
 }
 
-exports.updateSubzone = function(req, res){
+exports.update = function(req, res){
 	var body = req.body;
 	if(!isEmpty(body)){ 
 		body["dateModified"] = new Date();
@@ -76,7 +76,7 @@ exports.updateSubzone = function(req, res){
 	}
 }
 
-exports.deleteSubzone = function(req, res){
+exports.delete = function(req, res){
 	subzone.update({
 		status : 0,
 		dateModified : new Date()
@@ -95,7 +95,7 @@ exports.deleteSubzone = function(req, res){
 	})
 }
 
-exports.getAllSubzone = function(req,res){
+exports.getAll = function(req,res){
 	subzone.findAll({ where: req.query}).then(result => {
 		for (let item in result){
 			let json = result[item]
@@ -113,7 +113,7 @@ exports.getAllSubzone = function(req,res){
 	})
 }
 
-exports.getByIdSubzone = function (req, res){
+exports.getById = function (req, res){
 	subzone.findById(req.params.idSubzone).then((result) => {
 		if(result){
 			let json = result.get({

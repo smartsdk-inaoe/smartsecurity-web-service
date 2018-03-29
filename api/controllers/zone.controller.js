@@ -1,6 +1,5 @@
 'use strict';
-var cb = require('ocb-sender');
-var ngsi = require('ngsi-parser');
+
 
 var zone = require('../models/zone.model')
 var context = require('../context')
@@ -13,7 +12,7 @@ function isEmpty (object) {
     return false;
 }
 
-exports.addZone = async function (req, res){
+exports.add = async function (req, res){
 	var body = req.body;
 	let type = "Zone";
 	body[`id${type}`] = `${type}_${Date.now()}`;
@@ -61,7 +60,7 @@ exports.addZone = async function (req, res){
 	}
 }
 
-exports.updateZone = function(req, res){
+exports.update = function(req, res){
 	var body = req.body;
 	if(!isEmpty(body)){ 
 		body["dateModified"] = new Date();
@@ -83,7 +82,7 @@ exports.updateZone = function(req, res){
 	}
 }
 
-exports.deleteZone = function(req, res){
+exports.delete = function(req, res){
 	zone.update({
 		status : 0,
 		dateModified : new Date()
@@ -102,7 +101,7 @@ exports.deleteZone = function(req, res){
 	})
 }
 
-exports.getAllZone = function(req,res){
+exports.getAll = function(req,res){
 	zone.findAll({ where: req.query}).then(result => {
 		// Cambiar para que se obtengan arreglos en lugar de text
 
@@ -119,16 +118,13 @@ exports.getAllZone = function(req,res){
 			json.centerPoint[1] = Number(json.centerPoint[1]) 
 			json.category = json.category.split(",")
 			result[item] = json
-
 			console.log(json.centerPoint)
 		}
-		
-
 		res.status(200).json(result);
 	})
 }
 
-exports.getByIdZone = function (req, res){
+exports.getById = function (req, res){
 	zone.findById(req.params.idZone).then((result) => {
 		if(result){
 			let json = result.get({
@@ -145,7 +141,6 @@ exports.getByIdZone = function (req, res){
 			json.centerPoint[1] = Number(json.centerPoint[1]) 
 			json.category = json.category.split(",")
 			res.status(200).json(json);
-			// Cambiar para que se obtengan arreglos en lugar de text
 		}
 		else{
 			res.status(400).json({message: "An error has ocurred", error: result});

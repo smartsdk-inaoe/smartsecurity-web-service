@@ -9,6 +9,7 @@ var app = express();
 var organizationRoute 	= require('./api/routes/organization.route');
 var zoneRoute  			= require('./api/routes/zone.route');
 var subzoneRoute		= require('./api/routes/subzone.route');
+var road = require('./api/routes/road.route')
 
 //Configurar bodyParser
 app.use(bodyParser.urlencoded({extended:false}));
@@ -24,5 +25,6 @@ app.route('/api')
 app.use('/api', organizationRoute);
 app.use('/api', zoneRoute);
 app.use('/api', subzoneRoute);
+app.use('/api',road)
 
 module.exports = app;

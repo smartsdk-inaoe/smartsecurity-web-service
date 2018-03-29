@@ -4,14 +4,14 @@ var express     = require('express');
 var app         = express();
 
 //Import the controllers
-var organizationController = require('../controllers/organization.controller');
+var controller = require('../controllers/organization.controller');
 
 app.route('/organization')
-    .get(organizationController.getAllOrganization) // /zones?status =  1 || /zones?status=0
-    .post(organizationController.addOrganization)  
+    .get(controller.getAll) // /zones?status =  1 || /zones?status=0
+    .post(controller.add)  
 app.route('/organization/:idOrganization')
-    .get(organizationController.getByIdOrganization)
-    .put(organizationController.updateOrganization)
-    .delete(organizationController.deleteOrganization)
+    .get(controller.getById)
+    .put(controller.update)
+    .delete(controller.delete)
 
 module.exports = app;

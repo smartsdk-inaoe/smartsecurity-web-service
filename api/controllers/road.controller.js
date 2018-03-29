@@ -1,9 +1,7 @@
 'use strict';
-var cb = require('ocb-sender');
-var ngsi = require('ngsi-parser');
 
-var organization = require('../models/organization.model')
-var context = require("../context")
+var road = require('../models/road.model')
+var context = require('../context')
 
 function isEmpty (object) {
     if (object == undefined ) return true;
@@ -11,20 +9,20 @@ function isEmpty (object) {
     if (object.length === 0)  return true;
     if (typeof object === 'string' && object === "") return true;
     return false;
-}  
+}
 
-exports.add = function (req, res){
+exports.add = async function (req, res){
 	var body = req.body;
-	let type = "Organization";
+	let type = "Road";
 	body[`id${type}`] = `${type}_${Date.now()}`;
-	
+
 	if (!isEmpty(body)) {
-		organization.create(body)
+		road.create(body)
 		.then((result)=> {
 			var data  = result.get({
 				plain: true
 			})
-			context.create("Organization", data, (status, entity) =>{
+			context.create("Road", data, (status, entity) => {
 				if(status){
 					res.status(201).json(entity);
 				}
@@ -34,7 +32,7 @@ exports.add = function (req, res){
 			})
 		})
 		.catch(err => {
-			res.status(400).json( err["errors"])
+			res.status(400).json(err["errors"])
 		})
 	}
 	else{
@@ -46,9 +44,9 @@ exports.update = function(req, res){
 	var body = req.body;
 	if(!isEmpty(body)){ 
 		body["dateModified"] = new Date();
-		organization.update(body, {
+		road.update(body, {
 			where: {
-				idOrganization: req.params.idOrganization
+				idRoad: req.params.idRoad
 			}
 		})
 		.then((result) => {
@@ -65,36 +63,39 @@ exports.update = function(req, res){
 }
 
 exports.delete = function(req, res){
-	organization.update({
+	road.update({
 		status : 0,
-		dateModified :new Date()
+		dateModified : new Date()
 	}, {
 		where: {
-			idOrganization: req.params.idOrganization
+			idRoad: req.params.idRoad
 		}
 	})
 	.then((result) => {
 		if(result[0] > 0){
 			res.status(200).json(result);
-		}else {
+		}
+		else {
 			res.status(404).json({message: "The entity cannot be updated"});
 		}
 	})
 }
 
 exports.getAll = function(req,res){
-	organization.findAll({ where: req.query}).then(result => {
+	road.findAll({ where: req.query}).then(result => {
 		res.status(200).json(result);
 	})
 }
 
 exports.getById = function (req, res){
-	organization.findById(req.params.idOrganization).then((result) => {
-		if (result){
-			res.status(200).json(result.get({
+	road.findById(req.params.idRoad).then((result) => {
+		if(result){
+			let json = result.get({
 				plain: true
-			}));
-		}else {
+			})
+			res.status(200).json(json);
+		}
+		else{
 			res.status(400).json({message: "An error has ocurred", error: result});
 		}
 	})

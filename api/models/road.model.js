@@ -4,7 +4,7 @@ const Sequelize = require('sequelize');
 var sequelize = require('../utils/config');
 
 var road = sequelize.define('Road', {
-	idSubzone : { 
+	idRoad : { 
 		type : Sequelize.STRING(100), 
 		primaryKey: true,
 	},
@@ -16,14 +16,8 @@ var road = sequelize.define('Road', {
 		type : Sequelize.STRING,
 		allowNull: false
     },
-    alternateName:{
-        type: Sequelize.STRING
-    },
     description:{
         type: Sequelize.TEXT
-    },
-    lenght:{
-        type: Sequelize.NUMBER
     },
     responsible:{
         type: Sequelize.TEXT,
@@ -42,4 +36,5 @@ var road = sequelize.define('Road', {
 		defaultValue: "1"
 	}
 });
+road.sync() 
 module.exports = road;

@@ -4,15 +4,15 @@ var express     = require('express');
 var app         = express();
 
 //Import the controllers
-var zoneController = require('../controllers/zone.controller');
+var controller = require('../controllers/zone.controller');
 
 //ROUTES
 app.route('/zone')
-    .get(zoneController.getAllZone) // /zones?status =  1 || /zones?status=0
-    .post(zoneController.addZone);
+    .get(controller.getAll) // /zones?status =  1 || /zones?status=0
+    .post(controller.add);
 app.route('/zone/:idZone')
-    .get(zoneController.getByIdZone)
-    .put(zoneController.updateZone)
-    .delete(zoneController.deleteZone);
+    .get(controller.getById)
+    .put(controller.update)
+    .delete(controller.delete);
 
 module.exports = app;
