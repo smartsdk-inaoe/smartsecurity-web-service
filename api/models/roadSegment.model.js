@@ -16,9 +16,6 @@ var roadSegment = sequelize.define('RoadSegment', {
 		type : Sequelize.STRING,
 		allowNull: false
     },
-    alternateName:{
-        type: Sequelize.STRING
-    },
     location:{
 		type: Sequelize.TEXT,
 		allowNull: false
@@ -39,10 +36,10 @@ var roadSegment = sequelize.define('RoadSegment', {
         type: Sequelize.INTEGER
     },
     maximumAllowedSpeed:{
-        type: Sequelize.NUMBER
+        type: Sequelize.INTEGER
     },
     minimumAllowedSpeed:{
-        type: Sequelize.NUMBER
+        type: Sequelize.INTEGER
     },
 	dateCreated : { 
 		type: Sequelize.DATE, 
@@ -57,4 +54,5 @@ var roadSegment = sequelize.define('RoadSegment', {
 		defaultValue: "1"
 	}
 });
+roadSegment.sync() 
 module.exports = roadSegment;

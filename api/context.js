@@ -8,7 +8,9 @@ exports.create = async (type, json, callback) =>{
         json["dateCreated"] = new Date(json.dateCreated),
         json["dateModified"] = new  Date(json.dateModified)	
         let NGSIentity = ngsi.parseEntity(json)
-        await cb.createEntity(NGSIentity)
+        console.log("Enviando al context")
+        callback(true, NGSIentity);
+        /*await cb.createEntity(NGSIentity)
             .then((result) => {
                 console.log(result)
                 callback(true, NGSIentity);
@@ -16,6 +18,6 @@ exports.create = async (type, json, callback) =>{
             .catch((err) => {
                 callback(false, {message: err});
             })
-        
+        */
     
 }
