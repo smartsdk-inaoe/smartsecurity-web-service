@@ -5,6 +5,7 @@ cb.config('http://207.249.127.218',1026,'v2')
 exports.create = async (type, json, callback) =>{
         json["id"] = json[`id${type}`]
         delete json[`id${type}`] ;
+        delete json["status"]
         json["dateCreated"] = new Date(json.dateCreated),
         json["dateModified"] = new  Date(json.dateModified)	
         let NGSIentity = ngsi.parseEntity(json)

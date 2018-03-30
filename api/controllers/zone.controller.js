@@ -62,6 +62,16 @@ exports.add = async function (req, res){
 
 exports.update = function(req, res){
 	var body = req.body;
+
+	if(body.location){
+		body["location"] = body["location"].join(";")
+	}
+	if(body["centerPoint"]){
+		body["centerPoint"] = body["centerPoint"].join(",")
+	}
+	if(body["category"]){
+		body["category"] = body["category"].join(",")
+	}
 	if(!isEmpty(body)){ 
 		body["dateModified"] = new Date();
 		zone.update(body, {
@@ -83,6 +93,7 @@ exports.update = function(req, res){
 }
 
 exports.delete = function(req, res){
+
 	zone.update({
 		status : 0,
 		dateModified : new Date()

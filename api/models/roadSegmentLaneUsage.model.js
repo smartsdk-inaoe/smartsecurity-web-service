@@ -1,9 +1,8 @@
 const Sequelize = require('sequelize');
 
 var sequelize = require('../utils/config');
-
-var roadSegment_LaneUsage = sequelize.define('RoadSegmentLaneUsage', {
-	idRoadSegment_LaneUsage : { 
+var roadSegmentLaneUsage = sequelize.define('RoadSegmentLaneUsages', {
+	idRoadSegmentLaneUsage : { 
 		type : Sequelize.STRING(100), 
         primaryKey: true,
 	},
@@ -14,23 +13,17 @@ var roadSegment_LaneUsage = sequelize.define('RoadSegmentLaneUsage', {
 	idRoadSegment : {
 		type : Sequelize.STRING(100),
 		allowNull: false
-    },
+	},
     lane_direction:{
         type: Sequelize.TEXT,
         allowNull: false
     },
     lane_minimumAllowedSpeed:{
-        type: Sequelize.TEXT
+        type: Sequelize.INTEGER
     },
     lane_maximumAllowedSpeed:{
-        type: Sequelize.TEXT,
-    },
-    lane_maximumAllowedHeight:{
-        type: Sequelize.TEXT
-    },
-    lane_maximumAllowedWeight:{
-        type: Sequelize.TEXT
-    },
+        type: Sequelize.INTEGER,
+	},
 	dateCreated : { 
 		type: Sequelize.DATE, 
 		defaultValue: Sequelize.NOW
@@ -44,4 +37,5 @@ var roadSegment_LaneUsage = sequelize.define('RoadSegmentLaneUsage', {
 		defaultValue: "1"
 	}
 });
-module.exports = roadSegment_LanUsage;
+roadSegmentLaneUsage.sync() 
+module.exports = roadSegmentLaneUsage;

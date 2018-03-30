@@ -1,6 +1,6 @@
 'use strict';
 
-var organization = require('../models/organization.model')
+var roadSegmentLaneUsage = require('../models/roadSegmentLaneUsage.model')
 var context = require("../context")
 
 function isEmpty (object) {
@@ -13,16 +13,16 @@ function isEmpty (object) {
 
 exports.add = function (req, res){
 	var body = req.body;
-	let type = "Organization";
+	let type = "RoadSegmentLaneUsage";
 	body[`id${type}`] = `${type}_${Date.now()}`;
 	
 	if (!isEmpty(body)) {
-		organization.create(body)
+		roadSegmentLaneUsage.create(body)
 		.then((result)=> {
 			var data  = result.get({
 				plain: true
 			})
-			context.create("Organization", data, (status, entity) =>{
+			context.create("RoadSegmentLaneUsage", data, (status, entity) =>{
 				if(status){
 					res.status(201).json(entity);
 				}
@@ -44,9 +44,9 @@ exports.update = function(req, res){
 	var body = req.body;
 	if(!isEmpty(body)){ 
 		body["dateModified"] = new Date();
-		organization.update(body, {
+		roadSegmentLaneUsage.update(body, {
 			where: {
-				idOrganization: req.params.idOrganization
+				idRoadSegmentLaneUsage: req.params.idOrganization
 			}
 		})
 		.then((result) => {
@@ -63,12 +63,12 @@ exports.update = function(req, res){
 }
 
 exports.delete = function(req, res){
-	organization.update({
+	roadSegmentLaneUsage.update({
 		status : 0,
 		dateModified :new Date()
 	}, {
 		where: {
-			idOrganization: req.params.idOrganization
+			idRoadSegmentLaneUsage: req.params.idRoadSegmentLaneUsage
 		}
 	})
 	.then((result) => {
@@ -81,13 +81,13 @@ exports.delete = function(req, res){
 }
 
 exports.getAll = function(req,res){
-	organization.findAll({ where: req.query}).then(result => {
+	roadSegmentLaneUsage.findAll({ where: req.query}).then(result => {
 		res.status(200).json(result);
 	})
 }
 
 exports.getById = function (req, res){
-	organization.findById(req.params.idOrganization).then((result) => {
+	roadSegmentLaneUsage.findById(req.params.idRoadSegmentLaneUsage).then((result) => {
 		if (result){
 			res.status(200).json(result.get({
 				plain: true

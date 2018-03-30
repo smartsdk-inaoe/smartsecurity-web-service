@@ -1,6 +1,4 @@
 'use strict';
-var cb = require('ocb-sender');
-var ngsi = require('ngsi-parser');
 
 var subzone = require('../models/subzone.model')
 var context = require('../context')
@@ -56,6 +54,12 @@ exports.add = async function (req, res){
 
 exports.update = function(req, res){
 	var body = req.body;
+	if(body.location){
+		body["location"] = body["location"].join(";")
+	}
+	if(body["category"]){
+		body["category"] = body["category"].join(",")
+	}
 	if(!isEmpty(body)){ 
 		body["dateModified"] = new Date();
 		subzone.update(body, {

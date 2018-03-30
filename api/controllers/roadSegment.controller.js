@@ -30,7 +30,7 @@ exports.add = async function (req, res){
 			data.location  = {
 				type: "geo:polyline",
 				value: data['location'].split(";")
-            }
+			}
 			context.create("RoadSegment", data, (status, entity) => {
 				if(status){
 					res.status(201).json(entity);
@@ -51,6 +51,17 @@ exports.add = async function (req, res){
 
 exports.update = function(req, res){
 	var body = req.body;
+	
+	if(body.location){
+		body["location"] = body["location"].join(";")
+	}
+	if(body["startPoint"]){
+		body["startPoint"] = body["startPoint"].join(",")
+	}
+	if(body["endPoint"]){
+		body["endPoint"] = body["endPoint"].join(",")
+	}
+	
 	if(!isEmpty(body)){ 
 		body["dateModified"] = new Date();
 		roadSegment.update(body, {
