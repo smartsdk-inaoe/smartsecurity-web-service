@@ -27,23 +27,10 @@ exports.add = async function (req, res){
 			var data  = result.get({
 				plain: true
             })
-            
-			//Cambios especificos para envíar al context
 			data.location  = {
 				type: "geo:polyline",
 				value: data['location'].split(";")
             }
-
-            /*data.startPoint = {
-                type: "geo:point",
-				value: data['startPoint']
-            }
-
-            data.endPoint = {
-                type: "geo:point",
-				value: data['endPoint']
-            }*/
-            
 			context.create("RoadSegment", data, (status, entity) => {
 				if(status){
 					res.status(201).json(entity);
@@ -123,7 +110,7 @@ exports.getAll = function(req,res){
 }
 
 exports.getById = function (req, res){
-	roadSegment.findById(req.params.idZone).then((result) => {
+	roadSegment.findById(req.params.idRoadSegment).then((result) => {
 		if(result){
 			let json = result.get({
 				plain: true
