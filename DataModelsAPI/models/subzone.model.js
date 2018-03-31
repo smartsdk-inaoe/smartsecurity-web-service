@@ -1,18 +1,24 @@
 
 const Sequelize = require('sequelize');
 
-var sequelize = require('../utils/config');
+//var sequelize = require('../utils/config');
+var config = require('../../config/config');
+var sequelize = config.sequelize;
 var Zone = require('../models/zone.model')
 var locations = require('./functions/locations')
 
-var parking= sequelize.define('OffStreetParking', {
-	idOffStreetParking: { 
+var subzone = sequelize.define('Subzone', {
+	idSubzone: { 
 		type : Sequelize.STRING(100), 
 		primaryKey: true,
 	},
 	type: { 
 		type: Sequelize.STRING,
-        defaultValue: "OffStreetParking"
+		defaultValue: "Building"
+	},
+	refBuildingType : { 
+		type: Sequelize.STRING,
+		defaultValue: "Subzone"
 	},
 	name: {
 		type : Sequelize.STRING,
@@ -20,29 +26,27 @@ var parking= sequelize.define('OffStreetParking', {
 	},
 	category: { 
 		type: Sequelize.TEXT,
-		set(category) {
+		set (category) {
 			this.setDataValue('category', category.join(","));
 		},
 		get() {
 			return this.getDataValue('category').split(',')
-		}	
+		}
+		
 	},
 	location:{
 		type: Sequelize.TEXT,
 		allowNull: false,
-		set(location) {
+		set (location) {
 			this.setDataValue('location', location.join(";"));
 		},
 		get() {
 			return locations.getPoly(this.getDataValue('location'))
 		}
 	},
-	description: {
-		type:Sequelize.TEXT
-    },
-    areaServed:{
-        type: Sequelize.STRING(100),
-        references: {
+    refZone:{
+		type: Sequelize.STRING(100),
+		references: {
 			// This is a reference to another model
 			model: Zone,
 			// This is the column name of the referenced model
@@ -50,11 +54,14 @@ var parking= sequelize.define('OffStreetParking', {
 		},
 		allowNull: false,
     },
-	dateCreated: { 
+	dateCreated : { 
 		type: Sequelize.DATE, 
 		defaultValue: Sequelize.NOW
 	},
-	dateModified: { 
+	description: {
+		type:Sequelize.TEXT
+	},
+	dateModified : { 
 		type: Sequelize.DATE, 
 		defaultValue: Sequelize.NOW 
 	},
@@ -63,5 +70,5 @@ var parking= sequelize.define('OffStreetParking', {
 		defaultValue: "1"
 	}
 });
-parking.sync() 
-module.exports = parking;
+subzone.sync() 
+module.exports = subzone;

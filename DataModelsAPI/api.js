@@ -10,7 +10,7 @@ var roadSegmentRoute 	= require('./routes/roadSegment.route')
 var roadSegmentLaneUsageRoute = require('./routes/roadSegmentLaneUsage.route') 
 
 app.route('/')
-	.get((req, res, next) => {res.json({ message: 'Welcome to API REST Web Apilication' });
+	.get((req, res, next) => {res.json({ message: 'Welcome to DataModels API REST' });
 });
 
 app.use(organizationRoute);

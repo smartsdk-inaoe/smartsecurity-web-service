@@ -1,22 +1,20 @@
 
 const Sequelize = require('sequelize');
 
-var sequelize = require('../utils/config');
+var config = require('../../config/config');
+var sequelize = config.sequelize;
+//var sequelize = require('../utils/config');
 var Zone = require('../models/zone.model')
 var locations = require('./functions/locations')
 
-var subzone = sequelize.define('Subzone', {
-	idSubzone: { 
+var parking= sequelize.define('OffStreetParking', {
+	idOffStreetParking: { 
 		type : Sequelize.STRING(100), 
 		primaryKey: true,
 	},
 	type: { 
 		type: Sequelize.STRING,
-		defaultValue: "Building"
-	},
-	refBuildingType : { 
-		type: Sequelize.STRING,
-		defaultValue: "Subzone"
+        defaultValue: "OffStreetParking"
 	},
 	name: {
 		type : Sequelize.STRING,
@@ -24,27 +22,29 @@ var subzone = sequelize.define('Subzone', {
 	},
 	category: { 
 		type: Sequelize.TEXT,
-		set (category) {
+		set(category) {
 			this.setDataValue('category', category.join(","));
 		},
 		get() {
 			return this.getDataValue('category').split(',')
-		}
-		
+		}	
 	},
 	location:{
 		type: Sequelize.TEXT,
 		allowNull: false,
-		set (location) {
+		set(location) {
 			this.setDataValue('location', location.join(";"));
 		},
 		get() {
 			return locations.getPoly(this.getDataValue('location'))
 		}
 	},
-    refZone:{
-		type: Sequelize.STRING(100),
-		references: {
+	description: {
+		type:Sequelize.TEXT
+    },
+    areaServed:{
+        type: Sequelize.STRING(100),
+        references: {
 			// This is a reference to another model
 			model: Zone,
 			// This is the column name of the referenced model
@@ -52,14 +52,11 @@ var subzone = sequelize.define('Subzone', {
 		},
 		allowNull: false,
     },
-	dateCreated : { 
+	dateCreated: { 
 		type: Sequelize.DATE, 
 		defaultValue: Sequelize.NOW
 	},
-	description: {
-		type:Sequelize.TEXT
-	},
-	dateModified : { 
+	dateModified: { 
 		type: Sequelize.DATE, 
 		defaultValue: Sequelize.NOW 
 	},
@@ -68,5 +65,5 @@ var subzone = sequelize.define('Subzone', {
 		defaultValue: "1"
 	}
 });
-subzone.sync() 
-module.exports = subzone;
+parking.sync() 
+module.exports = parking;

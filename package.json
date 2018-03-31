@@ -15,10 +15,12 @@
     "cors": "^2.8.4",
     "express": "^4.16.2",
     "jwt-simple": "^0.5.1",
-    "momento": "^0.2.0",
+    "moment": "^2.22.0",
+    "moment-timezone": "^0.5.14",
     "morgan": "^1.9.0",
     "mysql2": "^1.5.3",
     "ngsi-parser": "^2.0.5",
+    "node-crate": "^2.0.3",
     "ocb-sender": "^2.0.1",
     "sequelize": "^4.37.4"
   },

@@ -1,7 +1,9 @@
 
 const Sequelize = require('sequelize');
 
-var sequelize = require('../utils/config');
+//var sequelize = require('../utils/config');
+var config = require('../../config/config');
+var sequelize = config.sequelize;
 var locations = require('./functions/locations')
 
 

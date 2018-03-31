@@ -1,28 +1,23 @@
 
 const Sequelize = require('sequelize');
 
-var sequelize = require('../utils/config');
+//var sequelize = require('../utils/config');
+var config = require('../../config/config');
+var sequelize = config.sequelize;
 
-var road = sequelize.define('Road', {
-	idRoad : { 
+var organization = sequelize.define('Organization', {
+	idOrganization : { 
 		type : Sequelize.STRING(100), 
 		primaryKey: true,
 	},
 	type : { 
 		type: Sequelize.STRING,
-		defaultValue: "Road"
+		defaultValue: "Organization"
 	},
-	name : {
+	name: {
 		type : Sequelize.STRING,
 		allowNull: false
-    },
-    description:{
-        type: Sequelize.TEXT
-    },
-    responsible:{
-        type: Sequelize.TEXT,
-        allowNull: false
-    },
+	},
 	dateCreated : { 
 		type: Sequelize.DATE, 
 		defaultValue: Sequelize.NOW
@@ -36,5 +31,5 @@ var road = sequelize.define('Road', {
 		defaultValue: "1"
 	}
 });
-road.sync() 
-module.exports = road;
+organization.sync() 
+module.exports = organization;
