@@ -3,6 +3,7 @@ const Sequelize = require('sequelize');
 
 var sequelize = require('../utils/config');
 var Zone = require('../models/zone.model')
+var locations = require('./functions/locations')
 
 var subzone = sequelize.define('Subzone', {
 	idSubzone: { 
@@ -21,13 +22,26 @@ var subzone = sequelize.define('Subzone', {
 		type : Sequelize.STRING,
 		allowNull: false
 	},
-	category : { 
-		type: Sequelize.TEXT
+	category: { 
+		type: Sequelize.TEXT,
+		set (category) {
+			this.setDataValue('category', category.join(","));
+		},
+		get() {
+			return this.getDataValue('category').split(',')
+		}
+		
 	},
 	location:{
 		type: Sequelize.TEXT,
-		allowNull: false
-    },
+		allowNull: false,
+		set (location) {
+			this.setDataValue('location', location.join(";"));
+		},
+		get() {
+			return locations.getPoly(this.getDataValue('location'))
+		}
+	},
     refZone:{
 		type: Sequelize.STRING(100),
 		references: {

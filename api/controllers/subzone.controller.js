@@ -16,9 +16,6 @@ exports.add = async function (req, res){
 	let type = "Subzone";
 	body[`id${type}`] = `${type}_${Date.now()}`;
 
-	// Cambios especificos al recibir el json
-	body["location"] = body["location"].join(";")
-	body["category"] = body["category"].join(",")
 	
 	if (!isEmpty(body)) {
 		subzone.create(body)
@@ -27,13 +24,12 @@ exports.add = async function (req, res){
 				plain: true
 			})
 			//Cambios especificos para envíar al context
+			data['location'] = data['location'].join(';')
+
 			data.location  = {
 				type: "geo:polygon",
-				value: data['location'].split(";"),
+				value: data['location'].split(";")
 			}
-			delete data.centerPoint
-			data.category = data.category.split(",")
-			
 			context.create("Subzone", data, (status, entity) => {
 				if(status){
 					res.status(201).json(entity);
@@ -44,7 +40,7 @@ exports.add = async function (req, res){
 			})
 		})
 		.catch(err => {
-			res.status(400).json(err["errors"])
+			res.status(400).json(err)
 		})
 	}
 	else{
@@ -54,12 +50,6 @@ exports.add = async function (req, res){
 
 exports.update = function(req, res){
 	var body = req.body;
-	if(body.location){
-		body["location"] = body["location"].join(";")
-	}
-	if(body["category"]){
-		body["category"] = body["category"].join(",")
-	}
 	if(!isEmpty(body)){ 
 		body["dateModified"] = new Date();
 		subzone.update(body, {
@@ -101,18 +91,6 @@ exports.delete = function(req, res){
 
 exports.getAll = function(req,res){
 	subzone.findAll({ where: req.query}).then(result => {
-		for (let item in result){
-			let json = result[item]
-			json.location = json.location.split(";")
-			for( let item in json.location){
-				json.location[item] = json.location[item].split(",")
-				json.location[item][0] = Number(json.location[item][0])
-				json.location[item][1] = Number(json.location[item][1])
-			}
-			json.category = json.category.split(",")
-			result[item] = json
-			console.log(json.centerPoint)
-		}
 		res.status(200).json(result);
 	})
 }
@@ -123,13 +101,6 @@ exports.getById = function (req, res){
 			let json = result.get({
 				plain: true
 			})
-			json.location = json.location.split(";")
-			for( let item in json.location){
-				json.location[item] = json.location[item].split(",")
-				json.location[item][0] = Number(json.location[item][0])
-				json.location[item][1] = Number(json.location[item][1])
-			}
-			json.category = json.category.split(",")
 			res.status(200).json(json);
 		}
 		else{

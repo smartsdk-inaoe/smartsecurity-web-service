@@ -2,6 +2,7 @@
 const Sequelize = require('sequelize');
 
 var sequelize = require('../utils/config');
+var locations = require('./functions/locations')
 
 var zone = sequelize.define('Zone', {
 	idZone: { 
@@ -25,15 +26,34 @@ var zone = sequelize.define('Zone', {
 		allowNull: false
 	},
 	category: { 
-		type: Sequelize.TEXT
+		type: Sequelize.TEXT,
+		set (category) {
+			this.setDataValue('category', category.join(","));
+		},
+		get() {
+			return this.getDataValue('category').split(',')
+		}	
 	},
 	location:{
 		type: Sequelize.TEXT,
-		allowNull: false
+		allowNull: false,
+		set (location) {
+			this.setDataValue('location', location.join(";"));
+		},
+		get() {
+			return locations.getPoly(this.getDataValue('location'))
+		}
 	},
 	centerPoint:{
 		type:Sequelize.TEXT,
-		allowNull:false
+		allowNull:false,
+		set (center) {
+			
+			this.setDataValue('centerPoint', center.join(","));
+		},
+		get() {
+			return locations.getPoint(this.getDataValue('centerPoint'))
+		}
 	},
 	description: {
 		type:Sequelize.TEXT
