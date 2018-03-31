@@ -17,10 +17,6 @@ exports.add = async function (req, res){
 	let type = "Zone";
 	body[`id${type}`] = `${type}_${Date.now()}`;
 
-	//body["location"] = body["location"].join(";")
-	//body["centerPoint"] = body["centerPoint"].join(",")
-	//body["category"] = body["category"].join(",")
-
 	if (!isEmpty(body)) {
 		zone.create(body)
 		.then((result)=> {

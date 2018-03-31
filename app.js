@@ -1,33 +1,23 @@
-'use strict';
 
-var express = require('express');
-var bodyParser = require('body-parser');
-var morgan = require('morgan');
-var cors = require('cors')
-var app = express();
+var express     = require('express');
+var app         = express();
 
 var organizationRoute 	= require('./api/routes/organization.route');
 var zoneRoute  			= require('./api/routes/zone.route');
 var subzoneRoute		= require('./api/routes/subzone.route');
-var road = require('./api/routes/road.route')
-var roadSegment = require('./api/routes/roadSegment.route')
-var roadSegmentLaneUsage = require('./api/routes/roadSegmentLaneUsage.route') 
+var roadRoute 			= require('./api/routes/road.route')
+var roadSegmentRoute 	= require('./api/routes/roadSegment.route')
+var roadSegmentLaneUsageRoute = require('./api/routes/roadSegmentLaneUsage.route') 
 
-//Configurar bodyParser
-app.use(bodyParser.urlencoded({extended:false}));
-app.use(bodyParser.json());
-app.use(morgan('dev'));
-app.use(cors())
-
-// Test route to make sure everything is working (accessed at GET http://localhost:4005/api)
-app.route('/api')
-	.get((req, res, next) => {res.json({ message: 'Welcome to API RESTFul Web Application' });
+app.route('/')
+	.get((req, res, next) => {res.json({ message: 'Welcome to API REST Web Apilication' });
 });
 
-app.use('/api', organizationRoute);
-app.use('/api', zoneRoute);
-app.use('/api', subzoneRoute);
-app.use('/api',road)
-app.use('/api', roadSegment)
-app.use('/api',roadSegmentLaneUsage)
+app.use(organizationRoute);
+app.use(zoneRoute);
+app.use(subzoneRoute);
+app.use(roadRoute)
+app.use(roadSegmentRoute)
+app.use(roadSegmentLaneUsageRoute)
+
 module.exports = app;
