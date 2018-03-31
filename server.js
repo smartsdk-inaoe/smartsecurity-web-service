@@ -6,7 +6,7 @@ var morgan = require('morgan');
 var cors = require('cors')
 var app = express();
 
-var api = require('./app')
+var api = require('./api/api')
 
 //Configurar bodyParser
 app.use(bodyParser.urlencoded({extended:false}));
