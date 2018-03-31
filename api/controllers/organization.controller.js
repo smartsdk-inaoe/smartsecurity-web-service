@@ -15,7 +15,6 @@ exports.add = function (req, res){
 	var body = req.body;
 	let type = "Organization";
 	body[`id${type}`] = `${type}_${Date.now()}`;
-	
 	if (!isEmpty(body)) {
 		organization.create(body)
 		.then((result)=> {

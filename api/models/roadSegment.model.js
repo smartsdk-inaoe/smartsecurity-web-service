@@ -2,6 +2,8 @@
 const Sequelize = require('sequelize');
 
 var sequelize = require('../utils/config');
+var locations = require('./functions/locations')
+
 
 var roadSegment = sequelize.define('RoadSegment', {
 	idRoadSegment : { 
@@ -18,7 +20,13 @@ var roadSegment = sequelize.define('RoadSegment', {
     },
     location:{
 		type: Sequelize.TEXT,
-		allowNull: false
+        allowNull: false,
+        set (location) {
+			this.setDataValue('location', location.join(";"));
+		},
+		get() {
+			return locations.getPoly(this.getDataValue('location'))
+		}
     },
     refRoad:{
         type: Sequelize.TEXT,
@@ -26,11 +34,23 @@ var roadSegment = sequelize.define('RoadSegment', {
     },
     startPoint:{
         type: Sequelize.TEXT,
-        allowNull: false
+        allowNull: false,
+        set (start) {
+			this.setDataValue('startPoint', start.join(","));
+		},
+		get() {
+			return locations.getPoint(this.getDataValue('startPoint'))
+		}
     },
     endPoint:{
         type: Sequelize.TEXT,
-        allowNull: false
+        allowNull: false,
+        set (end) {
+			this.setDataValue('endPoint', end.join(","));
+		},
+		get() {
+			return locations.getPoint(this.getDataValue('endPoint'))
+		}
     },
     totalLaneNumber:{
         type: Sequelize.INTEGER
