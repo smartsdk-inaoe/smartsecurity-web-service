@@ -1,7 +1,7 @@
 
 const Sequelize = require('sequelize');
 const crate = require('node-crate');
-exports.sequelize = new Sequelize('prueba', 'root', 'root', {
+exports.sequelize = new Sequelize('prueba', 'root', '', {
     host: 'localhost',
     dialect: 'mysql',
     operatorsAliases: false,
