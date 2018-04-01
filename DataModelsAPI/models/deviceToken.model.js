@@ -17,6 +17,11 @@ var DeviceToken = sequelize.define('DeviceTokens', {
 		type : Sequelize.STRING,
 		allowNull: false
 	},
+	preferences :{
+		type : Sequelize.STRING,
+		allowNull : false,
+		defaultValue : "All"
+	},
 	dateCreated : { 
 		type: Sequelize.DATE, 
 		defaultValue: Sequelize.NOW
