@@ -22,21 +22,14 @@ exports.get = async function (req,res) {
             });
             //console.log(queryToCount)
 
-			const options = {
+            await fetch(`http://130.206.113.226:1026/v2/entities${queryToCount}`, {
                 method: 'GET',
                 headers: {
                     'Access-Control-Allow-Methods':'GET, POST, OPTIONS, PUT, PATCH, DELETE'
                 },
-			};
-        
-            await fetch(`http://130.206.113.226:1026/v2/entities${queryToCount}`, options)
+			})
 			.then(async (response) => {
-
-                
                 let off = Number(response["headers"]["_headers"]["fiware-total-count"][0])  
-                
-                console.log("off", off)
-                
 				let params  = {
 					id: "Alert:Device_Smartphone_.*",
 					type : "Alert",
@@ -46,14 +39,11 @@ exports.get = async function (req,res) {
 					coords : zone.location,
 					limit : "10",
                 }
-                
 				if (off > 10){
 					params.offset = off - 10
 				}
-				
                 let query = ngsi.createQuery(params);
                 console.log(query)
-                
 				await cb.getWithQuery(query)
 				.then((result) => {
 					if (result.length > 0){
@@ -65,8 +55,6 @@ exports.get = async function (req,res) {
 				.catch((error) =>{
 					res.status(500).send(error);
                 })
-                
-
 			})
 			.catch((error) =>{
 				res.status(500).send(error);
