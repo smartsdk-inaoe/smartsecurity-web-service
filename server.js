@@ -9,6 +9,7 @@ var app = express();
 
 var dataModelsApi 	= require('./DataModelsAPI/api')
 var crateApi 		= require('./CrateAPI/api')
+var servicesApi = require('./ServicesAPI/api')
 
 //Configurar bodyParser
 app.use(bodyParser.urlencoded({extended:false}));
@@ -18,6 +19,7 @@ app.use(cors())
 
 app.use('/api', dataModelsApi)
 app.use('/crate', crateApi)
+app.use('/services', servicesApi)
 
 var port = process.env.PORT || 4005;
 
