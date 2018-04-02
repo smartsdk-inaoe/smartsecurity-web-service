@@ -12,6 +12,9 @@ app.route('/')
 app.route('/alertsZone/history/:idZone')
 	.get(alertsZone.getHistory)
 
+app.route('/alertsZone/current/:idZone')
+	.get(alertsZone.getCurrent)
+
 //app.use('/', routes);
 
 module.exports = app;

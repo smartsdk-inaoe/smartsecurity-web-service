@@ -11,7 +11,6 @@ var app = express();
 var context = require('./config/config').context;
 var cb = require('ocb-sender')
 	.config(context.host,context.port,context.v)
-	.then(console.log)
 
 var dataModelsApi 	= require('./DataModelsAPI/api')
 var crateApi 		= require('./CrateAPI/api')

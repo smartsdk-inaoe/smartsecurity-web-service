@@ -3,6 +3,7 @@ var Zone = require('../../DataModelsAPI/models/zone.model');
 var cb = require('ocb-sender')
 var ngsi = require('ngsi-parser')
 var fetch = require('node-fetch')
+const { DateTime } = require('luxon');
 
 exports.getHistory = async function (req,res) {
 
@@ -66,13 +67,17 @@ exports.getCurrent = async function (req,res) {
     .then( async (zone) => {
 	  	if (zone != null){
 
+			var dt = DateTime.local();
+			let midnight = dt.minus({ days: 1 }).endOf('day');
+
 			let queryToCount = ngsi.createQuery({
 				id: "Alert:Device_Smartphone_.*",
 				type : "Alert",
 				options : "count",
 				georel :"coveredBy",
 				geometry:"polygon",
-				coords : zone.location
+				coords : zone.location,
+				dateObserved: `>=${midnight}`
             });
 
             await fetch(`http://130.206.113.226:1026/v2/entities${queryToCount}`, {
@@ -82,21 +87,23 @@ exports.getCurrent = async function (req,res) {
                 },
 			})
 			.then(async (response) => {
-                let off = Number(response["headers"]["_headers"]["fiware-total-count"][0])  
-				let params  = {
+
+				let count = Number(response["headers"]["_headers"]["fiware-total-count"][0])  
+				if (count < 20) {
+					count = 20;
+				}
+
+				let query = ngsi.createQuery({
 					id: "Alert:Device_Smartphone_.*",
 					type : "Alert",
 					options : "keyValues",
 					georel :"coveredBy",
 					geometry:"polygon",
 					coords : zone.location,
-					limit : "10",
-                }
-				if (off > 10){
-					params.offset = off - 10
-				}
-                let query = ngsi.createQuery(params);
-                console.log(query)
+					dateObserved: `>=${midnight}`,
+					limit : count,
+				});
+
 				await cb.getWithQuery(query)
 				.then((result) => {
 					if (result.length > 0){
@@ -107,7 +114,8 @@ exports.getCurrent = async function (req,res) {
 				})
 				.catch((error) =>{
 					res.status(500).send(error);
-                })
+				})
+				
 			})
 			.catch((error) =>{
 				res.status(500).send(error);
