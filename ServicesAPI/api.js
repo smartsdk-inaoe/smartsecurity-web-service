@@ -27,6 +27,9 @@ app.route('/alertsSubzone/current/:idSubzone')
 app.route('/devicesZone/:idZone')
 	.get(devicesZone.devicesZone)
 
+app.route('/devicesSubzone/:idSubzone')
+	.get(devicesZone.devicesSubzone)
+
 app.route('/query')
 	.post(query)
 
