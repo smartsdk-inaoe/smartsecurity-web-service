@@ -4,6 +4,7 @@ var app         = express();
 //var routes      = require('./routes/index'); //importing the routes
 var config      = require('../config/config'); // get our config file
 var alertsZone = require('./alerts/alertsZone')
+var alertsSubzone = require('./alerts/alertsSubzone')
 var devicesZone = require('./devices/devicesZone')
 var query = require('./especial/query').query
 
@@ -16,6 +17,12 @@ app.route('/alertsZone/history/:idZone')
 
 app.route('/alertsZone/current/:idZone')
 	.get(alertsZone.getCurrent)
+
+app.route('/alertsSubzone/history/:idSubzone')
+	.get(alertsSubzone.getHistory)
+
+app.route('/alertsSubzone/current/:idSubzone')
+	.get(alertsSubzone.getCurrent)
 
 app.route('/devicesZone/:idZone')
 	.get(devicesZone.devicesZone)
