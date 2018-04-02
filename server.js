@@ -24,7 +24,7 @@ app.use(cors())
 
 app.use('/api', dataModelsApi)
 app.use('/crate', crateApi)
-app.use('/services', servicesApi)
+app.use('/service', servicesApi)
 
 var port = process.env.PORT || 4005;
 
