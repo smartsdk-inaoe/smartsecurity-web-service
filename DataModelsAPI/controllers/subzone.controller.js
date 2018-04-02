@@ -1,7 +1,7 @@
 'use strict';
 
 var subzone = require('../models/subzone.model')
-var context = require('../context')
+var context = require("./functions/context")
 
 function isEmpty (object) {
     if (object == undefined ) return true;

@@ -2,7 +2,7 @@
 
 
 var zone = require('../models/zone.model')
-var context = require('../context')
+var context = require("./functions/context")
 
 function isEmpty (object) {
     if (object == undefined ) return true;
