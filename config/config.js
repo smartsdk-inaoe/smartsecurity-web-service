@@ -3,7 +3,7 @@ exports.mysql = {
   host : 'localhost',
   db : 'prueba',
   user : 'root',
-  password : ''
+  password : 'root'
 }
 
 exports.context = {

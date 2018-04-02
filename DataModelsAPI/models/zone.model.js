@@ -27,7 +27,7 @@ var zone = sequelize.define('Zone', {
 	},
 	category: { 
 		type: Sequelize.TEXT,
-		set (category) {
+		set(category) {
 			this.setDataValue('category', category.join(","));
 		},
 		get() {

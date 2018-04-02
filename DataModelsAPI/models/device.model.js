@@ -5,7 +5,7 @@ var sequelize = require('../db/sequelize');
 var locations = require('./functions/locations')
 
 var device = sequelize.define('Device', {
-	idDvice: { 
+	idDevice: { 
 		type : Sequelize.STRING(100), 
 		primaryKey: true,
 	},
