@@ -4,7 +4,7 @@ var Subzone = require('../../DataModelsAPI/models/subzone.model');
 var cb = require('ocb-sender')
 var ngsi = require('ngsi-parser')
 
-exports.devicesZone = async function (req,res) {
+exports.getZone = async function (req,res) {
 	await Zone.findOne({where : { 'idZone': req.params.idZone }})
     .then( async (zone) => {
 	  	if (zone != null){
@@ -38,7 +38,7 @@ exports.devicesZone = async function (req,res) {
 	});
 } 
 
-exports.devicesSubzone = async function (req,res) {
+exports.getSubzone = async function (req,res) {
 	await Subzone.findOne({where : { 'idSubzone': req.params.idSubzone }})
     .then( async (subzone) => {
 	  	if (subzone != null){

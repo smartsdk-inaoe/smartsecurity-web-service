@@ -1,15 +1,16 @@
 
-var Subzone = require('../../DataModelsAPI/models/subzone.model');
+var Zone = require('../../DataModelsAPI/models/zone.model');
 var cb = require('ocb-sender')
 var ngsi = require('ngsi-parser')
 var fetch = require('node-fetch')
 const { DateTime } = require('luxon');
+var context = require('../../config/config').context
 
 exports.getHistory = async function (req,res) {
 
-    await Subzone.findOne({where : { 'idSubzone': req.params.idSubzone }})
-    .then( async (subzone) => {
-	  	if (subzone != null){
+    await Zone.findOne({where : { 'idZone': req.params.idZone }})
+    .then( async (zone) => {
+	  	if (zone != null){
 
 			let queryToCount = ngsi.createQuery({
 				id: "Alert:Device_Smartphone_.*",
@@ -17,10 +18,10 @@ exports.getHistory = async function (req,res) {
 				options : "count",
 				georel :"coveredBy",
 				geometry:"polygon",
-				coords : subzone.location
+				coords : zone.location
             });
 
-            await fetch(`http://130.206.113.226:1026/v2/entities${queryToCount}`, {
+            await fetch(`http://${context.host}:${context.port}/${context.v}/entities${queryToCount}`, {
                 method: 'GET',
                 headers: {
                     'Access-Control-Allow-Methods':'GET, POST, OPTIONS, PUT, PATCH, DELETE'
@@ -28,14 +29,13 @@ exports.getHistory = async function (req,res) {
 			})
 			.then(async (response) => {
                 let off = Number(response["headers"]["_headers"]["fiware-total-count"][0])  
-                
 				let params  = {
 					id: "Alert:Device_Smartphone_.*",
 					type : "Alert",
 					options : "keyValues",
 					georel :"coveredBy",
 					geometry:"polygon",
-					coords : subzone.location,
+					coords : zone.location,
 					limit : "10",
                 }
 				if (off > 10){
@@ -64,9 +64,9 @@ exports.getHistory = async function (req,res) {
 } 
 
 exports.getCurrent = async function (req,res) {
-    await Subzone.findOne({where : { 'idSubzone': req.params.idSubzone }})
-    .then( async (subzone) => {
-	  	if (subzone != null){
+    await Zone.findOne({where : { 'idZone': req.params.idZone }})
+    .then( async (zone) => {
+	  	if (zone != null){
 
 			var dt = DateTime.local();
 			let midnight = dt.minus({ days: 1 }).endOf('day');
@@ -77,11 +77,11 @@ exports.getCurrent = async function (req,res) {
 				options : "count",
 				georel :"coveredBy",
 				geometry:"polygon",
-				coords : subzone.location,
+				coords : zone.location,
 				dateObserved: `>=${midnight}`
             });
 
-            await fetch(`http://130.206.113.226:1026/v2/entities${queryToCount}`, {
+            await fetch(`http://${context.host}:${context.port}/${context.v}/entities${queryToCount}`, {
                 method: 'GET',
                 headers: {
                     'Access-Control-Allow-Methods':'GET, POST, OPTIONS, PUT, PATCH, DELETE'
@@ -100,7 +100,7 @@ exports.getCurrent = async function (req,res) {
 					options : "keyValues",
 					georel :"coveredBy",
 					geometry:"polygon",
-					coords : subzone.location,
+					coords : zone.location,
 					dateObserved: `>=${midnight}`,
 					limit : count,
 				});
@@ -120,7 +120,8 @@ exports.getCurrent = async function (req,res) {
 			})
 			.catch((error) =>{
 				res.status(500).send(error);
-			})	
+			})
+				
 	  	}  	
 	});
 } 

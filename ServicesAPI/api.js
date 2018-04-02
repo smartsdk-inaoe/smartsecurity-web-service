@@ -1,36 +1,14 @@
 
 var express     = require('express');
 var app         = express();
-//var routes      = require('./routes/index'); //importing the routes
-var config      = require('../config/config'); // get our config file
-var alertsZone = require('./alerts/alertsZone')
-var alertsSubzone = require('./alerts/alertsSubzone')
-var devicesZone = require('./devices/devicesZone')
-var query = require('./especial/query').query
+
+
+var routes = require('./routes/index')
 
 app.route('/')
 	.get((req, res, next) => {res.json({ message: 'Welcome to Especial Services API' });
 });
 
-app.route('/alertsZone/history/:idZone')
-	.get(alertsZone.getHistory)
-
-app.route('/alertsZone/current/:idZone')
-	.get(alertsZone.getCurrent)
-
-app.route('/alertsSubzone/history/:idSubzone')
-	.get(alertsSubzone.getHistory)
-
-app.route('/alertsSubzone/current/:idSubzone')
-	.get(alertsSubzone.getCurrent)
-
-app.route('/devicesZone/:idZone')
-	.get(devicesZone.devicesZone)
-
-app.route('/devicesSubzone/:idSubzone')
-	.get(devicesZone.devicesSubzone)
-
-app.route('/query')
-	.post(query)
+app.use(routes)
 
 module.exports = app;
