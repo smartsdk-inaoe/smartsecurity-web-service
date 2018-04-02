@@ -1,6 +1,6 @@
 var cb = require('ocb-sender');
 var ngsi = require('ngsi-parser');
-cb.config('http://207.249.127.218',1026,'v2')
+
 
 exports.create = async (type, json, callback) =>{
         json["id"] = json[`id${type}`]

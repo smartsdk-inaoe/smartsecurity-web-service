@@ -9,7 +9,7 @@ app.route('/')
 	.get((req, res, next) => {res.json({ message: 'Welcome to Especial Services API' });
 });
 
-app.route('/alertsZone/hostory/:idZone')
+app.route('/alertsZone/history/:idZone')
 	.get(alertsZone.getHistory)
 
 //app.use('/', routes);
