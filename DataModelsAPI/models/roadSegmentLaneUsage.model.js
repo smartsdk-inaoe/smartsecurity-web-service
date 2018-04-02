@@ -1,8 +1,7 @@
 const Sequelize = require('sequelize');
 
-//var sequelize = require('../utils/config');
-var config = require('../../config/config');
-var sequelize = config.sequelize;
+var sequelize = require('../db/sequelize');
+
 var roadSegmentLaneUsage = sequelize.define('RoadSegmentLaneUsages', {
 	idRoadSegmentLaneUsage : { 
 		type : Sequelize.STRING(100), 

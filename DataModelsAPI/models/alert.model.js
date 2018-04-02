@@ -1,7 +1,6 @@
 const Sequelize = require('sequelize');
 
-var config = require('../../config/config');
-var sequelize = config.sequelize;
+var sequelize = require('../db/sequelize');
 
 var alert = sequelize.define('Alert', {
 	idAlert: { 
