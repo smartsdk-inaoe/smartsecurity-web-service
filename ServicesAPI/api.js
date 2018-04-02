@@ -5,6 +5,7 @@ var app         = express();
 var config      = require('../config/config'); // get our config file
 var alertsZone = require('./alerts/alertsZone')
 var devicesZone = require('./devices/devicesZone')
+var query = require('./especial/query').query
 
 app.route('/')
 	.get((req, res, next) => {res.json({ message: 'Welcome to Especial Services API' });
@@ -18,5 +19,8 @@ app.route('/alertsZone/current/:idZone')
 
 app.route('/devicesZone/:idZone')
 	.get(devicesZone.devicesZone)
+
+app.route('/query')
+	.post(query)
 
 module.exports = app;
