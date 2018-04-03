@@ -12,5 +12,7 @@ app.route('/user/:id')
     .get(controller.getById)
     .put(controller.update)
     .delete(controller.delete)
+app.route('/user/login')
+    .post(controller.keyLogin)
 
 module.exports = app;

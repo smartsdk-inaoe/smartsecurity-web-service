@@ -1,6 +1,7 @@
 'use strict';
 
 var User= require('../models/user.model')
+var fetch = require('node-fetch')
 
 function isEmpty (object) {
     if (object == undefined ) return true;
@@ -86,3 +87,63 @@ exports.getById = function (req, res){
 		}
 	})
 }
+
+exports.keyLogin = (req, res) => {
+	var params = req.body;
+	var email = params.email;
+	var name = params.email;
+	var password = params.password;
+
+	if(!isEmpty(email)){
+
+		let payload  = {
+			"auth": {
+				"identity": {
+					"methods": [
+						"password"
+					],
+					"password": {
+						"user": {
+							"domain": {
+								"id": "default"
+							},
+							"name": name,
+							"password": password
+						}
+					}
+				}
+			}
+		}
+
+		var headers = {
+			"accept": "application/json",
+			"accept-encoding": "gzip, deflate",
+			"accept-language": "en-US,en;q=0.8",
+			"user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36",
+			"content-type": "application/json"
+		
+		}
+
+		let options = {
+			method: 'POST',
+			headers: headers,
+			body : JSON.stringify(payload)
+		};
+
+		fetch('http://207.249.127.96:8001/v3/auth/tokens', options)
+			.then(function(response) {              
+				if(response.status >= 200 && response.status <= 208){
+					let token = response.headers._headers['x-subject-token'][0];
+					res.status(200).json({token : token})
+				}else{
+					res.status(404).send("The password you've entered is incorrect")
+				}
+			})
+			.catch((err) => {
+				console.error(err)
+				res.status(404).send(err)
+			});
+	}else{
+		res.status(400).json(["Empty fields required"]);
+	}
+} 
