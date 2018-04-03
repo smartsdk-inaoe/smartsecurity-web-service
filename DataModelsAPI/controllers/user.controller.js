@@ -13,6 +13,8 @@ function isEmpty (object) {
 
 exports.add = function (req, res){
 	var body = req.body;
+	let type = "User";
+	body[`id`] = `${type}_${Date.now()}`;
 	if (!isEmpty(body)) {
 		User.create(body)
 		.then((result)=> {
@@ -133,8 +135,19 @@ exports.keyLogin = (req, res) => {
 		fetch('http://207.249.127.96:8001/v3/auth/tokens', options)
 			.then(function(response) {              
 				if(response.status >= 200 && response.status <= 208){
-					let token = response.headers._headers['x-subject-token'][0];
-					res.status(200).json({token : token})
+
+					User.findOne({where : { email : email}})
+					.then((result) =>{
+						let user = result.get({
+							plain: true
+						})
+						let token = response.headers._headers['x-subject-token'][0];
+						res.status(200).json({token : token, user})
+					})
+					.catch((err) => {
+						res.status(404).json(err)
+					})
+					
 				}else{
 					res.status(404).send("The password you've entered is incorrect")
 				}

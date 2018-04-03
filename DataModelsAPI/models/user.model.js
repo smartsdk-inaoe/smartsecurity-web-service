@@ -39,8 +39,8 @@ var User = sequelize.define('User', {
 		type : Sequelize.STRING(20),
 		allowNull : false
 	},
-	
-    refDevices       : {
+	/*
+  refDevices       : {
 		type : Sequelize.STRING(50)
 	},
     refVehicles      : {
@@ -55,7 +55,7 @@ var User = sequelize.define('User', {
     registrationId   : {
 		type: Sequelize.STRING(256)
 	},
-
+*/
 	dateCreated : { 
 		type: Sequelize.DATE, 
 		defaultValue: Sequelize.NOW
