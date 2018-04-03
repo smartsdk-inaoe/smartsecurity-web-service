@@ -39,12 +39,8 @@ var user = sequelize.define('user', {
 		type : Sequelize.STRING(20),
 		allowNull : false
 	},
-<<<<<<< HEAD
 	/*
   refDevices       : {
-=======
-    refDevices       : {
->>>>>>> 39b3c2379df68f30bb5d5922208ecaef8d66f72a
 		type : Sequelize.STRING(50)
 	},
     refVehicles      : {

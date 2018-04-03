@@ -2,6 +2,7 @@
 
 var User= require('../models/user.model')
 var fetch = require('node-fetch')
+var keyrock = require('../../config/config').keyrock
 
 function isEmpty (object) {
     if (object == undefined ) return true;
@@ -131,8 +132,8 @@ exports.keyLogin = (req, res) => {
 			headers: headers,
 			body : JSON.stringify(payload)
 		};
-
-		fetch('http://207.249.127.96:8001/v3/auth/tokens', options)
+		console.log(`http://${keyrock}/v3/auth/tokens`)
+		fetch(`http://${keyrock}/v3/auth/tokens`, options)
 			.then(function(response) {              
 				if(response.status >= 200 && response.status <= 208){
 
