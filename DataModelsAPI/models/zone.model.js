@@ -4,7 +4,7 @@ const Sequelize = require('sequelize');
 var sequelize = require('../db/sequelize');
 var locations = require('./functions/locations')
 
-var zone = sequelize.define('Zone', {
+var zone = sequelize.define('zone', {
 	idZone: { 
 		type : Sequelize.STRING(100), 
 		primaryKey: true,
@@ -69,7 +69,7 @@ var zone = sequelize.define('Zone', {
 		type: Sequelize.CHAR(1),
 		defaultValue: "1"
 	}
-});
-//zone.hasMany(Subzone, {foreignKey: 'refZone'});
+},
+{ freezeTableName: true});
 zone.sync() 
 module.exports = zone;

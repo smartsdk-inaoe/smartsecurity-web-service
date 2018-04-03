@@ -5,7 +5,7 @@ var sequelize = require('../db/sequelize');
 var locations = require('./functions/locations')
 
 
-var roadSegment = sequelize.define('RoadSegment', {
+var roadSegment = sequelize.define('roadSegment', {
 	idRoadSegment : { 
 		type : Sequelize.STRING(100), 
         primaryKey: true,
@@ -73,6 +73,7 @@ var roadSegment = sequelize.define('RoadSegment', {
 		type: Sequelize.CHAR(1),
 		defaultValue: "1"
 	}
-});
+},
+{ freezeTableName: true});
 roadSegment.sync() 
 module.exports = roadSegment;

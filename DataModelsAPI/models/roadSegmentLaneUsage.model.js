@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 
 var sequelize = require('../db/sequelize');
 
-var roadSegmentLaneUsage = sequelize.define('RoadSegmentLaneUsages', {
+var roadSegmentLaneUsage = sequelize.define('roadSegmentLaneUsage', {
 	idRoadSegmentLaneUsage : { 
 		type : Sequelize.STRING(100), 
         primaryKey: true,
@@ -37,6 +37,7 @@ var roadSegmentLaneUsage = sequelize.define('RoadSegmentLaneUsages', {
 		type: Sequelize.CHAR(1),
 		defaultValue: "1"
 	}
-});
+},
+{ freezeTableName: true});
 roadSegmentLaneUsage.sync() 
 module.exports = roadSegmentLaneUsage;

@@ -6,7 +6,7 @@ var sequelize = require('../db/sequelize');
 var Zone = require('../models/zone.model')
 var locations = require('./functions/locations')
 
-var subzone = sequelize.define('Subzone', {
+var subzone = sequelize.define('subzone', {
 	idSubzone: { 
 		type : Sequelize.STRING(100), 
 		primaryKey: true,
@@ -67,6 +67,7 @@ var subzone = sequelize.define('Subzone', {
 		type: Sequelize.CHAR(1),
 		defaultValue: "1"
 	}
-});
+},
+{ freezeTableName: true});
 subzone.sync() 
 module.exports = subzone;

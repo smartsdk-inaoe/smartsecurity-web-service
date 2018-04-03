@@ -3,7 +3,7 @@ const Sequelize = require('sequelize');
 
 var sequelize = require('../db/sequelize');
 
-var road = sequelize.define('Road', {
+var road = sequelize.define('road', {
 	idRoad : { 
 		type : Sequelize.STRING(100), 
 		primaryKey: true,
@@ -35,6 +35,7 @@ var road = sequelize.define('Road', {
 		type: Sequelize.CHAR(1),
 		defaultValue: "1"
 	}
-});
+},
+{ freezeTableName: true});
 road.sync() 
 module.exports = road;

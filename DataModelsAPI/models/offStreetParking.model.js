@@ -2,11 +2,10 @@
 const Sequelize = require('sequelize');
 
 var sequelize = require('../db/sequelize');
-//var sequelize = require('../utils/config');
 var Zone = require('../models/zone.model')
 var locations = require('./functions/locations')
 
-var parking = sequelize.define('OffStreetParking', {
+var parking = sequelize.define('offStreetParking', {
 	idOffStreetParking: { 
 		type : Sequelize.STRING(100), 
 		primaryKey: true,
@@ -63,6 +62,7 @@ var parking = sequelize.define('OffStreetParking', {
 		type: Sequelize.CHAR(1),
 		defaultValue: "1"
 	}
-});
+},
+{ freezeTableName: true});
 parking.sync() 
 module.exports = parking;

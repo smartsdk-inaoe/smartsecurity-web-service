@@ -3,7 +3,7 @@ const Sequelize = require('sequelize');
 
 var sequelize = require('../db/sequelize');
 
-var DeviceToken = sequelize.define('DeviceTokens', {
+var DeviceToken = sequelize.define('deviceTokens', {
 	idDeviceToken : { 
 		type : Sequelize.STRING(100), 
 		primaryKey: true,
@@ -33,6 +33,7 @@ var DeviceToken = sequelize.define('DeviceTokens', {
 		type: Sequelize.CHAR(1),
 		defaultValue: "1"
 	}
-});
+},
+{ freezeTableName: true});
 DeviceToken.sync() 
 module.exports = DeviceToken;

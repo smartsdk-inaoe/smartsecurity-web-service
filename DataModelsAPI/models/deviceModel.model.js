@@ -4,8 +4,8 @@ const Sequelize = require('sequelize');
 var sequelize = require('../db/sequelize');
 var locations = require('./functions/locations')
 
-var deviceModel = sequelize.define('DeviceModel', {
-	idDeviceModel { 
+var deviceModel = sequelize.define('deviceModel', {
+	idDeviceModel: { 
 		type : Sequelize.STRING(100), 
 		primaryKey: true,
 	},
@@ -34,6 +34,7 @@ var deviceModel = sequelize.define('DeviceModel', {
 		type: Sequelize.CHAR(1),
 		defaultValue: "1"
 	}
-});
+},
+{ freezeTableName: true});
 device.sync() 
 module.exports = device;
