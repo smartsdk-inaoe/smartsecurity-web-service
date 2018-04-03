@@ -6,7 +6,7 @@ var sequelize = require('../db/sequelize');
 var Zone = require('../models/zone.model')
 var locations = require('./functions/locations')
 
-var parking= sequelize.define('OffStreetParking', {
+var parking = sequelize.define('OffStreetParking', {
 	idOffStreetParking: { 
 		type : Sequelize.STRING(100), 
 		primaryKey: true,

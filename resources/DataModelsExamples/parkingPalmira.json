@@ -1,0 +1,24 @@
+{
+	"name": "Parking PALMIRA",
+    "category": ["private","forEmployees", "forVisitors", "forStudents"],
+    "address": "Interior Internado Palmira S/N, Palmira, 62490 Cuernavaca, Mor.",
+    "description": "Estacionamiento Principal de CENIDET PALMIRA",
+	"location": [
+        [18.879787, -99.221769],
+        [18.879746, -99.221732],
+        [18.879868, -99.221625],
+        [18.879914, -99.221668],
+        [18.879787, -99.221769],
+        [18.876848, -99.220305],
+        [18.876767, -99.220005],
+        [18.876432, -99.22008],
+        [18.876315, -99.21957],
+        [18.876188, -99.219538],
+        [18.876269, -99.220015],
+        [18.876452, -99.220203],
+        [18.876629, -99.22023],
+        [18.876741, -99.2203],
+        [18.876848, -99.220305]
+    ],
+    "areaServed": "Zone_1522704214486"
+}
