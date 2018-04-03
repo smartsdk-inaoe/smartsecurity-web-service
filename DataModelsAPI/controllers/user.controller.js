@@ -1,0 +1,88 @@
+'use strict';
+
+var User= require('../models/user.model')
+
+function isEmpty (object) {
+    if (object == undefined ) return true;
+    if (object == null) return true;
+    if (object.length === 0)  return true;
+    if (typeof object === 'string' && object === "") return true;
+    return false;
+}  
+
+exports.add = function (req, res){
+	var body = req.body;
+	if (!isEmpty(body)) {
+		User.create(body)
+		.then((result)=> {
+			var data  = result.get({
+				plain: true
+            })
+            res.status(201).json(data);
+		})
+		.catch(err => {
+			res.status(400).json(err)
+		})
+	}
+	else{
+		res.status(400).json({message: "Bad request"});
+	}
+}
+
+exports.update = function(req, res){
+	var body = req.body;
+	if(!isEmpty(body)){ 
+		body["dateModified"] = new Date();
+		User.update(body, {
+			where: {
+				id: req.params.id
+			}
+		})
+		.then((result) => {
+			if(result[0] > 0){
+				res.status(200).json(result);
+			}else {
+				res.status(404).json({message: "The user cannot be updated", error: data});
+			}
+		})
+	}
+	else{
+		res.status(400).json({message: "Bad request"});
+	}
+}
+
+exports.delete = function(req, res){
+	User.update({
+		status : 0,
+		dateModified :new Date()
+	}, {
+		where: {
+			id: req.params.id
+		}
+	})
+	.then((result) => {
+		if(result[0] > 0){
+			res.status(200).json(result);
+		}else {
+			res.status(404).json({message: "The user cannot be updated"});
+		}
+	})
+}
+
+exports.getAll = function(req,res){
+	User.findAll({ where: req.query}).then(result => {
+		res.status(200).json(result);
+	})
+}
+
+exports.getById = function (req, res){
+	User.findById(req.params.id).then((result) => {
+		if (result){
+			res.status(200).json(result.get({
+				plain: true
+			}));
+		}else {
+			res.status(400).json({message: "Not found", error: result});
+		}
+	})
+}

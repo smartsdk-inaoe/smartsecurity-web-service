@@ -3,7 +3,7 @@ exports.mysql = {
   host : 'localhost',
   db : 'prueba',
   user : 'root',
-  password : 'root'
+  password : ''
 }
 //Remote database
 /*exports.mysql = {
