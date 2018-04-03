@@ -67,7 +67,12 @@ Example : /zone?status=1&owner=5
 ***GET /service/alerts/subzone/current/:idSubzone*** get all the alerts generated since midnight on especified subzone<br>
 
 ***Devices***
+
 ***GET /service/device/zone/:idZone*** get all devices on the especified zone<br>
+
+Especific Params 
+Example : /service/device/zone/:idZone?id=Smartphone_1828273&type=Device&owner=Daniel%20Torres
+
 ***GET /service/device/subzone/:idSubzone*** get all devices on the especified subzone<br>
 
 

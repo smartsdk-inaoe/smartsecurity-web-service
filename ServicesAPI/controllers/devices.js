@@ -5,14 +5,13 @@ var cb = require('ocb-sender')
 var ngsi = require('ngsi-parser')
 
 exports.getZone = async function (req,res) {
+	let queries = req.query;
 	await Zone.findOne({where : { 'idZone': req.params.idZone }})
     .then( async (zone) => {
 	  	if (zone != null){
-              
 			var dt = DateTime.local();
-            let fifteenAgo = dt.minus({ minutes: 15 });
-            
-			let query = ngsi.createQuery({
+			let fifteenAgo = dt.minus({ minutes: 15 });
+			let query = ngsi.createQuery(Object.assign({
 				id: "Device_Smartphone_.*",
 				type : "Device",
 				options : "keyValues",
@@ -20,8 +19,7 @@ exports.getZone = async function (req,res) {
 				geometry:"polygon",
 				coords : zone.location,
 				dateModified: `>=${fifteenAgo}`
-            });
-            
+			}, queries));
 			await cb.getWithQuery(query)
 			.then((result) => {
 				if (result.length > 0){
@@ -39,14 +37,13 @@ exports.getZone = async function (req,res) {
 } 
 
 exports.getSubzone = async function (req,res) {
+	let queries = req.query;
 	await Subzone.findOne({where : { 'idSubzone': req.params.idSubzone }})
     .then( async (subzone) => {
 	  	if (subzone != null){
-              
 			var dt = DateTime.local();
             let fifteenAgo = dt.minus({ minutes: 15 });
-            
-			let query = ngsi.createQuery({
+			let query = ngsi.createQuery(Object.assign({
 				id: "Device_Smartphone_.*",
 				type : "Device",
 				options : "keyValues",
@@ -54,8 +51,7 @@ exports.getSubzone = async function (req,res) {
 				geometry:"polygon",
 				coords : subzone.location,
 				dateModified: `>=${fifteenAgo}`
-            });
-            
+			}, queries));
 			await cb.getWithQuery(query)
 			.then((result) => {
 				if (result.length > 0){
