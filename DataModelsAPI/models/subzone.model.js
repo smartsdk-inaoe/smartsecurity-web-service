@@ -31,7 +31,6 @@ var subzone = sequelize.define('Subzone', {
 		get() {
 			return this.getDataValue('category').split(',')
 		}
-		
 	},
 	location:{
 		type: Sequelize.TEXT,

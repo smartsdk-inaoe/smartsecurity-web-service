@@ -7,19 +7,55 @@ var User = sequelize.define('User', {
 		type : Sequelize.STRING(100), 
 		primaryKey: true,
     },
-    refAffiliation   : Sequelize.STRING(256),
-    firstName        : Sequelize.STRING(200),
-    lastName         : Sequelize.STRING(200),
-    email            : Sequelize.STRING(100),
-    userName         : Sequelize.STRING(50),
-    password         : Sequelize.STRING(50),
-    address          : Sequelize.STRING(200),
-    phoneNumber      : Sequelize.STRING(20),
-    refDevices       : Sequelize.STRING(50),
-    refVehicles      : Sequelize.STRING(50),
-    registrationKey  : Sequelize.STRING(200),
-    resetPasswordKey : Sequelize.STRING(200),
-    registrationId   : Sequelize.STRING(256),
+    refAffiliation   : {
+		type: Sequelize.STRING(256),
+		allowNull : false
+	},
+    firstName        : {
+		type: Sequelize.STRING(200),
+		allowNull : false
+	},
+    lastName         : {
+		type : Sequelize.STRING(200),
+		allowNull : false
+	},
+    email            : {
+		type : Sequelize.STRING(100),
+		allowNull : false
+	},
+    userName         : {
+		type: Sequelize.STRING(50),
+		allowNull : false
+	},
+    password         : {
+		type : Sequelize.STRING(50),
+		allowNull : false
+	},
+    address          : {
+		type : Sequelize.STRING(200),
+		allowNull : false
+	},
+    phoneNumber      : {
+		type : Sequelize.STRING(20),
+		allowNull : false
+	},
+	
+    refDevices       : {
+		type : Sequelize.STRING(50)
+	},
+    refVehicles      : {
+		type : Sequelize.STRING(50)
+	},
+    registrationKey  : {
+		type : Sequelize.STRING(200)
+	},
+    resetPasswordKey : {
+		type : Sequelize.STRING(200)
+	},
+    registrationId   : {
+		type: Sequelize.STRING(256)
+	},
+
 	dateCreated : { 
 		type: Sequelize.DATE, 
 		defaultValue: Sequelize.NOW
