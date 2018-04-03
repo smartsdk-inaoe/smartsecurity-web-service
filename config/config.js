@@ -1,10 +1,17 @@
-
+//LOcal database
 exports.mysql = {
   host : 'localhost',
   db : 'prueba',
   user : 'root',
   password : 'root'
 }
+//Remote database
+/*exports.mysql = {
+  host : '207.249.127.16',
+  db : 'smarsdkcenidet',
+  user : 'smartsdkcenidet',
+  password : 'hdcenidet2018*'
+}*/
 
 exports.context = {
   host : 'http://207.249.127.218',
