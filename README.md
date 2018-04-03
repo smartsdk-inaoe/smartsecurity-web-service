@@ -7,7 +7,7 @@
 ### Public Data Models
 **Organization**  
 ***GET /api/organization*** get all organizations and by attributes <br>
-Example : /organization?status=1
+Example : /organization?status=1 <br>
 ***POST /api/organization*** create a new organization <br>
 ***GET /api/organization/idOrganization*** get an especific organization <br>
 ***PUT /api/organization/idOrganization***  update an especific organization <br>
@@ -15,7 +15,7 @@ Example : /organization?status=1
 
 **Zones**  
 ***GET /api/zone*** get all Zones and by attributes<br>
-Example : /zone?status=1&owner=5
+Example : /zone?status=1&owner=5 <br>
 ***POST /api/zone*** create a new Zone <br>
 ***GET /api/zone/idZone*** get an especific Zone <br>
 ***PUT /api/zone/idZone***  update an especific Zone <br>
@@ -60,20 +60,17 @@ Example : /zone?status=1&owner=5
 
 ## Especial Services Routes
 
-**Alerts**
+**Alerts**<br>
 ***GET /service/alerts/zone/history/:idZone*** get the last 10 alerts on the especified zone<br>
 ***GET /service/alerts/zone/current/:idZone*** get all the alerts generated since midnight on especified zone<br>
 ***GET /service/alerts/subzone/history/:idSubzone*** get the last 10 alerts on the especified subzone<br>
 ***GET /service/alerts/subzone/current/:idSubzone*** get all the alerts generated since midnight on especified subzone<br>
 
-***Devices***
-
+**Devices**<br>
 ***GET /service/device/zone/:idZone*** get all devices on the especified zone<br>
-Especific Params 
-Example : /service/device/zone/:idZone?id=Smartphone_1828273&type=Device&owner=Daniel%20Torres
+Especific Params example : /service/device/zone/:idZone?id=Smartphone_1828273&type=Device&owner=Daniel%20Torres
 ***GET /service/device/subzone/:idSubzone*** get all devices on the especified subzone<br>
-Especific Params 
-Example : /service/device/zone/:idSubzone?id=Smartphone_1828273&type=Device&owner=Daniel%20Torres
+Especific Params example : /service/device/zone/:idSubzone?id=Smartphone_1828273&type=Device&owner=Daniel%20Torres
 
 
 
