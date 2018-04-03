@@ -54,6 +54,7 @@ var device = sequelize.define('Device', {
 		type: Sequelize.CHAR(1),
 		defaultValue: "1"
 	}
-});
+},
+{ freezeTableName: true});
 device.sync() 
 module.exports = device;

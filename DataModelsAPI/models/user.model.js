@@ -2,7 +2,7 @@
 const Sequelize = require('sequelize');
 var sequelize = require('../db/sequelize');
 
-var User = sequelize.define('User', {
+var user = sequelize.define('user', {
 	id : { 
 		type : Sequelize.STRING(100), 
 		primaryKey: true,
@@ -39,7 +39,6 @@ var User = sequelize.define('User', {
 		type : Sequelize.STRING(20),
 		allowNull : false
 	},
-	
     refDevices       : {
 		type : Sequelize.STRING(50)
 	},
@@ -68,6 +67,7 @@ var User = sequelize.define('User', {
 		type: Sequelize.CHAR(1),
 		defaultValue: "1"
 	}
-},{ freezeTableName: true});
-User.sync() 
-module.exports = User;
+},
+{ freezeTableName: true});
+user.sync() 
+module.exports = user;

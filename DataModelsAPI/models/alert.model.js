@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 
 var sequelize = require('../db/sequelize');
 
-var alert = sequelize.define('Alert', {
+var alert = sequelize.define('alert', {
 	idAlert: { 
 		type : Sequelize.STRING(100),  
 		primaryKey: true,
@@ -55,5 +55,6 @@ var alert = sequelize.define('Alert', {
 		type: Sequelize.CHAR(1),
 		defaultValue: "1"
 	}
-});
+},
+{ freezeTableName: true});
 module.exports = alert;

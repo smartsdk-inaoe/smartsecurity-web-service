@@ -1,10 +1,8 @@
 
 const Sequelize = require('sequelize');
-
-//var config = require('../../config/config');
 var sequelize = require('../db/sequelize');
 
-var organization = sequelize.define('Organization', {
+var organization = sequelize.define('organization', {
 	idOrganization : { 
 		type : Sequelize.STRING(100), 
 		primaryKey: true,
@@ -29,6 +27,7 @@ var organization = sequelize.define('Organization', {
 		type: Sequelize.CHAR(1),
 		defaultValue: "1"
 	}
-});
+},
+{ freezeTableName: true});
 organization.sync() 
 module.exports = organization;
