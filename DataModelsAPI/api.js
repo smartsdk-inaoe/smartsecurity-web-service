@@ -10,6 +10,7 @@ var roadRoute 					= require('./routes/road.route')
 var roadSegmentRoute 			= require('./routes/roadSegment.route')
 var roadSegmentLaneUsageRoute 	= require('./routes/roadSegmentLaneUsage.route') 
 var deviceTokens = require('./routes/deviceTokens.route')
+var user = require('./routes/user.route')
 
 app.route('/')
 	.get((req, res, next) => {res.json({ message: 'Welcome to DataModels API REST' });
@@ -23,5 +24,6 @@ app.use(roadRoute)
 app.use(roadSegmentRoute)
 app.use(roadSegmentLaneUsageRoute)
 app.use(deviceTokens)
+app.use(user)
 
 module.exports = app;
