@@ -14,7 +14,8 @@ exports.keyrock = "207.249.127.96:8001"
   password : 'hdcenidet2018*'
 }*/
 exports.context = {
-  host : 'http://207.249.127.218',
+  //host : 'http://207.249.127.218',
+  host:'http://130.206.113.226',
   v : "v2",
   port : 1026
 }

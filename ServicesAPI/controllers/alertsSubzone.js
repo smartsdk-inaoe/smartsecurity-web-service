@@ -21,7 +21,7 @@ exports.getHistory = async function (req,res) {
 				coords : subzone.location
             });
 
-            await fetch(`http://${context.host}:${context.port}/${context.v}/entities${queryToCount}`, {
+            await fetch(`${context.host}:${context.port}/${context.v}/entities${queryToCount}`, {
                 method: 'GET',
                 headers: {
                     'Access-Control-Allow-Methods':'GET, POST, OPTIONS, PUT, PATCH, DELETE'
@@ -82,7 +82,7 @@ exports.getCurrent = async function (req,res) {
 				dateObserved: `>=${midnight}`
             });
 
-            await fetch(`http://${context.host}:${context.port}/${context.v}/entities${queryToCount}`, {
+            await fetch(`${context.host}:${context.port}/${context.v}/entities${queryToCount}`, {
                 method: 'GET',
                 headers: {
                     'Access-Control-Allow-Methods':'GET, POST, OPTIONS, PUT, PATCH, DELETE'

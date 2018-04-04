@@ -21,7 +21,7 @@ exports.getHistory = async function (req,res) {
 				coords : zone.location
             });
 
-            await fetch(`http://${context.host}:${context.port}/${context.v}/entities${queryToCount}`, {
+            await fetch(`${context.host}:${context.port}/${context.v}/entities${queryToCount}`, {
                 method: 'GET',
                 headers: {
                     'Access-Control-Allow-Methods':'GET, POST, OPTIONS, PUT, PATCH, DELETE'
@@ -42,7 +42,8 @@ exports.getHistory = async function (req,res) {
 					params.offset = off - 10
 				}
                 let query = ngsi.createQuery(params);
-                console.log(query)
+				console.log(query)
+				
 				await cb.getWithQuery(query)
 				.then((result) => {
 					if (result.length > 0){
@@ -52,11 +53,11 @@ exports.getHistory = async function (req,res) {
 					}
 				})
 				.catch((error) =>{
-					res.status(500).send(error);
+					res.status(500).send("eeror 1");
                 })
 			})
 			.catch((error) =>{
-				res.status(500).send(error);
+				res.status(500).send("error");
 			})
 				
 	  	}  	
@@ -81,7 +82,7 @@ exports.getCurrent = async function (req,res) {
 				dateObserved: `>=${midnight}`
             });
 
-            await fetch(`http://${context.host}:${context.port}/${context.v}/entities${queryToCount}`, {
+            await fetch(`${context.host}:${context.port}/${context.v}/entities${queryToCount}`, {
                 method: 'GET',
                 headers: {
                     'Access-Control-Allow-Methods':'GET, POST, OPTIONS, PUT, PATCH, DELETE'
@@ -104,7 +105,7 @@ exports.getCurrent = async function (req,res) {
 					dateObserved: `>=${midnight}`,
 					limit : count,
 				});
-
+				console.log(query)
 				await cb.getWithQuery(query)
 				.then((result) => {
 					if (result.length > 0){
