@@ -58,6 +58,27 @@ Example : /zone?status=1&owner=5 <br>
 ***PUT /api/device/token/idDeviceToken***  update an especific DeviceToken <br>
 ***DELETE /api/device/token/idDeviceToken***  update an especific DeviceToken <br>
 
+**User**  
+***GET /api/user*** get all User and by attributes<br>
+***POST /api/user*** create a new User <br>
+***GET /api/user*** get an especific User <br>
+***PUT /api/user***  update an especific User <br>
+***DELETE /api/user***  update an especific User <br>
+***POST /api/user/login*** obtain the token from keystone
+```json
+  {
+    'email': 'email',
+    'password' : 'password'
+  }
+```
+Response  
+
+```json
+  {
+    'token': '&lt;token&gt;',
+    'User' : {}
+  }
+```
 ## Especial Services Routes
 
 **Alerts**<br>
