@@ -18,11 +18,15 @@ app.route('/alerts/subzone/history/:idSubzone')
 app.route('/alerts/subzone/current/:idSubzone')
 .get(alertsSubzone.getCurrent)
 
+
 app.route('/devices/zone/:idZone')
 .get(devices.getZone)
 
 app.route('/devices/subzone/:idSubzone')
 .get(devices.getSubzone)
+
+app.route('/devices/zone/:idZone/owner')
+.get(devices.getZoneByOwner)
 
 app.route('/query')
 .post(query)
