@@ -1,9 +1,9 @@
 //LOcal database
 exports.mysql = {
-  host : '10.0.0.7',
+  host : 'localhost',
   db : 'prueba',
   user : 'root',
-  password : 'secret'
+  password : ''
 }
 exports.keyrock = "207.249.127.96:8001"
 //Remote database

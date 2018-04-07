@@ -46,7 +46,7 @@ exports.add = async function (req, res){
 			})
 		})
 		.catch(err => {
-			res.status(400).json("error inserting ")
+			res.status(400).json(err)
 		})
 	}
 	else{

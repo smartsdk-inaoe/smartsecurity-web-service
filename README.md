@@ -54,9 +54,9 @@ Example : /zone?status=1&owner=5 <br>
 **DeviceToken**  
 ***GET /api/device/token*** get all DeviceToken and by attributes<br>
 ***POST /api/device/token*** create a new DeviceToken <br>
-***GET /api/device/token/idDeviceToken*** get an especific DeviceToken <br>
-***PUT /api/device/token/idDeviceToken***  update an especific DeviceToken <br>
-***DELETE /api/device/token/idDeviceToken***  update an especific DeviceToken <br>
+***GET /api/device/token/refDevice*** get an especific DeviceToken <br>
+***PUT /api/device/token/refDevice***  update an especific DeviceToken <br>
+***DELETE /api/device/token/refDevice***  update an especific DeviceToken <br>
 
 **User**  
 ***GET /api/user*** get all User and by attributes<br>
@@ -64,7 +64,7 @@ Example : /zone?status=1&owner=5 <br>
 ***GET /api/user*** get an especific User <br>
 ***PUT /api/user***  update an especific User <br>
 ***DELETE /api/user***  update an especific User <br>
-***POST /api/user/login*** obtain the token from keystone
+***POST /api/user/login*** obtain the token from keystone and data user 
 ```json
   {
     'email': 'email',
@@ -76,11 +76,10 @@ Response
 ```json
   {
     'token': '&lt;token&gt;',
-    'User' : {}
+    'user' : {}
   }
 ```
 ## Especial Services Routes
-
 **Alerts**<br>
 ***GET /service/alerts/zone/history/:idZone*** get the last 10 alerts on the especified zone<br>
 ***GET /service/alerts/zone/current/:idZone*** get all the alerts generated since midnight on especified zone<br>
