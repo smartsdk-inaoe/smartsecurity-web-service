@@ -38,7 +38,7 @@ exports.update = function(req, res){
 		body["dateModified"] = new Date();
 		deviceToken.update(body, {
 			where: {
-				idDeviceToken: req.params.idDeviceToken
+				refDevice: req.params.refDevice
 			}
 		})
 		.then((result) => {
@@ -60,7 +60,7 @@ exports.delete = function(req, res){
 		dateModified :new Date()
 	}, {
 		where: {
-			idDeviceToken: req.params.idDeviceToken
+			refDevice: req.params.refDevice
 		}
 	})
 	.then((result) => {
@@ -79,7 +79,7 @@ exports.getAll = function(req,res){
 }
 
 exports.getById = function (req, res){
-	deviceToken.findById(req.params.idDeviceToken).then((result) => {
+	deviceToken.findById(req.params.refDevice).then((result) => {
 		if (result){
 			res.status(200).json(result.get({
 				plain: true

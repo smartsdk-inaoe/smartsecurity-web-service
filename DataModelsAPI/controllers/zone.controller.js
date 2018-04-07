@@ -14,6 +14,7 @@ function isEmpty (object) {
 
 exports.add = async function (req, res){
 	var body = req.body;
+	console.log(body)
 	let type = "Zone";
 	body[`id${type}`] = `${type}_${Date.now()}`;
 
