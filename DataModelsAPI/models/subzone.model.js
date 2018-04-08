@@ -68,6 +68,6 @@ var subzone = sequelize.define('subzone', {
 		defaultValue: "1"
 	}
 },
-{ freezeTableName: true});
+{freezeTableName: true});
 subzone.sync() 
 module.exports = subzone;
