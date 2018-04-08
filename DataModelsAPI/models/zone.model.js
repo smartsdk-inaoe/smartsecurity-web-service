@@ -70,6 +70,6 @@ var zone = sequelize.define('zone', {
 		defaultValue: "1"
 	}
 },
-{ freezeTableName: true});
+{freezeTableName: true});
 zone.sync() 
 module.exports = zone;

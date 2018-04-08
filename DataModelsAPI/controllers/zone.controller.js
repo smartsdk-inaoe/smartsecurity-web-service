@@ -16,7 +16,7 @@ exports.add = async function (req, res){
 	var body = req.body;
 	let type = "Zone";
 	body[`id${type}`] = `${type}_${Date.now()}`;
-
+	console.log("entro");
 	if (!isEmpty(body)) {
 		zone.create(body)
 		.then((result)=> {
