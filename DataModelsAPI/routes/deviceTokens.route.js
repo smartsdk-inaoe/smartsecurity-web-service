@@ -9,7 +9,7 @@ var controller = require('../controllers/deviceToken.controller');
 app.route('/device/token')
     .get(controller.getAll) // /zones?status =  1 || /zones?status=0
     .post(controller.add)  
-app.route('/device/token/:idDeviceToken')
+app.route('/device/token/:refDevice')
     .get(controller.getById)
     .put(controller.update)
     .delete(controller.delete)

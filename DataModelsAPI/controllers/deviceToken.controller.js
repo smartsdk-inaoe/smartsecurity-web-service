@@ -34,8 +34,10 @@ exports.add = function (req, res){
 
 exports.update = function(req, res){
 	var body = req.body;
+	console.log(body)
 	if(!isEmpty(body)){ 
 		body["dateModified"] = new Date();
+
 		deviceToken.update(body, {
 			where: {
 				refDevice: req.params.refDevice
@@ -88,13 +90,15 @@ exports.getAll = function(req,res){
 }
 
 exports.getById = function (req, res){
-	deviceToken.findById(req.params.refDevice).then((result) => {
+	console.log(req.params.refDevice)
+	let type = "DeviceToken";
+	deviceToken.findById(`${type}_${req.params.refDevice}`).then((result) => {
 		if (result){
 			res.status(200).json(result.get({
 				plain: true
 			}));
 		}else {
-			res.status(400).json({message: "An error has ocurred", error: result});
+			res.status(404).json({message: "Not Found", error: result});
 		}
 	})
 	.catch(err => {
