@@ -20,7 +20,6 @@ exports.add = function (req, res){
 			res.status(200).send(created)
 		})
 		.catch(err => {
-			console.log("yes")
 			res.status(400).json(err)
 		})
 	}
