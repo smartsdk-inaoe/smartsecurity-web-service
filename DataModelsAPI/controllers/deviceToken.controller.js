@@ -14,16 +14,13 @@ exports.add = function (req, res){
 	var body = req.body;
 	let type = "DeviceToken";
 	body[`id${type}`] = `${type}_${body["refDevice"]}`;
-
 	if (!isEmpty(body)) {
-		deviceToken.create(body)
-		.then((result)=> {
-			var data  = result.get({
-				plain: true
-            })
-            res.status(201).json(data);
+		deviceToken.upsert(body)
+		.then(created => {
+			res.status(200).send(created)
 		})
 		.catch(err => {
+			console.log("yes")
 			res.status(400).json(err)
 		})
 	}
