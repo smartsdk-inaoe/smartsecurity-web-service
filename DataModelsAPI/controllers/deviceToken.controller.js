@@ -13,7 +13,7 @@ function isEmpty (object) {
 exports.add = function (req, res){
 	var body = req.body;
 	let type = "DeviceToken";
-	body[`id${type}`] = `${type}_${Date.now()}`;
+	body[`id${type}`] = `${type}_${body["refDevice"]}`;
 
 	if (!isEmpty(body)) {
 		deviceToken.create(body)
