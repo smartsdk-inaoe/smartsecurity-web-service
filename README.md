@@ -1,5 +1,21 @@
 # Smartsecurity Web Service
 
+### Clone this repo
+```
+  git clone https://github.com/cenidetiot/smartsecurity-web-service.git
+ 
+```
+
+### Install requirements 
+```
+  npm i
+ 
+```
+### Run 
+```
+  npm start 
+ 
+```
 
 ## DataModels APIREST Routes
 
