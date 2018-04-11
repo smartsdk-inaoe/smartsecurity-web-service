@@ -13,15 +13,11 @@ function isEmpty (object) {
 exports.add = function (req, res){
 	var body = req.body;
 	let type = "DeviceToken";
-	body[`id${type}`] = `${type}_${Date.now()}`;
-
+	body[`id${type}`] = `${type}_${body["refDevice"]}`;
 	if (!isEmpty(body)) {
-		deviceToken.create(body)
-		.then((result)=> {
-			var data  = result.get({
-				plain: true
-            })
-            res.status(201).json(data);
+		deviceToken.upsert(body)
+		.then(created => {
+			res.status(200).send(created)
 		})
 		.catch(err => {
 			res.status(400).json(err)
@@ -34,11 +30,13 @@ exports.add = function (req, res){
 
 exports.update = function(req, res){
 	var body = req.body;
+	console.log(body)
 	if(!isEmpty(body)){ 
 		body["dateModified"] = new Date();
+
 		deviceToken.update(body, {
 			where: {
-				idDeviceToken: req.params.idDeviceToken
+				refDevice: req.params.refDevice
 			}
 		})
 		.then((result) => {
@@ -47,6 +45,9 @@ exports.update = function(req, res){
 			}else {
 				res.status(404).json({message: "The entity cannot be updated", error: data});
 			}
+		})
+		.catch(err => {
+			res.status(400).json(err)
 		})
 	}
 	else{
@@ -60,7 +61,7 @@ exports.delete = function(req, res){
 		dateModified :new Date()
 	}, {
 		where: {
-			idDeviceToken: req.params.idDeviceToken
+			refDevice: req.params.refDevice
 		}
 	})
 	.then((result) => {
@@ -70,22 +71,33 @@ exports.delete = function(req, res){
 			res.status(404).json({message: "The entity cannot be updated"});
 		}
 	})
+	.catch(err => {
+		res.status(400).json(err)
+	})
 }
 
 exports.getAll = function(req,res){
 	deviceToken.findAll({ where: req.query}).then(result => {
 		res.status(200).json(result);
 	})
+	.catch(err => {
+		res.status(400).json(err)
+	})
 }
 
 exports.getById = function (req, res){
-	deviceToken.findById(req.params.idDeviceToken).then((result) => {
+	console.log(req.params.refDevice)
+	let type = "DeviceToken";
+	deviceToken.findById(`${type}_${req.params.refDevice}`).then((result) => {
 		if (result){
 			res.status(200).json(result.get({
 				plain: true
 			}));
 		}else {
-			res.status(400).json({message: "An error has ocurred", error: result});
+			res.status(404).json({message: "Not Found", error: result});
 		}
+	})
+	.catch(err => {
+		res.status(400).json(err)
 	})
 }

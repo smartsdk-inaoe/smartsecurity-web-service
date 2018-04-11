@@ -69,7 +69,7 @@ exports.getCurrent = async function (req,res) {
     .then( async (zone) => {
 	  	if (zone != null){
 
-			var dt = DateTime.local();
+			var dt = DateTime.utc();
 			let midnight = dt.minus({ days: 1 }).endOf('day');
 
 			let queryToCount = ngsi.createQuery({

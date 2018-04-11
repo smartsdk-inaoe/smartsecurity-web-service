@@ -14,6 +14,7 @@ function isEmpty (object) {
 
 exports.add = async function (req, res){
 	var body = req.body;
+	console.log(body)
 	let type = "Zone";
 	body[`id${type}`] = `${type}_${Date.now()}`;
 	console.log("entro");
@@ -45,7 +46,7 @@ exports.add = async function (req, res){
 			})
 		})
 		.catch(err => {
-			res.status(400).json("error inserting ")
+			res.status(400).json(err)
 		})
 	}
 	else{

@@ -3,7 +3,7 @@
   host : 'localhost',
   db : 'prueba',
   user : 'root',
-  password : 'root'
+  password : ''
 }*/
 exports.keyrock = "207.249.127.96:8001"
 //Remote database

@@ -2,8 +2,13 @@
 const Sequelize = require('sequelize');
 var sequelize = require('../db/sequelize');
 
+<<<<<<< HEAD
 var user = sequelize.define('user', {
 	id: { 
+=======
+var user = sequelize.define('User', {
+	id : { 
+>>>>>>> 3accfd81f95871dfc9784c0bd1c08a818bbfb36a
 		type : Sequelize.STRING(100), 
 		primaryKey: true,
     },
