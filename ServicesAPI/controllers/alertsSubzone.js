@@ -46,11 +46,7 @@ exports.getHistory = async function (req,res) {
                 console.log(query)
 				await cb.getWithQuery(query)
 				.then((result) => {
-					if (result.length > 0){
-						res.status(200).json(result)
-					}else{
-						res.status(200).json({})
-					}
+					res.status(200).json(result)
 				})
 				.catch((error) =>{
 					res.status(500).send(error);
@@ -108,11 +104,7 @@ exports.getCurrent = async function (req,res) {
 
 				await cb.getWithQuery(query)
 				.then((result) => {
-					if (result.length > 0){
-						res.status(200).json(result)
-					}else{
-						res.status(200).json({})
-					}
+					res.status(200).json(result)
 				})
 				.catch((error) =>{
 					res.status(500).send(error);
