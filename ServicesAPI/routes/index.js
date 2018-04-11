@@ -18,7 +18,6 @@ app.route('/alerts/subzone/history/:idSubzone')
 app.route('/alerts/subzone/current/:idSubzone')
 .get(alertsSubzone.getCurrent)
 
-
 app.route('/devices/zone/:idZone')
 .get(devices.getZone)
 

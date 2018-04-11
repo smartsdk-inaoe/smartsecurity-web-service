@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 
 var sequelize = require('../db/sequelize');
+var locations = require('./functions/locations');
 
 var alert = sequelize.define('alert', {
 	idAlert: { 

@@ -26,7 +26,12 @@ app.use('/api', dataModelsApi)
 app.use('/crate', crateApi)
 app.use('/service', servicesApi)
 
-var port = process.env.PORT || 4005;
+//Middleware to catch and handle a 404 error (an unidentified route)
+/*app.use(function(req, res) {
+	res.status(404).send({ url: req.originalUrl + ' not found' })
+  });
+*/
+const port = process.env.PORT || 4005;
 
 app.listen(port, function(){
 	console.log(" Servidor del api rest escuchando en http://localhost:" + port);

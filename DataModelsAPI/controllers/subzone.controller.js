@@ -23,7 +23,6 @@ exports.add = async function (req, res){
 			var data  = result.get({
 				plain: true
 			})
-			
 			data['location'] = data['location'].join(';')
 			data.location  = {
 				type: "geo:polygon",
