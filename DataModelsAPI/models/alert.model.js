@@ -22,13 +22,7 @@ var alert = sequelize.define('alert', {
 	},
 	location:{
 		type: Sequelize.TEXT,
-		allowNull: false,
-		set(location) {
-			this.setDataValue('location', location.join(";"));
-		},
-		get() {
-			return locations.getPoly(this.getDataValue('location'))
-		}
+		allowNull: false
 	},
 	address:{
 		type: Sequelize.TEXT
