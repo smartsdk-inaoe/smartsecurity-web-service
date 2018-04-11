@@ -65,9 +65,9 @@ exports.getCurrent = async function (req,res) {
     .then( async (zone) => {
 	  	if (zone != null){
 
-			var dt = DateTime.utc();
+			//var dt = DateTime.utc()
+			var dt = DateTime.local()
 			let midnight = dt.minus({ days: 1 }).endOf('day');
-
 			let queryToCount = ngsi.createQuery({
 				id: "Alert:Device_Smartphone_.*",
 				type : "Alert",
