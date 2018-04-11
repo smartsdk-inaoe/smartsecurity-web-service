@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 
 var sequelize = require('../db/sequelize');
+var locations = require('./functions/locations');
 
 var alert = sequelize.define('alert', {
 	idAlert: { 
@@ -21,7 +22,13 @@ var alert = sequelize.define('alert', {
 	},
 	location:{
 		type: Sequelize.TEXT,
-		allowNull: false
+		allowNull: false,
+		set(location) {
+			this.setDataValue('location', location.join(";"));
+		},
+		get() {
+			return locations.getPoly(this.getDataValue('location'))
+		}
 	},
 	address:{
 		type: Sequelize.TEXT
