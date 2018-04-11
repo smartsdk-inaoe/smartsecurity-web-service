@@ -4,7 +4,7 @@ var app         = express();
 var alertsZone = require('../controllers/alertsZone')
 var alertsSubzone = require('../controllers/alertsSubzone')
 var devices = require('../controllers/devices')
-var query = require('../controllers/query').query
+var functions = require('../controllers/functions')
 
 app.route('/alerts/zone/history/:idZone')
 .get(alertsZone.getHistory)
@@ -28,7 +28,10 @@ app.route('/devices/zone/:idZone/owner')
 .get(devices.getZoneByOwner)
 
 app.route('/query')
-.post(query)
+.post(functions.query)
+
+app.route('/zone/point')
+.post(functions.pointCampus)
 
 
 module.exports = app;

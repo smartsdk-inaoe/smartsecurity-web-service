@@ -108,7 +108,22 @@ Especific Params example : /service/device/zone/:idZone?id=Smartphone_1828273&ty
 ***GET /service/device/subzone/:idSubzone*** get all devices on the especified subzone<br>
 Especific Params example : /service/device/zone/:idSubzone?id=Smartphone_1828273&type=Device&owner=Daniel%20Torres
 
-
+**Especial Functions**<br>
+***POST /service/zone/point*** Determine if a point is on a zone
+```json
+  {
+    'point' : [x, y]
+    'polygon' [[a,b],[c,d],[e,f],[a,b]]
+  }
+```
+***POST /service/query*** Determine if a point is on a zone
+Example
+```json
+  {
+    'id' : "Entity id"
+    'type' : "Entity type"
+  }
+```
 
 ## Crate API Routes (Time Services)
 
