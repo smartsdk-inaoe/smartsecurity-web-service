@@ -127,3 +127,8 @@ Example
 
 ## Crate API Routes (Time Services)
 
+**GET /crate/locationDate?date=2018-02-08**  get all devices of an specific date
+**GET /crate/locationOwnerDate?owner=41&date=2018-02-08 **
+**GET /crate/locationDeviceDate?idDevice=Device_Smartphone_b0234f7b3f365bf3&date=2018-02-08 **
+**GET /crate/locationOwnerDateTime?owner=41&date=2018-02-08&time=12**
+**GET /crate/locationDeviceDateTime?idDevice=Device_Smartphone_b0234f7b3f365bf3&date=2018-02-08&time=12**
