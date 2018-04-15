@@ -4,7 +4,6 @@ var app         = express();
 
 
 var zoneRoute  					= require('./routes/zone.route');
-var subzoneRoute				= require('./routes/subzone.route');
 var parkingRoute				= require('./routes/offStreetParking.route');
 var roadRoute 					= require('./routes/road.route')
 var roadSegmentRoute 			= require('./routes/roadSegment.route')
@@ -18,7 +17,6 @@ app.route('/')
 
 
 app.use(zoneRoute);
-app.use(subzoneRoute);
 app.use(parkingRoute)
 app.use(roadRoute)
 app.use(roadSegmentRoute)

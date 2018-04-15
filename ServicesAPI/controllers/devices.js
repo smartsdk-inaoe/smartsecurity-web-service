@@ -1,6 +1,5 @@
 const { DateTime } = require('luxon');
 var Zone = require('../../DataModelsAPI/models/zone.model');
-var Subzone = require('../../DataModelsAPI/models/subzone.model');
 var user = require('../../DataModelsAPI/models/user.model')
 var cb = require('ocb-sender')
 var ngsi = require('ngsi-parser')
@@ -40,33 +39,7 @@ exports.getZone = async function (req,res) {
 	});
 } 
 
-exports.getSubzone = async function (req,res) {
-	let queries = req.query;
-	await Subzone.findOne({where : { 'idSubzone': req.params.idSubzone }})
-    .then( async (subzone) => {
-	  	if (subzone != null){
-			var dt = DateTime.local();
-            let fifteenAgo = dt.minus({ minutes: 15 });
-			let query = ngsi.createQuery(Object.assign({
-				id: "Device_Smartphone_.*",
-				type : "Device",
-				options : "keyValues",
-				georel :"coveredBy",
-				geometry:"polygon",
-				coords : subzone.location,
-				dateModified: `>=${fifteenAgo}`
-			}, queries));
-			await cb.getWithQuery(query)
-			.then((result) => {
-				res.status(200).json(result)
-			})
-			.catch((error) =>{
-				res.status(500).send(error);
-            })
-            
-	  	}  	
-	});
-} 
+
 
 exports.getZoneByOwner = async function (req,res) {
 	let queries = req.query;
