@@ -2,7 +2,7 @@
 const Sequelize = require('sequelize');
 var sequelize = require('../db/sequelize');
 
-var user = sequelize.define('MobileUser', {
+var user = sequelize.define('mobileUser', {
 	id : { 
 		type : Sequelize.STRING(100), 
 		primaryKey: true,
