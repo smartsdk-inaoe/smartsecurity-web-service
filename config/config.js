@@ -8,9 +8,10 @@
 exports.keyrock = "207.249.127.96:8001"
 //Remote database
 exports.mysql = {
-  host : '207.249.127.16',
+  host : '35.196.174.137',
+  //host : '207.249.127.16',
   db : 'smarsdkcenidet',
-  user : 'smartsdkcenidet',
+  user : 'root',
   password : 'hdcenidet2018*'
 }
 exports.context = {
