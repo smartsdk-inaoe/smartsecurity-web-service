@@ -31,7 +31,12 @@ var zone = sequelize.define('zone', {
 			this.setDataValue('category', category.join(","));
 		},
 		get() {
-			return this.getDataValue('category').split(',')
+			if(this.getDataValue('category') === null){
+				return null;
+			}
+			else{
+				return this.getDataValue('category').split(',')
+			}
 		}	
 	},
 	location:{

@@ -15,19 +15,15 @@ exports.getZone = async function (req,res) {
 				id: "Device_Smartphone_.*",
 				type : "Device",
 				options : "keyValues",
-				//georel :"coveredBy",
-				//geometry:"polygon",
-				//coords : zone.location,
-				//dateModified: `>=${fifteenAgo}`
+				georel :"coveredBy",
+				geometry:"polygon",
+				coords : zone.location,
+				dateModified: `>=${fifteenAgo}`
 			}, queries));
 			console.log(query)
 			await cb.getWithQuery(query)
 			.then((result) => {
-				if (result.length > 0){
-					res.status(200).json(result)
-				}else{
-					res.status(200).json({})
-				}
+				res.status(200).json(result)
 			})
 			.catch((error) =>{
 				res.status(500).send(error);
@@ -56,10 +52,10 @@ exports.getZoneByOwner = async function (req,res) {
 						type : "Device",
 						options : "keyValues",
 						owner : user.id,
-						//georel :"coveredBy",
-						//geometry:"polygon",
-						//coords : zone.location,
-						//dateModified: `>=${fifteenAgo}`
+						georel :"coveredBy",
+						geometry:"polygon",
+						coords : zone.location,
+						dateModified: `>=${fifteenAgo}`
 					});
 					console.log(query)
 					await cb.getWithQuery(query)
