@@ -38,10 +38,10 @@ var zone = sequelize.define('zone', {
 		get() {
 			let category = this.getDataValue('category') 
 			if (category !== null && category !==undefined){
-				return category 
+				return category.split(',') 
 			}
 			else {
-				return null
+				return []
 			}
 		}	
 	},
