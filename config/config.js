@@ -11,6 +11,7 @@ exports.mysql = {
   host : '35.196.174.137',
   //host : '207.249.127.16',
   db : 'smarsdkcenidet',
+  //user : 'smartsdkcenidet',
   user : 'root',
   password : 'hdcenidet2018*'
 }
