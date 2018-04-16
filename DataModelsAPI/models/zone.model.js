@@ -31,12 +31,12 @@ var zone = sequelize.define('zone', {
 			this.setDataValue('category', category.join(","));
 		},
 		get() {
-			/*if(this.getDataValue('category') === null){
+			if(this.getDataValue('category') === null){
 				return null;
 			}
-			else{*/
+			else{
 				return this.getDataValue('category').split(',')
-			//}
+			}
 		}	
 	},
 	location:{
