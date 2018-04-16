@@ -60,6 +60,9 @@ var roadSegment = sequelize.define('roadSegment', {
     },
     minimumAllowedSpeed:{
         type: Sequelize.INTEGER
+	},
+	width : {
+        type: Sequelize.INTEGER
     },
 	dateCreated : { 
 		type: Sequelize.DATE, 

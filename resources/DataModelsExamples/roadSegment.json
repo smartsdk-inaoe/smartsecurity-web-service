@@ -20,5 +20,6 @@
     "endPoint": [18.876982, -99.220337],
     "totalLaneNumber": 2,
     "maximumAllowedSpeed": 20 ,
-    "minimumAllowedSpeed": 10
+    "minimumAllowedSpeed": 10,
+    "width": 3
 }
