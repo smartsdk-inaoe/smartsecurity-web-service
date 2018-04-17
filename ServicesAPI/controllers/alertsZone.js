@@ -104,7 +104,7 @@ exports.getCurrent = async function (req,res) {
 				await cb.getWithQuery(query)
 				.then((result) => {
 				
-					res.status(200).json(result)
+					res.status(200).json(result.reverse())
 					
 				})
 				.catch((error) =>{
