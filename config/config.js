@@ -17,7 +17,7 @@ exports.mysql = {
 }
 exports.context = {
   //host : 'http://207.249.127.218',
-  host:'http://130.206.113.226',
+  host:'http://35.196.174.137',
   v : "v2",
   port : 1026
 }
