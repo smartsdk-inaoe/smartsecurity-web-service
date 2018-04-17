@@ -7,10 +7,6 @@ var user = sequelize.define('mobileUser', {
 		type : Sequelize.STRING(100), 
 		primaryKey: true,
     },
-    refAffiliation   : {
-		type: Sequelize.STRING(256),
-		allowNull : false
-	},
     firstName        : {
 		type: Sequelize.STRING(200),
 		allowNull : false
