@@ -31,7 +31,12 @@ var user = sequelize.define('mobileUser', {
 	},
     phoneNumber      : {
 		type : Sequelize.STRING(20),
-		allowNull : false
+		allowNull : false,
+		set(phoneNumber) {
+				if(phoneNumber!== null){
+					this.setDataValue('phoneNumber', phoneNumber.substring(1, phoneNumber.length) );
+				}
+		},
 	},
 	/*
   refDevices       : {
