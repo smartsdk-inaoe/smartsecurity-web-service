@@ -75,6 +75,7 @@ exports.delete = function(req, res){
 }
 
 exports.getAll = function(req,res){
+	console.log(req.query)
 	User.findAll({ where: req.query}).then(result => {
 		res.status(200).json(result);
 	})
