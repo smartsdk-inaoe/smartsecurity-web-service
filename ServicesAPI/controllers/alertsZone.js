@@ -46,7 +46,7 @@ exports.getHistory = async function (req,res) {
 				
 				await cb.getWithQuery(query)
 				.then((result) => {
-					res.status(200).json(result)
+					res.status(200).json(result.reverse())
 				})
 				.catch((error) =>{
 					res.status(500).send("eeror 1");

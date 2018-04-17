@@ -51,11 +51,11 @@ exports.getZoneByOwner = async function (req,res) {
 						id: "Device_Smartphone_.*",
 						type : "Device",
 						options : "keyValues",
-						owner : user.id,
 						georel :"coveredBy",
 						geometry:"polygon",
 						coords : zone.location,
-						dateModified: `>=${fifteenAgo}`
+						dateModified: `>=${fifteenAgo}`,
+						owner : user.id
 					});
 					console.log(query)
 					await cb.getWithQuery(query)
