@@ -64,5 +64,5 @@ var user = sequelize.define('mobileUser', {
 	}
 },
 { freezeTableName: true});
-user.sync({force : true}) 
+user.sync() 
 module.exports = user;
