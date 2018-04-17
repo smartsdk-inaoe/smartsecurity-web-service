@@ -20,16 +20,14 @@ var user = sequelize.define('mobileUser', {
 		allowNull : false
 	},
     userName         : {
-		type: Sequelize.STRING(50),
-		allowNull : false
+		type: Sequelize.STRING(50)
 	},
     password         : {
 		type : Sequelize.STRING(50),
 		allowNull : false
 	},
     address          : {
-		type : Sequelize.STRING(200),
-		allowNull : false
+		type : Sequelize.STRING(200)
 	},
     phoneNumber      : {
 		type : Sequelize.STRING(20),
