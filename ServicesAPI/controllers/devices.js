@@ -55,7 +55,7 @@ exports.getZoneByOwner = async function (req,res) {
 						georel :"coveredBy",
 						geometry:"polygon",
 						coords : zone.location,
-						dateModified: `>=${fifteenAgo}`
+						//dateModified: `>=${fifteenAgo}`
 					});
 					console.log(query)
 					await cb.getWithQuery(query)
