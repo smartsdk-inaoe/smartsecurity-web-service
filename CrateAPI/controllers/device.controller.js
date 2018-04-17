@@ -56,10 +56,10 @@ exports.read_deviceByOwnerDateTime= function(req, res) {
     .then((result) => {
         console.log('Success', result.json, result.rowcount)
         entidad = result.json;
-        if(entidad.length > 0){
+        if(entidad.length > 0) {
             let coordinatesConverted = [];
             coordinatesConverted.push(entidad[0]['location'][1], entidad[0]['location'][0])
-            entidad['location'] = coordinatesConverted
+            entidad[0]['location'] = coordinatesConverted
         }
         console.log(entidad);
         res.status(200).json(entidad);
