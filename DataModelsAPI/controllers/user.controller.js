@@ -15,6 +15,7 @@ function isEmpty (object) {
 exports.add = function (req, res){
 	var body = req.body;
 	let type = "User";
+	console.log(body)
 	body[`id`] = `${type}_${Date.now()}`;
 	if (!isEmpty(body)) {
 		User.create(body)
