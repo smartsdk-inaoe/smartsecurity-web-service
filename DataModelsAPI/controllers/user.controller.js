@@ -25,6 +25,7 @@ exports.add = function (req, res){
 	var body = req.body;
 	let type = "User";
 	body[`id`] = `${type}_${Date.now()}`;
+	body.phoneNumber = body.phoneNumber.substring(1, body.phoneNumber.length)
 	if (!isEmpty(body)) {
 
 		let payload = {
