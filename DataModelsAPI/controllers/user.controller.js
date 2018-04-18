@@ -149,7 +149,7 @@ exports.keyLogin = (req, res) => {
 							"domain": {
 								"id": "default"
 							},
-							"name": name,
+							"id": name,
 							"password": password
 						}
 					}
