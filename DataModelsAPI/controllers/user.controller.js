@@ -24,52 +24,46 @@ var headers = {
 exports.add = function (req, res){
 	var body = req.body;
 	let type = "User";
-
 	body[`id`] = `${type}_${Date.now()}`;
 	if (!isEmpty(body)) {
-		User.create(body)
-		.then((result)=> {
-			var data  = result.get({
-				plain: true
-			})
 
-			let payload = {
-				"user": {
-					"name": data.phoneNumber,
-					"domain_id": "default",
-					"email": data.email,
-					"enabled": true,
-					"password": data.password,
-					"firstname": data.firstName ,
-					"lastname": data.lastName
-				}
+		let payload = {
+			"user": {
+				"name": body.phoneNumber,
+				"domain_id": "default",
+				"email": body.email,
+				"enabled": true,
+				"password": body.password,
+				"firstname": body.firstName ,
+				"lastname": body.lastName
 			}
-
-			let options = {
-				method: 'POST',
-				headers: headers,
-				body : JSON.stringify(payload)
-			};
-			
-			fetch(`http://${keyrock}/v3/users`, options)
-				.then(function(response) {              
-					if(response.status >= 200 && response.status <= 208){
-						res.status(201).json(data);	
-					}else{
-						res.status(400).send(response.status)
-					}
+		}
+		let options = {
+			method: 'POST',
+			headers: headers,
+			body : JSON.stringify(payload)
+		};
+		fetch(`http://${keyrock}/v3/users`, options)
+		.then(function(response) {              
+			if(response.status >= 200 && response.status <= 208){
+				User.create(body)
+				.then((result)=> {
+					var data  = result.get({
+						plain: true
+					})
+					res.status(201).json(data);	
 				})
-				.catch((err) => {
-					console.error(err)
-					res.status(404).send(err)
-				});
-
-
-            
+				.catch(err => {
+					res.status(400).json(err)
+				})
+			}else{
+				res.status(400).send(response.status)
+			}
 		})
-		.catch(err => {
-			res.status(400).json(err)
-		})
+		.catch((err) => {
+			console.error(err)
+			res.status(404).send(err)
+		});
 	}
 	else{
 		res.status(400).json({message: "Bad request"});
