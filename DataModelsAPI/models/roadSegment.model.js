@@ -61,6 +61,28 @@ var roadSegment = sequelize.define('roadSegment', {
     minimumAllowedSpeed:{
         type: Sequelize.INTEGER
 	},
+	laneUsage : {
+		type: Sequelize.TEXT,
+		set(laneUsage) {
+			if(laneUsage !== null){
+				this.setDataValue('laneUsage', laneUsage.join(","));
+			}
+			else {
+				this.setDataValue('laneUsage',null);
+			}
+		},
+		get() {
+			let laneUsage = this.getDataValue('laneUsage') 
+			if (laneUsage !== null && laneUsage !==undefined){
+				return laneUsage.split(',') 
+			}
+			else {
+				return []
+			}
+		},
+		allowNull : false	
+
+	},
 	width : {
         type: Sequelize.INTEGER
     },

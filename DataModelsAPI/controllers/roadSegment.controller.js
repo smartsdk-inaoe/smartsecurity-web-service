@@ -14,7 +14,7 @@ function isEmpty (object) {
 exports.add = async function (req, res){
 	var body = req.body;
 	let type = "RoadSegment";
-	body[`id${type}`] = `${type}_:${body.refRoad}${Date.now()}`;
+	body[`id${type}`] = `${type}_${Date.now()}`;
 
 	if (!isEmpty(body)) {
 		roadSegment.create(body)
