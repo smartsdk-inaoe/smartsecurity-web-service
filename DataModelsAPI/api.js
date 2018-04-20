@@ -7,7 +7,6 @@ var zoneRoute  					= require('./routes/zone.route');
 var parkingRoute				= require('./routes/offStreetParking.route');
 var roadRoute 					= require('./routes/road.route')
 var roadSegmentRoute 			= require('./routes/roadSegment.route')
-var roadSegmentLaneUsageRoute 	= require('./routes/roadSegmentLaneUsage.route') 
 var deviceTokens = require('./routes/deviceTokens.route')
 var user = require('./routes/user.route')
 
@@ -20,7 +19,6 @@ app.use(zoneRoute);
 app.use(parkingRoute)
 app.use(roadRoute)
 app.use(roadSegmentRoute)
-app.use(roadSegmentLaneUsageRoute)
 app.use(deviceTokens)
 app.use(user)
 

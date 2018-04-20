@@ -83,7 +83,7 @@ Example : /zone?status=1&owner=5 <br>
 ***POST /api/user/login*** obtain the token from keystone and data user 
 ```json
   {
-    'email': 'email',
+    'phoneNumber': 'phoneNumber',
     'password' : 'password'
   }
 ```

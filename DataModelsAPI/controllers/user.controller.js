@@ -12,21 +12,59 @@ function isEmpty (object) {
     return false;
 }  
 
+var headers = {
+	"accept": "application/json",
+	"accept-encoding": "gzip, deflate",
+	"accept-language": "en-US,en;q=0.8",
+	"user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36",
+	"content-type": "application/json",
+	"X-Auth-token": "ADMIN"
+}
+
 exports.add = function (req, res){
 	var body = req.body;
 	let type = "User";
 	body[`id`] = `${type}_${Date.now()}`;
+	body.phoneNumber = body.phoneNumber.substring(1, body.phoneNumber.length)
 	if (!isEmpty(body)) {
-		User.create(body)
-		.then((result)=> {
-			var data  = result.get({
-				plain: true
-            })
-            res.status(201).json(data);
+
+		let payload = {
+			"user": {
+				"name": body.phoneNumber,
+				"domain_id": "default",
+				"email": body.email,
+				"enabled": true,
+				"password": body.password,
+				"firstname": body.firstName ,
+				"lastname": body.lastName
+			}
+		}
+		let options = {
+			method: 'POST',
+			headers: headers,
+			body : JSON.stringify(payload)
+		};
+		fetch(`http://${keyrock}/v3/users`, options)
+		.then(function(response) {              
+			if(response.status >= 200 && response.status <= 208){
+				User.create(body)
+				.then((result)=> {
+					var data  = result.get({
+						plain: true
+					})
+					res.status(201).json(data);	
+				})
+				.catch(err => {
+					res.status(400).json(err)
+				})
+			}else{
+				res.status(400).send(response.status)
+			}
 		})
-		.catch(err => {
-			res.status(400).json(err)
-		})
+		.catch((err) => {
+			console.error(err)
+			res.status(404).send(err)
+		});
 	}
 	else{
 		res.status(400).json({message: "Bad request"});
@@ -74,6 +112,7 @@ exports.delete = function(req, res){
 }
 
 exports.getAll = function(req,res){
+	console.log(req.query)
 	User.findAll({ where: req.query}).then(result => {
 		res.status(200).json(result);
 	})
@@ -93,11 +132,11 @@ exports.getById = function (req, res){
 
 exports.keyLogin = (req, res) => {
 	var params = req.body;
-	var email = params.email;
-	var name = params.email;
+	var phoneNumber = params.phoneNumber;
+	var name = params.phoneNumber;
 	var password = params.password;
 
-	if(!isEmpty(email)){
+	if(!isEmpty(phoneNumber)){
 
 		let payload  = {
 			"auth": {
@@ -110,21 +149,12 @@ exports.keyLogin = (req, res) => {
 							"domain": {
 								"id": "default"
 							},
-							"name": name,
+							"id": name,
 							"password": password
 						}
 					}
 				}
 			}
-		}
-
-		var headers = {
-			"accept": "application/json",
-			"accept-encoding": "gzip, deflate",
-			"accept-language": "en-US,en;q=0.8",
-			"user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36",
-			"content-type": "application/json"
-		
 		}
 
 		let options = {
@@ -137,7 +167,7 @@ exports.keyLogin = (req, res) => {
 			.then(function(response) {              
 				if(response.status >= 200 && response.status <= 208){
 
-					User.findOne({where : { email : email}})
+					User.findOne({where : { phoneNumber : phoneNumber}})
 					.then((result) =>{
 						let user = result.get({
 							plain: true
