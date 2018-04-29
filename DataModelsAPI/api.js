@@ -15,7 +15,7 @@ app.route('/')
 });
 
 
-app.use(zoneRoute);
+app.use(zoneRoute)
 app.use(parkingRoute)
 app.use(roadRoute)
 app.use(roadSegmentRoute)
