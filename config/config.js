@@ -6,7 +6,7 @@
   password : 'root'
 }*/
 
-exports.keyrock = "http://smartsdksecurity.com.mx:8002/basicauth"
+exports.keyrock = "smartsdksecurity.com.mx:8002/basicauth"
 //Remote database
 exports.mysql = {
   host : '35.196.174.137',
