@@ -137,6 +137,7 @@ exports.keyLogin = (req, res) => {
 	var phoneNumber = params.phoneNumber;
 	var name = params.phoneNumber;
 	var password = params.password;
+	console.log(params)
 
 	if(!isEmpty(phoneNumber)){
 
@@ -174,14 +175,16 @@ exports.keyLogin = (req, res) => {
 						let user = result.get({
 							plain: true
 						})
-						let token = response.headers._headers['x-subject-token'][0];
-						res.status(200).json({token : token, user})
+						//let token = response.headers._headers['x-subject-token'][0];
+						res.status(200).json({token : 'token', user})
 					})
 					.catch((err) => {
+						console.error("no en la base")
 						res.status(404).json(err)
 					})
 					
 				}else{
+					console.error("No en el keystone")
 					res.status(404).send("The password you've entered is incorrect")
 				}
 			})
@@ -236,8 +239,8 @@ exports.keyGuardLogin = (req, res) => {
 						let user = result.get({
 							plain: true
 						})
-						let token = response.headers._headers['x-subject-token'][0];
-						res.status(200).json({token : token, user})
+						//let token = response.headers._headers['x-subject-token'][0];
+						res.status(200).json({token : 'token', user})
 					})
 					.catch((err) => {
 						res.status(404).json(err)
