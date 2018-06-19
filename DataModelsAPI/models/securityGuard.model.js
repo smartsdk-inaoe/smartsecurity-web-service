@@ -2,7 +2,7 @@
 const Sequelize = require('sequelize');
 var sequelize = require('../db/sequelize');
 
-var user = sequelize.define('mobileUser', {
+var guard = sequelize.define('authUser', {
 	id : { 
 		type : Sequelize.STRING(100), 
 		primaryKey: true,
@@ -47,5 +47,5 @@ var user = sequelize.define('mobileUser', {
 	}
 },
 { freezeTableName: true});
-user.sync() 
-module.exports = user;
+guard.sync() 
+module.exports = guard;

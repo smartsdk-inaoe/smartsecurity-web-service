@@ -6,15 +6,17 @@
   password : 'root'
 }*/
 
-exports.keyrock = "207.249.127.96:8001"
+exports.keyrock = "smartsdksecurity.com.mx:8002/basicauth"
 //Remote database
 exports.mysql = {
-  host : '200.23.5.144',//142
-  //host : '207.249.127.16',
-  db : 'smartsdksecurity',
-  //user : 'smartsdkcenidet',
-  user : 'cenidet',
-  password : 'Cenidet2017'
+  host : '35.196.174.137',
+  db : 'smarsdkcenidet',
+  user : 'root',
+  password : 'hdcenidet2018*'
+  //host : '200.23.5.144',
+  //db : 'smartsdksecurity',
+  //user : 'cenidet',
+  //password : 'Cenidet2017'
 }
 exports.context = {
   //host : 'http://207.249.127.218',

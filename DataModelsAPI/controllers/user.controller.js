@@ -1,6 +1,7 @@
 'use strict';
 
-var User= require('../models/user.model')
+var User = require('../models/user.model')
+var Guard = require('../models/securityGuard.model')
 var fetch = require('node-fetch')
 var keyrock = require('../../config/config').keyrock
 
@@ -18,7 +19,8 @@ var headers = {
 	"accept-language": "en-US,en;q=0.8",
 	"user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36",
 	"content-type": "application/json",
-	"X-Auth-token": "ADMIN"
+	"X-Auth-token": "ADMIN",
+	"authorization" : "Basic aWRtOmlkbQ=="
 }
 
 exports.add = function (req, res){
@@ -163,31 +165,93 @@ exports.keyLogin = (req, res) => {
 			body : JSON.stringify(payload)
 		};
 		console.log(`http://${keyrock}/v3/auth/tokens`)
-		//fetch(`http://${keyrock}/v3/auth/tokens`, options)
-		//	.then(function(response) {              
-		//		if(response.status >= 200 && response.status <= 208){
+		fetch(`http://${keyrock}/v3/auth/tokens`, options)
+			.then(function(response) {              
+				if(response.status >= 200 && response.status <= 208){
 
 					User.findOne({where : { phoneNumber : phoneNumber}})
 					.then((result) =>{
 						let user = result.get({
 							plain: true
 						})
-						//let token = response.headers._headers['x-subject-token'][0];
-						res.status(200).json({token : "token", user})
+						let token = response.headers._headers['x-subject-token'][0];
+						res.status(200).json({token : token, user})
 					})
 					.catch((err) => {
 						res.status(404).json(err)
 					})
 					
-		//		}else{
-		//			res.status(404).send("The password you've entered is incorrect")
-		//		}
-		//	})
-		//	.catch((err) => {
-		//		console.error(err)
-		//		res.status(404).send(err)
-		//	});
+				}else{
+					res.status(404).send("The password you've entered is incorrect")
+				}
+			})
+			.catch((err) => {
+				console.error(err)
+				res.status(404).send(err)
+			});
 	}else{
 		res.status(400).json(["Empty fields required"]);
 	}
 } 
+
+exports.keyGuardLogin = (req, res) => {
+	var params = req.body;
+	//var phoneNumber = params.phoneNumber;
+	var name = params.email;
+	var password = params.password;
+
+	if(!isEmpty(name)){
+
+		let payload  = {
+			"auth": {
+				"identity": {
+					"methods": [
+						"password"
+					],
+					"password": {
+						"user": {
+							"domain": {
+								"id": "default"
+							},
+							"id": name,
+							"password": password
+						}
+					}
+				}
+			}
+		}
+
+		let options = {
+			method: 'POST',
+			headers: headers,
+			body : JSON.stringify(payload)
+		};
+		console.log(`http://${keyrock}/v3/auth/tokens`)
+		fetch(`http://${keyrock}/v3/auth/tokens`, options)
+			.then(function(response) {              
+				if(response.status >= 200 && response.status <= 208){
+
+					Guard.findOne({where : { email : name}})
+					.then((result) =>{
+						let user = result.get({
+							plain: true
+						})
+						let token = response.headers._headers['x-subject-token'][0];
+						res.status(200).json({token : token, user})
+					})
+					.catch((err) => {
+						res.status(404).json(err)
+					})
+					
+				}else{
+					res.status(404).send("The password you've entered is incorrect")
+				}
+			})
+			.catch((err) => {
+				console.error(err)
+				res.status(404).send(err)
+			});
+	}else{
+		res.status(400).json(["Empty fields required"]);
+	}
+}
