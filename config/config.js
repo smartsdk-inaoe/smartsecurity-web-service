@@ -9,7 +9,7 @@
 exports.keyrock = "207.249.127.96:8001"
 //Remote database
 exports.mysql = {
-  host : '200.23.5.144',
+  host : '200.23.5.144',//142
   //host : '207.249.127.16',
   db : 'smartsdksecurity',
   //user : 'smartsdkcenidet',
