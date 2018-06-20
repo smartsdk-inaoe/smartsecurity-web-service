@@ -15,4 +15,7 @@ app.route('/user/:id')
 app.route('/user/login')
     .post(controller.keyLogin)
 
+app.route('/guard/login')
+    .post(controller.keyLogin)
+
 module.exports = app;
