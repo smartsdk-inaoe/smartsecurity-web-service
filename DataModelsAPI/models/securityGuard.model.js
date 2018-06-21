@@ -1,43 +1,43 @@
 
-const Sequelize = require('sequelize');
+var Sequelize = require('sequelize');
 var sequelize = require('../db/sequelize');
 
 var guard = sequelize.define('authUser', {
 	id : { 
-		type : Sequelize.STRING(100), 
+		type : Sequelize.INTEGER, //Sequelize.STRING(100),  
 		primaryKey: true,
-    },
-    firstName        : {
+		get() {
+			return this.getDataValue('id').toString();
+		}
+   },
+	first_name        : {
 		type: Sequelize.STRING(200),
 		allowNull : false
 	},
-    lastName         : {
+  last_name         : {
 		type : Sequelize.STRING(200),
 		allowNull : false
 	},
-    email            : {
-		type : Sequelize.STRING(100),
+  email            : {
+		type : Sequelize.STRING(512),
 		allowNull : false
 	},
-    userName         : {
-		type: Sequelize.STRING(50)
-	},
-    password         : {
-		type : Sequelize.STRING(50),
+  password         : {
+		type : Sequelize.STRING(512),
 		allowNull : false
 	},
-    address          : {
-		type : Sequelize.STRING(200)
+  address          : {
+		type : Sequelize.STRING(512)
 	},
-    phoneNumber      : {
-		type : Sequelize.STRING(20),
+  phonenumber      : {
+		type : Sequelize.TEXT,
 		allowNull : false
 	},
-	dateCreated : { 
+	datecreated : { 
 		type: Sequelize.DATE, 
 		defaultValue: Sequelize.NOW
 	},
-	dateModified : { 
+	datemodified : { 
 		type: Sequelize.DATE, 
 		defaultValue: Sequelize.NOW 
 	},
@@ -47,5 +47,5 @@ var guard = sequelize.define('authUser', {
 	}
 },
 { freezeTableName: true});
-guard.sync() 
+guard.sync();
 module.exports = guard;

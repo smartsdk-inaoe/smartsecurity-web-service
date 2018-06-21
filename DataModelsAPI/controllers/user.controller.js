@@ -239,7 +239,20 @@ exports.keyGuardLogin = (req, res) => {
 						let user = result.get({
 							plain: true
 						})
-						//let token = response.headers._headers['x-subject-token'][0];
+						user["id"] = user["id"].toString();
+						user["firstName"] = user["first_name"];
+						user["lastName"] = user["last_name"];
+						user["phoneNumber"] = user["phonenumber"];
+						user["dateCreated"] = user["datecreated"];
+						user["dateModified"] = user["datemodified"];
+
+						delete user["first_name"];
+						delete user["last_name"];
+						delete user["phonenumber"];
+						delete user["datecreated"];
+						delete user["datemodified"];
+						
+						console.log(user);
 						res.status(200).json({token : 'token', user})
 					})
 					.catch((err) => {
