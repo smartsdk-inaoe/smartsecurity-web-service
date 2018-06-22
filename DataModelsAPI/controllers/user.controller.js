@@ -37,7 +37,8 @@ exports.add = function (req, res){
 				"enabled": true,
 				"password": body.password,
 				"firstname": body.firstName ,
-				"lastname": body.lastName
+				"lastname": body.lastName,
+				"username" : body.phoneNumber
 			}
 		}
 		let options = {
