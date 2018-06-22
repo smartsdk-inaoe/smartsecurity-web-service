@@ -10,14 +10,14 @@
 exports.keyrock = "smartsdksecurity.com.mx:8001"
 //Remote database
 exports.mysql = {
-  host : '35.196.174.137',
+  /*host : '35.196.174.137',
   db : 'smarsdkcenidet',
   user : 'root',
+  password : 'hdcenidet2018*'*/
+  host : '200.23.5.142',
+  db : 'smartsdksecurity',
+  user : 'cenidet',
   password : 'hdcenidet2018*'
-  //host : '200.23.5.144',
-  //db : 'smartsdksecurity',
-  //user : 'cenidet',
-  //password : 'Cenidet2017'
 }
 exports.context = {
   //host : 'http://207.249.127.218',
