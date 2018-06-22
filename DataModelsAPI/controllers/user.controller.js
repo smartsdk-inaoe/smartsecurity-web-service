@@ -215,7 +215,7 @@ exports.keyGuardLogin = (req, res) => {
 							"domain": {
 								"id": "default"
 							},
-							"id": name,
+							"name": name,
 							"password": password
 						}
 					}
