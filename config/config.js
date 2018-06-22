@@ -17,7 +17,7 @@ exports.mysql = {
   host : '200.23.5.142',
   db : 'smartsdksecurity',
   user : 'cenidet',
-  password : 'hdcenidet2018*'
+  password : 'Cenidet2017'
 }
 exports.context = {
   //host : 'http://207.249.127.218',
