@@ -164,6 +164,7 @@ exports.keyLogin = (req, res) => {
 			headers: headers,
 			body : JSON.stringify(payload)
 		};
+		console.log(payload);
 		console.log(`http://${keyrock}/v3/auth/tokens`)
 		fetch(`http://${keyrock}/v3/auth/tokens`, options)
 			.then(function(response) {              
