@@ -13,7 +13,7 @@ exports.getHistory = async function (req,res) {
 	  	if (zone != null){
 
 			let queryToCount = ngsi.createQuery({
-				id: "Alert:Device_Smartphone_.*",
+				//id: "Alert:Device_Smartphone_.*",
 				type : "Alert",
 				options : "count",
 				georel :"coveredBy",
@@ -30,7 +30,7 @@ exports.getHistory = async function (req,res) {
 			.then(async (response) => {
                 let off = Number(response["headers"]["_headers"]["fiware-total-count"][0])  
 				let params  = {
-					id: "Alert:Device_Smartphone_.*",
+					//id: "Alert:Device_Smartphone_.*",
 					type : "Alert",
 					options : "keyValues",
 					georel :"coveredBy",
@@ -68,7 +68,7 @@ exports.getCurrent = async function (req,res) {
 			//var dt = DateTime.local().setZone('America/New_York')
 			let midnight = dt.minus({ days: 1 }).endOf('day');
 			let queryToCount = ngsi.createQuery({
-				id: "Alert:Device_Smartphone_.*",
+				//id: "Alert:Device_Smartphone_.*",
 				type : "Alert",
 				options : "count",
 				georel :"coveredBy",
@@ -91,7 +91,7 @@ exports.getCurrent = async function (req,res) {
 				}
 
 				let query = ngsi.createQuery({
-					id: "Alert:Device_Smartphone_.*",
+					//id: "Alert:Device_Smartphone_.*",
 					type : "Alert",
 					options : "keyValues",
 					georel :"coveredBy",
