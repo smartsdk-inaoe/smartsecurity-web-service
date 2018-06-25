@@ -176,8 +176,9 @@ exports.keyLogin = (req, res) => {
 						let user = result.get({
 							plain: true
 						})
-						//let token = response.headers._headers['x-subject-token'][0];
-						res.status(200).json({token : 'token', user})
+						let token = response.headers._headers['x-subject-token'][0];
+						console.log(token)
+						res.status(200).json({token : token, user})
 					})
 					.catch((err) => {
 						console.error("no en la base")
