@@ -68,8 +68,9 @@ exports.getCurrent = async function (req,res) {
     await Zone.findOne({where : { 'idZone': req.params.idZone }})
     .then( async (zone) => {
 	  	if (zone != null){
-			var dt = DateTime.utc()
-			//var dt = DateTime.local().setZone('America/New_York')
+			//var dt = DateTime.utc()
+			//var dt = DateTime.local();
+			var dt = DateTime.local().setZone('America/Mexico_City')
 			let midnight = dt.minus({ days: 1 }).endOf('day');
 			let jsonQuery = {
 				type : "Alert",
