@@ -15,16 +15,13 @@ exports.getHistory = async function (req,res) {
 			let jsonQuery = {
 				type : "Alert",
 				options : "count",
-				georel :"coveredBy",
-				geometry:"polygon",
-				coords : zone.location
+				//georel :"coveredBy",
+				//geometry:"polygon",
+				//coords : zone.location
 			}
 			if(req.query.id != undefined)
 				jsonQuery["id"] = req.query.id
 			let queryToCount = ngsi.createQuery(jsonQuery);
-			
-
-
             await fetch(`${context.host}:${context.port}/${context.v}/entities${queryToCount}`, {
                 method: 'GET',
                 headers: {
@@ -36,9 +33,9 @@ exports.getHistory = async function (req,res) {
 				let params  = {
 					type : "Alert",
 					options : "keyValues",
-					georel :"coveredBy",
-					geometry:"polygon",
-					coords : zone.location,
+					//georel :"coveredBy",
+					//geometry:"polygon",
+					//coords : zone.location,
 					limit : "10",
 				}
 				if(req.query.id != undefined)
@@ -77,9 +74,9 @@ exports.getCurrent = async function (req,res) {
 			let jsonQuery = {
 				type : "Alert",
 				options : "count",
-				georel :"coveredBy",
-				geometry:"polygon",
-				coords : zone.location,
+				//georel :"coveredBy",
+				//geometry:"polygon",
+				//coords : zone.location,
 				dateObserved: `>=${midnight}`
 			}
 			if(req.query.id != undefined)
@@ -102,9 +99,9 @@ exports.getCurrent = async function (req,res) {
 				let jsonQuery2 = {
 					type : "Alert",
 					options : "keyValues",
-					georel :"coveredBy",
-					geometry:"polygon",
-					coords : zone.location,
+					//georel :"coveredBy",
+					//geometry:"polygon",
+					//coords : zone.location,
 					dateObserved: `>=${midnight}`,
 					limit : count,
 				}
