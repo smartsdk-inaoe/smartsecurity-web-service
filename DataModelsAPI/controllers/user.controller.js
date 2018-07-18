@@ -46,7 +46,7 @@ exports.add = function (req, res){
 			headers: headers,
 			body : JSON.stringify(payload)
 		};
-		fetch(`http://${keyrock}/v3/users`, options)
+		fetch(`${keyrock}/v3/users`, options)
 		.then(function(response) {              
 			if(response.status >= 200 && response.status <= 208){
 				User.create(body)
@@ -166,8 +166,8 @@ exports.keyLogin = (req, res) => {
 			body : JSON.stringify(payload)
 		};
 		console.log(payload);
-		console.log(`http://${keyrock}/v3/auth/tokens`)
-		fetch(`http://${keyrock}/v3/auth/tokens`, options)
+		console.log(`${keyrock}/v3/auth/tokens`)
+		fetch(`${keyrock}/v3/auth/tokens`, options)
 			.then(function(response) {              
 				if(response.status >= 200 && response.status <= 208){
 
@@ -231,8 +231,8 @@ exports.keyGuardLogin = (req, res) => {
 			headers: headers,
 			body : JSON.stringify(payload)
 		};
-		console.log(`http://${keyrock}/v3/auth/tokens`)
-		fetch(`http://${keyrock}/v3/auth/tokens`, options)
+		console.log(`${keyrock}/v3/auth/tokens`)
+		fetch(`${keyrock}/v3/auth/tokens`, options)
 			.then(function(response) {              
 				if(response.status >= 200 && response.status <= 208){
 
