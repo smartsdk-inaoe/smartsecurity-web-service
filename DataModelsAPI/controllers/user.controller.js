@@ -1,6 +1,7 @@
 'use strict';
 
-var User= require('../models/user.model')
+var User = require('../models/user.model')
+var Guard = require('../models/securityGuard.model')
 var fetch = require('node-fetch')
 var keyrock = require('../../config/config').keyrock
 
@@ -36,7 +37,8 @@ exports.add = function (req, res){
 				"enabled": true,
 				"password": body.password,
 				"firstname": body.firstName ,
-				"lastname": body.lastName
+				"lastname": body.lastName,
+				"username" : body.phoneNumber
 			}
 		}
 		let options = {
@@ -44,7 +46,7 @@ exports.add = function (req, res){
 			headers: headers,
 			body : JSON.stringify(payload)
 		};
-		fetch(`http://${keyrock}/v3/users`, options)
+		fetch(`${keyrock}/v3/users`, options)
 		.then(function(response) {              
 			if(response.status >= 200 && response.status <= 208){
 				User.create(body)
@@ -135,6 +137,7 @@ exports.keyLogin = (req, res) => {
 	var phoneNumber = params.phoneNumber;
 	var name = params.phoneNumber;
 	var password = params.password;
+	console.log(params)
 
 	if(!isEmpty(phoneNumber)){
 
@@ -162,8 +165,9 @@ exports.keyLogin = (req, res) => {
 			headers: headers,
 			body : JSON.stringify(payload)
 		};
-		console.log(`http://${keyrock}/v3/auth/tokens`)
-		fetch(`http://${keyrock}/v3/auth/tokens`, options)
+		console.log(payload);
+		console.log(`${keyrock}/v3/auth/tokens`)
+		fetch(`${keyrock}/v3/auth/tokens`, options)
 			.then(function(response) {              
 				if(response.status >= 200 && response.status <= 208){
 
@@ -173,7 +177,85 @@ exports.keyLogin = (req, res) => {
 							plain: true
 						})
 						let token = response.headers._headers['x-subject-token'][0];
+						console.log(token)
 						res.status(200).json({token : token, user})
+					})
+					.catch((err) => {
+						console.error("no en la base")
+						res.status(404).json(err)
+					})
+					
+				}else{
+					console.error("No en el keystone")
+					res.status(404).send("The password you've entered is incorrect")
+				}
+			})
+			.catch((err) => {
+				console.error(err)
+				res.status(404).send(err)
+			});
+	}else{
+		res.status(400).json(["Empty fields required"]);
+	}
+} 
+
+exports.keyGuardLogin = (req, res) => {
+	var params = req.body;
+	//var phoneNumber = params.phoneNumber;
+	var name = params.email;
+	var password = params.password;
+
+	if(!isEmpty(name)){
+
+		let payload  = {
+			"auth": {
+				"identity": {
+					"methods": [
+						"password"
+					],
+					"password": {
+						"user": {
+							"domain": {
+								"id": "default"
+							},
+							"name": name,
+							"password": password
+						}
+					}
+				}
+			}
+		}
+
+		let options = {
+			method: 'POST',
+			headers: headers,
+			body : JSON.stringify(payload)
+		};
+		console.log(`${keyrock}/v3/auth/tokens`)
+		fetch(`${keyrock}/v3/auth/tokens`, options)
+			.then(function(response) {              
+				if(response.status >= 200 && response.status <= 208){
+
+					Guard.findOne({where : { email : name}})
+					.then((result) =>{
+						let user = result.get({
+							plain: true
+						})
+						user["id"] = user["id"].toString();
+						user["firstName"] = user["first_name"];
+						user["lastName"] = user["last_name"];
+						user["phoneNumber"] = user["phonenumber"];
+						user["dateCreated"] = user["datecreated"];
+						user["dateModified"] = user["datemodified"];
+
+						delete user["first_name"];
+						delete user["last_name"];
+						delete user["phonenumber"];
+						delete user["datecreated"];
+						delete user["datemodified"];
+						
+						console.log(user);
+						res.status(200).json({token : 'token', user})
 					})
 					.catch((err) => {
 						res.status(404).json(err)
@@ -190,4 +272,4 @@ exports.keyLogin = (req, res) => {
 	}else{
 		res.status(400).json(["Empty fields required"]);
 	}
-} 
+}

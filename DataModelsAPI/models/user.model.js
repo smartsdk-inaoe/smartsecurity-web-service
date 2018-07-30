@@ -33,23 +33,6 @@ var user = sequelize.define('mobileUser', {
 		type : Sequelize.STRING(20),
 		allowNull : false
 	},
-	/*
-  refDevices       : {
-		type : Sequelize.STRING(50)
-	},
-    refVehicles      : {
-		type : Sequelize.STRING(50)
-	},
-    registrationKey  : {
-		type : Sequelize.STRING(200)
-	},
-    resetPasswordKey : {
-		type : Sequelize.STRING(200)
-	},
-    registrationId   : {
-		type: Sequelize.STRING(256)
-	},
-*/
 	dateCreated : { 
 		type: Sequelize.DATE, 
 		defaultValue: Sequelize.NOW
