@@ -31,10 +31,6 @@ exports.getHistory = async function (req,res) {
 			.then(async (response) => {
 				let off = Number(response["headers"]["_headers"]["fiware-total-count"][0])  
 				let params  = {
-<<<<<<< HEAD
-					//id: "Alert:Device_Smartphone_.*",
-=======
->>>>>>> 2a1e8f948da20190a5c5d6c5f5c671596f1b1884
 					type : "Alert",
 					options : "keyValues",
 					//georel :"coveredBy",
