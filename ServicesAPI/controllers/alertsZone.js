@@ -72,12 +72,7 @@ exports.getCurrent = async function (req,res) {
 			//var dt = DateTime.local();
 			var dt = DateTime.local().setZone('America/Mexico_City')
 			let midnight = dt.minus({ days: 1 }).endOf('day');
-<<<<<<< HEAD
-			let queryToCount = ngsi.createQuery({
-				//id: "Alert:Device_Smartphone_.*",
-=======
 			let jsonQuery = {
->>>>>>> 2a1e8f948da20190a5c5d6c5f5c671596f1b1884
 				type : "Alert",
 				options : "count",
 				//georel :"coveredBy",
@@ -102,13 +97,7 @@ exports.getCurrent = async function (req,res) {
 				if (count < 20) {
 					count = 20;
 				}
-<<<<<<< HEAD
-
-				let query = ngsi.createQuery({
-					//id: "Alert:Device_Smartphone_.*",
-=======
 				let jsonQuery2 = {
->>>>>>> 2a1e8f948da20190a5c5d6c5f5c671596f1b1884
 					type : "Alert",
 					options : "keyValues",
 					//georel :"coveredBy",
