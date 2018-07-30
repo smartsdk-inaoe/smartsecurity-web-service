@@ -13,11 +13,7 @@ var zone = sequelize.define('zone', {
 		type: Sequelize.STRING,
 		defaultValue: "Building"
 	},
-	refBuildingType: { 
-		type: Sequelize.STRING,
-		defaultValue: "Zone"
-	},
-	name: {
+	owner: {
 		type : Sequelize.STRING,
 		allowNull: false
 	},
