@@ -13,11 +13,7 @@ var zone = sequelize.define('zone', {
 		type: Sequelize.STRING,
 		defaultValue: "Building"
 	},
-	refBuildingType: { 
-		type: Sequelize.STRING,
-		defaultValue: "Zone"
-	},
-	name: {
+	owner: {
 		type : Sequelize.STRING,
 		allowNull: false
 	},
@@ -27,14 +23,7 @@ var zone = sequelize.define('zone', {
 	},
 	category: { 
 		type: Sequelize.TEXT,
-		set(category) {
-			if(category !== null){
-				this.setDataValue('category', category.join(","));
-			}
-			else {
-				this.setDataValue('category',null);
-			}
-		},
+		defaultValue: "Zone",
 		get() {
 			let category = this.getDataValue('category') 
 			if (category !== null && category !==undefined){
@@ -43,7 +32,8 @@ var zone = sequelize.define('zone', {
 			else {
 				return []
 			}
-		}	
+		},
+		allowNull: false
 	},
 	location:{
 		type: Sequelize.TEXT,

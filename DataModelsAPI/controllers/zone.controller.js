@@ -21,7 +21,6 @@ exports.add = async function (req, res){
 	if (!isEmpty(body)) {
 		zone.create(body)
 		.then((result)=> {
-
 			var data  = result.get({
 				plain: true
 			})
