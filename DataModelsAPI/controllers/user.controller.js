@@ -175,7 +175,7 @@ exports.keyLogin = (req, res) => {
 						})
 						let token = response.headers._headers['x-subject-token'][0];
 						console.log(token)
-						res.status(200).json({token : token, user})
+						res.status(200).json({token : "token", user})
 					})
 					.catch((err) => {
 						res.status(404).json(err)
