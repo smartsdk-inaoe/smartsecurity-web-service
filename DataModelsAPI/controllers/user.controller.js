@@ -165,12 +165,9 @@ exports.keyLogin = (req, res) => {
 			headers: headers,
 			body : JSON.stringify(payload)
 		};
-		console.log(payload);
-		console.log(`${keyrock}/v3/auth/tokens`)
-		fetch(`${keyrock}/v3/auth/tokens`, options)
-			.then(function(response) {              
-				if(response.status >= 200 && response.status <= 208){
-
+		//fetch(`${keyrock}/v3/auth/tokens`, options)
+		//	.then(function(response) {              
+		//		if(response.status >= 200 && response.status <= 208){
 					User.findOne({where : { phoneNumber : phoneNumber}})
 					.then((result) =>{
 						let user = result.get({
@@ -181,19 +178,16 @@ exports.keyLogin = (req, res) => {
 						res.status(200).json({token : token, user})
 					})
 					.catch((err) => {
-						console.error("no en la base")
 						res.status(404).json(err)
 					})
 					
-				}else{
-					console.error("No en el keystone")
-					res.status(404).send("The password you've entered is incorrect")
-				}
-			})
-			.catch((err) => {
-				console.error(err)
-				res.status(404).send(err)
-			});
+		//		}else{
+		//			res.status(404).send("The password you've entered is incorrect")
+		//		}
+		//	})
+		//	.catch((err) => {
+		//		res.status(404).send(err)
+		//	});
 	}else{
 		res.status(400).json(["Empty fields required"]);
 	}
@@ -231,10 +225,9 @@ exports.keyGuardLogin = (req, res) => {
 			headers: headers,
 			body : JSON.stringify(payload)
 		};
-		console.log(`${keyrock}/v3/auth/tokens`)
-		fetch(`${keyrock}/v3/auth/tokens`, options)
-			.then(function(response) {              
-				if(response.status >= 200 && response.status <= 208){
+		//fetch(`${keyrock}/v3/auth/tokens`, options)
+		//	.then(function(response) {              
+		//		if(response.status >= 200 && response.status <= 208){
 
 					Guard.findOne({where : { email : name}})
 					.then((result) =>{
@@ -261,14 +254,14 @@ exports.keyGuardLogin = (req, res) => {
 						res.status(404).json(err)
 					})
 					
-				}else{
-					res.status(404).send("The password you've entered is incorrect")
-				}
-			})
-			.catch((err) => {
-				console.error(err)
-				res.status(404).send(err)
-			});
+		//		}else{
+		//			res.status(404).send("The password you've entered is incorrect")
+		//		}
+		//	})
+		//	.catch((err) => {
+		//		console.error(err)
+		//		res.status(404).send(err)
+		//	});
 	}else{
 		res.status(400).json(["Empty fields required"]);
 	}
