@@ -104,6 +104,7 @@ exports.getAll = function(req,res){
 			zone["name"] = zone["owner"];
 			zone["refBuildingType"] = "Zone";
 			temp.push(zone)
+			console.log(zone)
 		})
 		res.status(200).json(temp);
 	})
@@ -117,6 +118,7 @@ exports.getById = function (req, res){
 			})
 			json["name"] = json["owner"];
 			json["refBuildingType"] = "Zone";
+			console.log(json)
 			res.status(200).json(json);
 		}
 		else{
