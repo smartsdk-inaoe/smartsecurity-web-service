@@ -101,6 +101,9 @@ exports.getAll = function(req,res){
 	zone.findAll({ where: req.query}).then(result => {
 		var temp = [];
 		result.map((zone) =>{
+			let json = zone.get({
+				plain: true
+			})
 			zone["name"] = zone["owner"];
 			zone["refBuildingType"] = "Zone";
 			temp.push(zone)
