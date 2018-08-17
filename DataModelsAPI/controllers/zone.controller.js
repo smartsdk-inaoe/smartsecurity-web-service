@@ -100,13 +100,7 @@ exports.delete = function(req, res){
 
 exports.getAll = function(req,res){
 	zone.findAll({ where: req.query}).then(result => {
-		var temp = [];
-		result.map((zone) =>{
-			zone["name"] = zone["owner"];
-			zone["refBuildingType"] = "Zone";
-			temp.push(zone)
-		})
-		res.status(200).json(temp);
+		res.status(200).json(result);
 	})
 }
 
@@ -116,8 +110,6 @@ exports.getById = function (req, res){
 			let json = result.get({
 				plain: true
 			})
-			json["name"] = json["owner"];
-			json["refBuildingType"] = "Zone";
 			res.status(200).json(json);
 		}
 		else{
