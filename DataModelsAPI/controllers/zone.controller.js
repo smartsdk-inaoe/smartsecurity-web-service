@@ -104,10 +104,10 @@ exports.getAll = function(req,res){
 			let json = zone.get({
 				plain: true
 			})
-			zone["name"] = zone["owner"];
-			zone["refBuildingType"] = "Zone";
-			temp.push(zone)
-			console.log(zone)
+			json["name"] = json["owner"];
+			json["refBuildingType"] = "Zone";
+			temp.push(json)
+			console.log(json)
 		})
 		res.status(200).json(temp);
 	})
