@@ -9,7 +9,8 @@ exports.getZone = async function (req,res) {
 	await Zone.findOne({where : { 'idZone': req.params.idZone }})
     .then( async (zone) => {
 	  	if (zone != null){
-			var dt = DateTime.utc();
+			//var dt = DateTime.utc();
+			var dt = DateTime.local().setZone('America/Mexico_City');
 			let fifteenAgo = dt.minus({ minutes: 15 });
 			let query = ngsi.createQuery(Object.assign({
 				id: "Device_Smartphone_.*",
@@ -45,7 +46,8 @@ exports.getZoneByOwner = async function (req,res) {
 			await user.findOne({ where : queries})
 			.then ( async(user) =>{
 				if (user!= null){
-					var dt = DateTime.utc();
+					//var dt = DateTime.utc();
+					var dt = DateTime.local().setZone('America/Mexico_City');
 					let fifteenAgo = dt.minus({ minutes: 15 });
 					let query = ngsi.createQuery({
 						id: "Device_Smartphone_.*",
