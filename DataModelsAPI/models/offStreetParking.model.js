@@ -24,7 +24,8 @@ var parking = sequelize.define('offStreetParking', {
 			this.setDataValue('category', category.join(","));
 		},
 		get() {
-			return this.getDataValue('category').split(',')
+			if (this.getDataValue('category') != undefined)
+				return this.getDataValue('category').split(',')
 		}	
 	},
 	location:{
@@ -43,13 +44,7 @@ var parking = sequelize.define('offStreetParking', {
     },
     areaServed:{
         type: Sequelize.STRING(100),
-        //references: {
-			// This is a reference to another model
-		//	model: Zone,
-			// This is the column name of the referenced model
-		//	key: 'idZone',
-		//},
-		allowNull: false,
+	allowNull: false,
     },
 	dateCreated: { 
 		type: Sequelize.DATE, 
