@@ -34,7 +34,8 @@ var parking = sequelize.define('offStreetParking', {
 			this.setDataValue('location', location.join(";"));
 		},
 		get() {
-			return locations.getPoly(this.getDataValue('location'))
+			if (this.getDataValue('location') != undefined)
+				return locations.getPoly(this.getDataValue('location'))
 		}
 	},
 	description: {
