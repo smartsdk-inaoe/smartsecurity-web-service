@@ -42,7 +42,8 @@ var zone = sequelize.define('zone', {
 			this.setDataValue('location', location.join(";"));
 		},
 		get() {
-			return locations.getPoly(this.getDataValue('location'))
+			if (this.getDataValue('location') != undefined)
+				return locations.getPoly(this.getDataValue('location'))
 		}
 	},
 	centerPoint:{
@@ -52,7 +53,8 @@ var zone = sequelize.define('zone', {
 			this.setDataValue('centerPoint', center.join(","));
 		},
 		get() {
-			return locations.getPoint(this.getDataValue('centerPoint'))
+			if (this.getDataValue('location') != undefined)
+				return locations.getPoint(this.getDataValue('centerPoint'))
 		}
 	},
 	description: {
