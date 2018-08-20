@@ -22,14 +22,11 @@ exports.getHistory = async function (req,res) {
 			if(req.query.id != undefined)
 				jsonQuery["id"] = req.query.id
 			let queryToCount = ngsi.createQuery(jsonQuery);
-            await fetch(`${context.host}:${context.port}/${context.v}/entities${queryToCount}`, {
-                method: 'GET',
-                headers: {
-                    'Access-Control-Allow-Methods':'GET, POST, OPTIONS, PUT, PATCH, DELETE'
-                },
-			})
+
+            await cb.getWithQuery(queryToCount)
 			.then(async (response) => {
-				let off = Number(response["headers"]["_headers"]["fiware-total-count"][0])  
+				let off = Number(response["headers"]["_headers"]["fiware-total-count"][0])
+				console.log(off)  
 				let params  = {
 					type : "Alert",
 					options : "keyValues",
@@ -45,11 +42,9 @@ exports.getHistory = async function (req,res) {
 					params.offset = off - 10
 				}
                 let query = ngsi.createQuery(params);
-				console.log(query)
-				
 				await cb.getWithQuery(query)
 				.then((result) => {
-					res.status(200).json(result.reverse())
+					res.status(200).json(result.body.reverse())
 				})
 				.catch((error) =>{
 					res.status(500).send("eeror 1");
@@ -80,17 +75,13 @@ exports.getCurrent = async function (req,res) {
 				//coords : zone.location,
 				dateObserved: `>=${midnight}`
 			}
+
 			if(req.query.id != undefined)
 				jsonQuery["id"] = req.query.id
 
 			let queryToCount = ngsi.createQuery(jsonQuery);
 
-            await fetch(`${context.host}:${context.port}/${context.v}/entities${queryToCount}`, {
-                method: 'GET',
-                headers: {
-                    'Access-Control-Allow-Methods':'GET, POST, OPTIONS, PUT, PATCH, DELETE'
-                },
-			})
+            await await cb.getWithQuery(queryToCount)
 			.then(async (response) => {
 
 				let count = Number(response["headers"]["_headers"]["fiware-total-count"][0])  
@@ -115,7 +106,7 @@ exports.getCurrent = async function (req,res) {
 				await cb.getWithQuery(query)
 				.then((result) => {
 				
-					res.status(200).json(result.reverse())
+					res.status(200).json(result.body.reverse())
 					
 				})
 				.catch((error) =>{

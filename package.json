@@ -23,7 +23,7 @@
     "ngsi-parser": "^2.1.0",
     "node-crate": "^2.0.3",
     "node-fetch": "^1.7.3",
-    "ocb-sender": "^2.0.1",
+    "ocb-sender": "^2.4.2",
     "sequelize": "^4.37.4"
   },
   "devDependencies": {

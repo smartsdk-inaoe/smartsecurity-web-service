@@ -19,12 +19,7 @@ exports.mysql = {
   user : 'cenidet',
   password : 'Cenidet2017'
 }
-exports.context = {
-  //host : 'http://207.249.127.218',
-  host:'http://130.206.113.226',
-  v : "v2",
-  port : 1026
-}
+exports.context = 'http://130.206.113.226:1026/v2'
 exports.crate = 'http://130.206.113.226:4200';
 
 
