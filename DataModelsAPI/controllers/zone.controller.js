@@ -1,8 +1,9 @@
 'use strict';
 
-
 var zone = require('../models/zone.model')
 var context = require("./functions/context")
+var triggers = require("./functions/triggers")
+
 
 function isEmpty (object) {
     if (object == undefined ) return true;
@@ -89,6 +90,7 @@ exports.delete = function(req, res){
 	})
 	.then((result) => {
 		if(result[0] > 0){
+			triggers.afterDeleteZone(req.params.idZone);
 			res.status(200).json(result);
 		}
 		else {
