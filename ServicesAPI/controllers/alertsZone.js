@@ -80,6 +80,7 @@ exports.getCurrent = async function (req,res) {
 				jsonQuery["id"] = req.query.id
 
 			let queryToCount = ngsi.createQuery(jsonQuery);
+			console.log(queryToCount)
 
             await await cb.getWithQuery(queryToCount)
 			.then(async (response) => {
@@ -95,7 +96,8 @@ exports.getCurrent = async function (req,res) {
 					//geometry:"polygon",
 					//coords : zone.location,
 					dateObserved: `>=${midnight}`,
-					limit : count,
+					limit : 10,
+					offset : count - 10,
 				}
 				if(req.query.id != undefined)
 					jsonQuery2["id"] = req.query.id
@@ -105,16 +107,17 @@ exports.getCurrent = async function (req,res) {
 				console.log(query)
 				await cb.getWithQuery(query)
 				.then((result) => {
-				
+					
 					res.status(200).json(result.body.reverse())
 					
 				})
 				.catch((error) =>{
-					res.status(500).send(error);
+					res.status(error.status).send(error);
 				})
 				
 			})
 			.catch((error) =>{
+				console.log("segundo")
 				res.status(500).send(error);
 			})
 				
