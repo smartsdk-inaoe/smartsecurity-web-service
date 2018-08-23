@@ -95,7 +95,7 @@ exports.getCurrent = async function (req,res) {
 					//geometry:"polygon",
 					//coords : zone.location,
 					dateObserved: `>=${midnight}`,
-					limit : count,
+					limit : count - 10,
 				}
 				if(req.query.id != undefined)
 					jsonQuery2["id"] = req.query.id
