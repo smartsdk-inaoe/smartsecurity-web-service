@@ -26,14 +26,13 @@ exports.getHistory = async function (req,res) {
             await cb.getWithQuery(queryToCount)
 			.then(async (response) => {
 				let off = Number(response["headers"]["_headers"]["fiware-total-count"][0])
-				console.log(off)  
 				let params  = {
 					type : "Alert",
 					options : "keyValues",
 					//georel :"coveredBy",
 					//geometry:"polygon",
 					//coords : zone.location,
-					limit : "10",
+					limit : 10,
 				}
 				if(req.query.id != undefined)
 					params["id"] = req.query.id
@@ -82,13 +81,11 @@ exports.getCurrent = async function (req,res) {
 			let queryToCount = ngsi.createQuery(jsonQuery);
 			console.log(queryToCount)
 
-            await await cb.getWithQuery(queryToCount)
+            await cb.getWithQuery(queryToCount)
 			.then(async (response) => {
 
 				let count = Number(response["headers"]["_headers"]["fiware-total-count"][0])  
-				if (count < 20) {
-					count = 20;
-				}
+				
 				let jsonQuery2 = {
 					type : "Alert",
 					options : "keyValues",
@@ -96,11 +93,14 @@ exports.getCurrent = async function (req,res) {
 					//geometry:"polygon",
 					//coords : zone.location,
 					dateObserved: `>=${midnight}`,
-					limit : 10,
-					offset : count - 10,
+					limit : 10
 				}
+				
 				if(req.query.id != undefined)
 					jsonQuery2["id"] = req.query.id
+
+				if(count > 20)
+					jsonQuery2["offset"] = count - 10;
 
 				let query = ngsi.createQuery(jsonQuery2);
 
