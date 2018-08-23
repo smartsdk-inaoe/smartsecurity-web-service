@@ -24,7 +24,7 @@ exports.getZone = async function (req,res) {
 			console.log(query)
 			await cb.getWithQuery(query)
 			.then((result) => {
-				res.status(200).json(result)
+				res.status(200).json(result.body)
 			})
 			.catch((error) =>{
 				res.status(500).send(error);
@@ -62,7 +62,7 @@ exports.getZoneByOwner = async function (req,res) {
 					console.log(query)
 					await cb.getWithQuery(query)
 					.then((result) => {
-						res.status(200).json(result)
+						res.status(200).json(result.body)
 					})
 					.catch((error) =>{
 						res.status(500).send(error);
