@@ -19,7 +19,8 @@ exports.mysql = {
   user : 'cenidet',
   password : 'Cenidet2017'
 }
-exports.context = 'http://130.206.113.226:1026/v2'
+//exports.context = 'http://130.206.113.226:1026/v2'
+exports.context = 'http://200.23.5.142:1026/v2';
 exports.crate = 'http://130.206.113.226:4200';
 
 
