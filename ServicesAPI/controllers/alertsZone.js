@@ -15,9 +15,9 @@ exports.getHistory = async function (req,res) {
 			let jsonQuery = {
 				type : "Alert",
 				options : "count",
-				//georel :"coveredBy",
-				//geometry:"polygon",
-				//coords : zone.location
+				georel :"coveredBy",
+				geometry:"polygon",
+				coords : zone.location
 			}
 			if(req.query.id != undefined)
 				jsonQuery["id"] = req.query.id
@@ -29,9 +29,9 @@ exports.getHistory = async function (req,res) {
 				let params  = {
 					type : "Alert",
 					options : "keyValues",
-					//georel :"coveredBy",
-					//geometry:"polygon",
-					//coords : zone.location,
+					georel :"coveredBy",
+					geometry:"polygon",
+					coords : zone.location,
 					limit : 10,
 				}
 				if(req.query.id != undefined)
@@ -40,7 +40,8 @@ exports.getHistory = async function (req,res) {
 				if (off > 10){
 					params.offset = off - 10
 				}
-                let query = ngsi.createQuery(params);
+				let query = ngsi.createQuery(params);
+				console.log(query)
 				await cb.getWithQuery(query)
 				.then((result) => {
 					res.status(200).json(result.body.reverse())
