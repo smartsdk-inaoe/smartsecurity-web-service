@@ -4,6 +4,7 @@ var ngsi = require('ngsi-parser')
 
 exports.query = async function (req,res) {    
     let query = ngsi.createQuery(req.body);
+	console.log(req.body)
     await cb.getWithQuery(query)
     .then((result) => {
         res.status(200).json(result.body);
