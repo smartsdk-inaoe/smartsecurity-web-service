@@ -10,7 +10,7 @@ exports.query = async function (req,res) {
         res.status(200).json(result.body);
     })
     .catch((error) =>{
-        res.status(500).send(error);
+        res.status(req.status).send(error);
     })
 } 
 
