@@ -102,7 +102,7 @@ exports.getCurrent = async function (req,res) {
 				if(req.query.id != undefined)
 					jsonQuery2["id"] = req.query.id
 
-				if(count > 20)
+				if(count >= 20)
 					jsonQuery2["offset"] = count - 10;
 		    		if(count < 20)
 					jsonQuery2["limit"] = count;
