@@ -104,6 +104,8 @@ exports.getCurrent = async function (req,res) {
 
 				if(count > 20)
 					jsonQuery2["offset"] = count - 10;
+		    		console.log(count)
+		    		console.log(jsonQuery2["offset"])
 
 				let query = ngsi.createQuery(jsonQuery2);
 
