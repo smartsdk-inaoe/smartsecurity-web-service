@@ -72,9 +72,9 @@ exports.getCurrent = async function (req,res) {
 			let jsonQuery = {
 				type : "Alert",
 				options : "count",
-				//georel :"coveredBy",
-				//geometry:"polygon",
-				//coords : zone.location,
+				georel :"coveredBy",
+				geometry:"polygon",
+				coords : zone.location,
 				dateObserved: `>=${midnight}`
 			}
 
