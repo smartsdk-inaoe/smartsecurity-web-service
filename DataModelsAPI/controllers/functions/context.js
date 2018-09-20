@@ -11,7 +11,7 @@ exports.create = async (type, json, callback) =>{
         let NGSIentity = ngsi.parseEntity(json)
         console.log("Enviando al context")
         callback(true, NGSIentity);
-        /*await cb.createEntity(NGSIentity)
+        await cb.createEntity(NGSIentity)
             .then((result) => {
                 console.log(result)
                 callback(true, NGSIentity);
@@ -19,6 +19,4 @@ exports.create = async (type, json, callback) =>{
             .catch((err) => {
                 callback(false, {message: err});
             })
-        */
-    
 }
