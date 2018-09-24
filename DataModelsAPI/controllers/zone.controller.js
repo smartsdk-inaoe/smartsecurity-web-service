@@ -25,7 +25,7 @@ exports.add = async function (req, res){
 			var data  = result.get({
 				plain: true
 			})
-			/*data['location'] = data['location'].join(';')
+			data['location'] = data['location'].join(';')
 			data.location  = {
 				type: "geo:polygon",
 				value: data['location'].split(';'),
@@ -44,7 +44,7 @@ exports.add = async function (req, res){
 				else{
 					res.status(400).json({message: "An error has ocurred to send the entity to ContextBroker"});
 				}
-			})*/
+			})
 			res.status(201).json(data);
 
 		})
